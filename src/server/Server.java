@@ -4,9 +4,10 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import micc.AdministratorUser;
-import micc.ClientUser;
-import micc.Messages;
+
+import allclasses.AdministratorUser;
+import allclasses.ClientUser;
+import allclasses.Messages;
 
 public class Server {
 

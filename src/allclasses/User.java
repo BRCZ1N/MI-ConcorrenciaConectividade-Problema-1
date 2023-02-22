@@ -1,4 +1,4 @@
-package micc;
+package allclasses;
 
 public class User {
 

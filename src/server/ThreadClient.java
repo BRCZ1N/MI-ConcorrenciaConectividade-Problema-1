@@ -2,7 +2,8 @@ package server;
 
 import java.io.IOException;
 import java.net.Socket;
-import micc.Messages;
+
+import allclasses.Messages;
 
 public class ThreadClient implements Runnable {
 
