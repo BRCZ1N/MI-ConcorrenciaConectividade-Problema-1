@@ -4,16 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import model.Administrator;
 import model.Consumer;
 import model.Consumption;
 import model.User;
-import utilityclasses.UserServicesInterfaces;
 
 public class UserServices {
 
-	private Map<String, User> usersMap;
+	private static Map<String, User> usersMap;
 	private long id = 0;
 
 	public UserServices() {
@@ -84,9 +82,9 @@ public class UserServices {
 
 	}
 
-	private Consumer getUser(String id) {
+	private User getUser(String id) {
 
-		for (Entry<String, Consumer> user : usersMap.entrySet()) {
+		for (Entry<String, User> user : usersMap.entrySet()) {
 
 			if (user.getKey().equals(id)) {
 
@@ -100,9 +98,9 @@ public class UserServices {
 
 	}
 
-	public boolean userAuthentication(String id, String password) {
+	public static boolean userAuthentication(String id, String password) {
 
-		for (Entry<String, Consumer> user : usersMap.entrySet()) {
+		for (Entry<String, User> user : usersMap.entrySet()) {
 
 			if (user.getKey().equals(id) && user.getValue().getPassword().equals(password)) {
 
@@ -118,7 +116,17 @@ public class UserServices {
 
 	public double getConsumptionAccumulated(String id) {
 
-		return getUser(id).getConsumptionAccumulated();
+		Consumer client = (Consumer) getUser(id);
+
+		return client.getConsumptionAccumulated();
+
+	}
+
+	public ArrayList<Consumption> getAllHistoryOfConsumption(String id) {
+
+		Consumer client = (Consumer) getUser(id);
+
+		return client.getListConsumption();
 
 	}
 
@@ -133,11 +141,5 @@ public class UserServices {
 //		}
 //		
 //	}
-
-	public ArrayList<Consumption> getAllHistoryOfConsumption(String id) {
-
-		return getUser(id).getListConsumption();
-
-	}
 
 }

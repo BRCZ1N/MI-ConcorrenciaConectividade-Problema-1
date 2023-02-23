@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import model.Administrator;
 import model.Consumer;
+import services.UserServices;
 import utilityclasses.Messages;
 
 public class Server {
@@ -24,7 +25,7 @@ public class Server {
 
 		String[] userCredentialsSplit = userCredentials.split(":");
 
-		if (userAuthentication(userCredentialsSplit[0], userCredentialsSplit[1])) {
+		if (UserServices.userAuthentication(userCredentialsSplit[0], userCredentialsSplit[1])) {
 
 			ThreadClient threadClient = new ThreadClient(socketClient);
 			new Thread(threadClient).start();
