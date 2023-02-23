@@ -5,69 +5,42 @@ import java.time.LocalDate;
 public class Invoice {
 
 	private LocalDate expirationDate;
-	private double amount;
-	private double consume;
+	private double consumption;
 	private long idMeasurer;
 	private long idClient;
-
+	private double totalInvoice;
+	
 	public LocalDate getExpirationDate() {
-		
 		return expirationDate;
-		
 	}
-
 	public void setExpirationDate(LocalDate expirationDate) {
-		
 		this.expirationDate = expirationDate;
-		
 	}
-
-	public double getAmount() {
-		
-		return amount;
-		
+	public double getConsumption() {
+		return consumption;
 	}
-
-	public void setAmount(double amount) {
-		
-		this.amount = amount;
-		
+	public void setConsumption(double consumption) {
+		this.consumption = consumption;
 	}
-
-	public double getConsume() {
-		
-		return consume;
-		
-	}
-
-	public void setConsume(double consume) {
-		
-		this.consume = consume;
-		
-	}
-
 	public long getIdMeasurer() {
-		
 		return idMeasurer;
-		
 	}
-
 	public void setIdMeasurer(long idMeasurer) {
-		
 		this.idMeasurer = idMeasurer;
-		
 	}
-
 	public long getIdClient() {
-		
 		return idClient;
-		
+	}
+	public void setIdClient(long idClient) {
+		this.idClient = idClient;
+	}
+	public double getTotalInvoice() {
+		return totalInvoice;
+	}
+	public void setTotalInvoice(double totalInvoice) {
+		this.totalInvoice = totalInvoice;
 	}
 
-	public void setIdClient(long idClient) {
-		
-		this.idClient = idClient;
-		
-	}
+
 
 }

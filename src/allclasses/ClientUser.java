@@ -2,13 +2,15 @@ package allclasses;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class ClientUser extends User implements Serializable {
 
 	private static final long serialVersionUID = -2973765919995933879L;
-	private ArrayList<Invoice> listInvoices;
+	private Map<String, Invoice> mapInvoices;
+	private ArrayList<Consumption> listConsumption;
 	private String statusConsume;
-	private double totalConsume;
+	private double consumptionAccumulated;
 
 	public ClientUser(String id, String name, String password, String statusConsume, ArrayList<Invoice> listInvoices) {
 
@@ -16,12 +18,20 @@ public class ClientUser extends User implements Serializable {
 
 	}
 
-	public ArrayList<Invoice> getListInvoices() {
-		return listInvoices;
+	public Map<String, Invoice> getMapInvoices() {
+		return mapInvoices;
 	}
 
-	public void setListInvoices(ArrayList<Invoice> listInvoices) {
-		this.listInvoices = listInvoices;
+	public void setMapInvoices(Map<String, Invoice> mapInvoices) {
+		this.mapInvoices = mapInvoices;
+	}
+
+	public ArrayList<Consumption> getListConsumption() {
+		return listConsumption;
+	}
+
+	public void setListConsumption(ArrayList<Consumption> listConsumption) {
+		this.listConsumption = listConsumption;
 	}
 
 	public String getStatusConsume() {
@@ -32,13 +42,12 @@ public class ClientUser extends User implements Serializable {
 		this.statusConsume = statusConsume;
 	}
 
-	public double getTotalConsume() {
-		return totalConsume;
+	public double getConsumptionAccumulated() {
+		return consumptionAccumulated;
 	}
 
-	public void setTotalConsume(double totalConsume) {
-		this.totalConsume = totalConsume;
+	public void setConsumptionAccumulated(double consumptionAccumulated) {
+		this.consumptionAccumulated = consumptionAccumulated;
 	}
 
-	
 }
