@@ -5,9 +5,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import allclasses.Messages;
-import client.AdministratorUser;
-import client.ClientUser;
+import model.Administrator;
+import model.Consumer;
+import utilityclasses.Messages;
 
 public class Server {
 

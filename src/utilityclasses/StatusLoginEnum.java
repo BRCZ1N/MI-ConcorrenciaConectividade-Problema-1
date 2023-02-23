@@ -1,4 +1,4 @@
-package allclasses;
+package utilityclasses;
 
 public enum StatusLoginEnum {
 

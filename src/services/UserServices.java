@@ -1,25 +1,28 @@
-package allclasses;
+package services;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import client.ClientUser;
-import client.Consumption;
+import model.Administrator;
+import model.Consumer;
+import model.Consumption;
+import model.User;
+import utilityclasses.UserServicesInterfaces;
 
-public class UserServices implements UserServicesInterfaces<ClientUser> {
+public class UserServices {
 
-	private Map<String, ClientUser> usersMap;
+	private Map<String, User> usersMap;
 	private long id = 0;
 
 	public UserServices() {
 
-		usersMap = new HashMap<String, ClientUser>();
+		usersMap = new HashMap<String, User>();
 
 	}
 
-	public boolean addClient(ClientUser user) {
+	public boolean addUser(User user) {
 
 		if (getUser(user.getName()) == null) {
 
@@ -47,15 +50,43 @@ public class UserServices implements UserServicesInterfaces<ClientUser> {
 
 	}
 
-	public Map<String, ClientUser> getAllClients() {
+	public Map<String, Consumer> getAllClients() {
 
-		return usersMap;
+		Map<String, Consumer> mapClients = new HashMap<String, Consumer>();
+
+		for (Entry<String, User> user : usersMap.entrySet()) {
+
+			if (user instanceof Consumer) {
+
+				mapClients.put(user.getKey(), (Consumer) user.getValue());
+
+			}
+
+		}
+		return mapClients;
 
 	}
 
-	private ClientUser getUser(String id) {
+	public Map<String, Administrator> getAllAdmins() {
 
-		for (Entry<String, ClientUser> user : usersMap.entrySet()) {
+		Map<String, Administrator> mapAdmins = new HashMap<String, Administrator>();
+
+		for (Entry<String, User> user : usersMap.entrySet()) {
+
+			if (user instanceof Administrator) {
+
+				mapAdmins.put(user.getKey(), (Administrator) user.getValue());
+
+			}
+
+		}
+		return mapAdmins;
+
+	}
+
+	private Consumer getUser(String id) {
+
+		for (Entry<String, Consumer> user : usersMap.entrySet()) {
 
 			if (user.getKey().equals(id)) {
 
@@ -71,7 +102,7 @@ public class UserServices implements UserServicesInterfaces<ClientUser> {
 
 	public boolean userAuthentication(String id, String password) {
 
-		for (Entry<String, ClientUser> user : usersMap.entrySet()) {
+		for (Entry<String, Consumer> user : usersMap.entrySet()) {
 
 			if (user.getKey().equals(id) && user.getValue().getPassword().equals(password)) {
 

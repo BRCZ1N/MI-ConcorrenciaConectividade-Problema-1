@@ -1,12 +1,10 @@
-package client;
+package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 
-import allclasses.User;
-
-public class ClientUser extends User implements Serializable {
+public class Consumer extends User implements Serializable {
 
 	private static final long serialVersionUID = -2973765919995933879L;
 	private Map<String, Invoice> mapInvoices;
@@ -14,7 +12,7 @@ public class ClientUser extends User implements Serializable {
 	private String statusConsume;
 	private double consumptionAccumulated;
 
-	public ClientUser(String id, String name, String password, String statusConsume, ArrayList<Invoice> listInvoices) {
+	public Consumer(String id, String name, String password, String statusConsume, ArrayList<Invoice> listInvoices) {
 
 		super(id, name, password);
 
