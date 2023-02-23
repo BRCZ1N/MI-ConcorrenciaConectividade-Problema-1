@@ -1,8 +1,10 @@
-package allclasses;
+package client;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
+
+import allclasses.User;
 
 public class ClientUser extends User implements Serializable {
 

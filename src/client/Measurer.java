@@ -1,4 +1,4 @@
-package allclasses;
+package client;
 
 public class Measurer {
 

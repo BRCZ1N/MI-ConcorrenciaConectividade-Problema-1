@@ -1,4 +1,4 @@
-package allclasses;
+package client;
 
 import java.time.LocalDate;
 

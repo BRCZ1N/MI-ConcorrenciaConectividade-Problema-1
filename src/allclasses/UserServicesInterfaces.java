@@ -6,6 +6,5 @@ public interface UserServicesInterfaces<T> {
 
 	public boolean deleteClient(String id);
 
-	public T getUser(String id);
 
 }

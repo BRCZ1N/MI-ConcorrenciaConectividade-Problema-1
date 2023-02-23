@@ -1,4 +1,6 @@
-package allclasses;
+package client;
+
+import allclasses.User;
 
 public class AdministratorUser extends User {
 
