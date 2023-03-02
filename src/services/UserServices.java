@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import model.Administrator;
-import model.Consumer;
-import model.Consumption;
-import model.User;
+
+import resources.Administrator;
+import resources.Consumer;
+import resources.Consumption;
+import resources.User;
 
 public class UserServices {
 

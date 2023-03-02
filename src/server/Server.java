@@ -1,12 +1,14 @@
 package server;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import model.Administrator;
-import model.Consumer;
+import resources.Administrator;
+import resources.Consumer;
 import services.UserServices;
 import utilityclasses.Messages;
 
@@ -21,23 +23,10 @@ public class Server {
 
 	}
 
-	private boolean generateAndStartThreadClient(Socket socketClient, String userCredentials) {
+	private void generateAndStartThreadClient(Socket socketClient) {
 
-		String[] userCredentialsSplit = userCredentials.split(":");
-
-		if (UserServices.userAuthentication(userCredentialsSplit[0], userCredentialsSplit[1])) {
-
-			ThreadClient threadClient = new ThreadClient(socketClient);
-			new Thread(threadClient).start();
-			Messages.sendMessage(socketClient, "LOGADO COM SUCESSO");
-			return true;
-
-		} else {
-
-			Messages.sendMessage(socketClient, "USER NOT FOUND");
-			return false;
-
-		}
+		ThreadClient threadClient = new ThreadClient(socketClient);
+		new Thread(threadClient).start();
 
 	}
 
@@ -46,20 +35,14 @@ public class Server {
 		boolean connection = true;
 
 		generateServerSocket(portServer);
-		System.out.println("Server executado na porta: " + socketServer.getLocalPort());
-		System.out.println("Server executado no IP:" + socketServer.getInetAddress());
+		System.out.println("Server executado no IP:" + socketServer.getLocalPort());
 
 		while (connection) {
 
 			clientSocket = socketServer.accept();
-
-			boolean confirmClient;
-			
-			do {
-
-				confirmClient = generateAndStartThreadClient(clientSocket,(String) Messages.receiveMessage(clientSocket));
-
-			} while (!confirmClient);
+			System.out.println("Client connected");
+			System.out.println(clientSocket.getInetAddress());
+			generateAndStartThreadClient(clientSocket);
 
 		}
 
@@ -70,7 +53,7 @@ public class Server {
 	public static void main(String[] args) throws IOException {
 
 		Server serverMain = new Server();
-		serverMain.execServer(12345);
+		serverMain.execServer(8000);
 
 	}
 

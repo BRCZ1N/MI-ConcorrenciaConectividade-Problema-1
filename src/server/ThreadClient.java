@@ -1,9 +1,11 @@
 package server;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Socket;
-
-import utilityclasses.Messages;
+import apirest.ProtocolHttp;
+import apirest.RequestHttp;
 
 public class ThreadClient implements Runnable {
 
@@ -28,43 +30,26 @@ public class ThreadClient implements Runnable {
 	@Override
 	public void run() {
 
-		boolean connectionStatus = true;
+		boolean connectionStatus;
 
-		String clientMessage = "";
+		connectionStatus = true;
 
 		while (connectionStatus) {
 
-			if (!clientMessage.equals("quit")) {
-
-				try {
-
-					clientMessage = (String) Messages.receiveMessage(socket);
-					System.out.println(clientMessage);
-
-				} catch (ClassCastException e) {
-
-					e.getStackTrace();
-				}
-
-			} else {
-
-				connectionStatus = false;
-
-			}
+			RequestHttp req;
 			
+			try {
+				
+				req = ProtocolHttp.readRequest(socket);
+				
+			} catch (IOException e) {
+				
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		}
-		
-		try {
 
-			socket.close();
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-
-		}
-		
 	}
 
 }
