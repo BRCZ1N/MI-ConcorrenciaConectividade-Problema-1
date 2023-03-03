@@ -1,8 +1,6 @@
 package server;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.Socket;
 import apirest.ProtocolHttp;
 import apirest.RequestHttp;
@@ -34,18 +32,18 @@ public class ThreadClient implements Runnable {
 
 		connectionStatus = true;
 
-		while (connectionStatus) {
+		while (!socket.isClosed()) {
 
 			RequestHttp req;
-			
+
 			try {
-				
+
 				req = ProtocolHttp.readRequest(socket);
-				
+
 			} catch (IOException e) {
-				
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
+
 			}
 
 		}

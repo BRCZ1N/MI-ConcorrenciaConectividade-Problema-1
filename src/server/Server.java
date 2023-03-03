@@ -1,16 +1,8 @@
 package server;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-
-import resources.Administrator;
-import resources.Consumer;
-import services.UserServices;
-import utilityclasses.Messages;
 
 public class Server {
 

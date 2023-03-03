@@ -2,15 +2,17 @@ package apirest;
 
 import java.util.Map;
 
+import org.json.JSONObject;
+
 public class RequestHttp {
 
 	private String method;
 	private String path;
 	private String versionHttp;
 	private Map<String, String> headers;
-	private String body;
+	private JSONObject body;
 
-	public RequestHttp(String method, String path, String versionHttp, Map<String, String> headers, String body) {
+	public RequestHttp(String method, String path, String versionHttp, Map<String, String> headers, JSONObject body) {
 
 		this.method = method;
 		this.path = path;
@@ -52,11 +54,11 @@ public class RequestHttp {
 		this.headers = headers;
 	}
 
-	public String getBody() {
+	public JSONObject getBody() {
 		return body;
 	}
 
-	public void setBody(String body) {
+	public void setBody(JSONObject body) {
 		this.body = body;
 	}
 

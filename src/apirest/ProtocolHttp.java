@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
+import org.json.JSONObject;
 
 public class ProtocolHttp {
 
@@ -14,19 +14,28 @@ public class ProtocolHttp {
 
 		BufferedReader buffer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		String lineRequest;
-		
-		String responseHeaders[] = buffer.readLine().split("\s"); 
-		
-		Map<String,String> mapHeaders = new HashMap<String,String>(); 
+
+		String responseHeaders[] = buffer.readLine().split("\s");
+
+		Map<String, String> mapHeaders = new HashMap<String, String>();
 		while (!(lineRequest = buffer.readLine()).isEmpty()) {
 
 			String[] header = lineRequest.split(":\s");
 			mapHeaders.put(header[0], header[1]);
 
 		}
-		String body = "Ok";
-		
-		return new RequestHttp(responseHeaders[0],responseHeaders[1],responseHeaders[2],mapHeaders,body);
+
+		StringBuilder bodyJson = new StringBuilder();
+		String bodyLine;
+
+		while ((bodyLine = buffer.readLine()) != null) {
+
+			bodyJson.append(bodyLine);
+
+		}
+
+		String body = bodyJson.toString().replaceAll("\\s+", "");
+		return new RequestHttp(responseHeaders[0], responseHeaders[1], responseHeaders[2], mapHeaders,new JSONObject(body));
 	}
 
 	public static void sendResponse() {
