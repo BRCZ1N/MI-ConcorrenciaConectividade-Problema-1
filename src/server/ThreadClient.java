@@ -37,7 +37,8 @@ public class ThreadClient implements Runnable {
 
 			while (!isEmptyBuffer((buffer = new BufferedReader(new InputStreamReader(socket.getInputStream()))))) {
 
-				req = ProtocolHttp.readRequest(buffer);
+				BufferedReader bufferCopy = buffer;
+				req = ProtocolHttp.readRequest(bufferCopy);
 
 			}
 
