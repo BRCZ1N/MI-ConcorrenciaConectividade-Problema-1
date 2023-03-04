@@ -1,6 +1,8 @@
 package server;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Socket;
 import apirest.ProtocolHttp;
 import apirest.RequestHttp;
@@ -28,25 +30,36 @@ public class ThreadClient implements Runnable {
 	@Override
 	public void run() {
 
-		boolean connectionStatus;
+		BufferedReader buffer;
+		RequestHttp req;
 
-		connectionStatus = true;
+		try {
 
-		while (!socket.isClosed()) {
+			while (!isEmptyBuffer((buffer = new BufferedReader(new InputStreamReader(socket.getInputStream()))))) {
 
-			RequestHttp req;
-
-			try {
-
-				req = ProtocolHttp.readRequest(socket);
-
-			} catch (IOException e) {
-
-				e.printStackTrace();
+				req = ProtocolHttp.readRequest(buffer);
 
 			}
 
+		} catch (IOException e) {
+
+			e.printStackTrace();
 		}
+
+	}
+
+	public boolean isEmptyBuffer(BufferedReader buffer) throws IOException {
+		
+		buffer.mark(Integer.MAX_VALUE);
+		if (buffer.readLine() != null) {
+
+			buffer.reset();
+			return false;
+
+		}
+
+		buffer.reset();
+		return true;
 
 	}
 

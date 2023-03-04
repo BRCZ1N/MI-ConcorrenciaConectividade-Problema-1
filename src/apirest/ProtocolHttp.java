@@ -10,12 +10,15 @@ import org.json.JSONObject;
 
 public class ProtocolHttp {
 
-	public static RequestHttp readRequest(Socket socket) throws IOException {
-
-		BufferedReader buffer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+	public static RequestHttp readRequest(BufferedReader buffer) throws IOException {
+		
 		String lineRequest;
-
 		String responseHeaders[] = buffer.readLine().split("\s");
+		for(String str: responseHeaders) {
+			
+			System.out.println(str);
+			
+		}
 
 		Map<String, String> mapHeaders = new HashMap<String, String>();
 		while (!(lineRequest = buffer.readLine()).isEmpty()) {
