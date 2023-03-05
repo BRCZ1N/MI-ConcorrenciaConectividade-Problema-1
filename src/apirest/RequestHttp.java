@@ -22,6 +22,10 @@ public class RequestHttp {
 
 	}
 
+	public RequestHttp() {
+		
+	}
+
 	public String getMethod() {
 		return method;
 	}

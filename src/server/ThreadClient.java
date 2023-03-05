@@ -2,6 +2,7 @@ package server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import apirest.ProtocolHttp;
@@ -30,17 +31,17 @@ public class ThreadClient implements Runnable {
 	@Override
 	public void run() {
 
-		BufferedReader buffer;
 		RequestHttp req;
 
 		try {
 
-			while (!isEmptyBuffer((buffer = new BufferedReader(new InputStreamReader(socket.getInputStream()))))) {
-
-				BufferedReader bufferCopy = buffer;
-				req = ProtocolHttp.readRequest(bufferCopy);
+			while (!isEmptyBuffer(socket.getInputStream())) {
+				
+				req = ProtocolHttp.readRequest(socket.getInputStream());
 
 			}
+
+			System.out.println("Conexão com a porta:" + socket.getPort() + " encerrada");
 
 		} catch (IOException e) {
 
@@ -49,18 +50,15 @@ public class ThreadClient implements Runnable {
 
 	}
 
-	public boolean isEmptyBuffer(BufferedReader buffer) throws IOException {
-		
-		buffer.mark(Integer.MAX_VALUE);
-		if (buffer.readLine() != null) {
+	public boolean isEmptyBuffer(InputStream input) throws IOException {
 
-			buffer.reset();
-			return false;
+		if (input.available() == 0) {
+
+			return true;
 
 		}
 
-		buffer.reset();
-		return true;
+		return false;
 
 	}
 
