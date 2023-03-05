@@ -1,11 +1,12 @@
 package apirest;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
-import java.util.Scanner;
 
 import org.json.JSONObject;
 
@@ -15,14 +16,25 @@ public class ProtocolHttp {
 
 		Queue<String> httpData = new LinkedList<String>();
 		String reqLine;
-
-		try (Scanner scanner = new Scanner(input)) {
-			while(scanner.hasNextLine()) {
-
-				httpData.add(scanner.nextLine());
-
+		
+		BufferedReader buffer = new BufferedReader(new InputStreamReader(input));
+		boolean readerAllLines = true;
+		
+		while(readerAllLines) {
+			
+			if(buffer.ready()) {
+				
+				System.out.println(buffer.ready());
+				httpData.add(buffer.readLine());
+				
+			}else {
+				
+				readerAllLines = false;
+				
 			}
+			
 		}
+		
 		
 		String responseHeaders[] = httpData.poll().split("\s");
 		Map<String, String> mapHeaders = new HashMap<String, String>();
