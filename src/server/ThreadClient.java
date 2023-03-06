@@ -36,29 +36,28 @@ public class ThreadClient implements Runnable {
 		try {
 
 			while (!isEmptyBuffer(socket.getInputStream())) {
-				
+
 				req = ProtocolHttp.readRequest(socket.getInputStream());
 
 			}
 
-			System.out.println("Conexão com a porta:" + socket.getPort() + " encerrada");
-
 		} catch (IOException e) {
 
-			e.printStackTrace();
+			System.out.println("Conexao encerrada:"+ socket.getLocalPort());
 		}
 
 	}
 
 	public boolean isEmptyBuffer(InputStream input) throws IOException {
+		
+	
+		if (input.available() > 0) {
 
-		if (input.available() == 0) {
-
-			return true;
+			return false;
 
 		}
 
-		return false;
+		return true;
 
 	}
 
