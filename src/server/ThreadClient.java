@@ -1,8 +1,11 @@
 package server;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
 
+import utilityclasses.HttpMethods;
+import utilityclasses.HttpPath;
 import utilityclasses.ProtocolHttp;
 import utilityclasses.RequestHttp;
 
@@ -37,12 +40,45 @@ public class ThreadClient implements Runnable {
 
 				req = ProtocolHttp.readRequest(socket.getInputStream());
 
+				HttpMethods method = HttpMethods.valueOf(req.getMethod());
+				HttpPath path = HttpPath.valueOf(req.getPath());
+				String versionHttp = req.getVersionHttp();
+
+				if (method == HttpMethods.GET) {
+					
+					if (path == HttpPath.PATH_HISTORIC) {
+
+						
+						
+						
+					} else {
+
+						
+						
+					}
+
+				} else if (method == HttpMethods.PUT) {
+					
+					
+					
+
+				} else if (method == HttpMethods.POST) {
+					
+					
+					
+
+				} else {
+					
+					
+					
+
+				}
 			}
 
 		} catch (IOException e) {
 
-			System.out.println("Conexao encerrada:"+ socket.getLocalPort());
-			
+			System.out.println("Conexao encerrada:" + socket.getLocalPort());
+
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -51,8 +87,7 @@ public class ThreadClient implements Runnable {
 	}
 
 	public boolean isEmptyBuffer(InputStream input) throws IOException {
-		
-	
+
 		if (input.available() > 0) {
 
 			return false;

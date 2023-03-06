@@ -4,16 +4,16 @@ import java.time.LocalDateTime;
 
 public class Consumption {
 
-	private LocalDateTime date;
+	private LocalDateTime dateTime;
 	private double amount;
 	private final String unitMeasurement = "Kwh";
 
-	public LocalDateTime getDate() {
-		return date;
+	public LocalDateTime getDateTime() {
+		return dateTime;
 	}
 
-	public void setDate(LocalDateTime date) {
-		this.date = date;
+	public void setDateTime(LocalDateTime dateTime) {
+		this.dateTime = dateTime;
 	}
 
 	public double getAmount() {

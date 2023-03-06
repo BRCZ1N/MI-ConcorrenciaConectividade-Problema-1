@@ -4,43 +4,77 @@ import java.time.LocalDate;
 
 public class Invoice {
 
+	private String id;
 	private LocalDate expirationDate;
-	private double consumption;
-	private long idMeasurer;
+	private LocalDate issuanceDate;
+	private String billingPeriod;
+	private double valueFare;
+	private double totalConsumption;
 	private long idClient;
 	private double totalInvoice;
-	
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public LocalDate getExpirationDate() {
 		return expirationDate;
 	}
+
 	public void setExpirationDate(LocalDate expirationDate) {
 		this.expirationDate = expirationDate;
 	}
-	public double getConsumption() {
-		return consumption;
+
+	public LocalDate getIssuanceDate() {
+		return issuanceDate;
 	}
-	public void setConsumption(double consumption) {
-		this.consumption = consumption;
+
+	public void setIssuanceDate(LocalDate issuanceDate) {
+		this.issuanceDate = issuanceDate;
 	}
-	public long getIdMeasurer() {
-		return idMeasurer;
+
+	public String getBillingPeriod() {
+		return billingPeriod;
 	}
-	public void setIdMeasurer(long idMeasurer) {
-		this.idMeasurer = idMeasurer;
+
+	public void setBillingPeriod(String billingPeriod) {
+		this.billingPeriod = billingPeriod;
 	}
+
+	public double getValueFare() {
+		return valueFare;
+	}
+
+	public void setValueFare(double valueFare) {
+		this.valueFare = valueFare;
+	}
+
+	public double getTotalConsumption() {
+		return totalConsumption;
+	}
+
+	public void setTotalConsumption(double totalConsumption) {
+		this.totalConsumption = totalConsumption;
+	}
+
 	public long getIdClient() {
 		return idClient;
 	}
+
 	public void setIdClient(long idClient) {
 		this.idClient = idClient;
 	}
+
 	public double getTotalInvoice() {
 		return totalInvoice;
 	}
+
 	public void setTotalInvoice(double totalInvoice) {
 		this.totalInvoice = totalInvoice;
 	}
-
-
 
 }

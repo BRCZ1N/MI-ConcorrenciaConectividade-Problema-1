@@ -1,12 +1,10 @@
 package resources;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class Consumer extends User implements Serializable {
+public class Consumer extends User {
 
-	private static final long serialVersionUID = -2973765919995933879L;
 	private Map<String, Invoice> mapInvoices;
 	private ArrayList<Consumption> listConsumption;
 	private String statusConsume;
