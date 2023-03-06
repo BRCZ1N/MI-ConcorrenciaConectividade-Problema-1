@@ -1,57 +1,31 @@
 package apirest;
-
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Scanner;
+
 import org.json.JSONObject;
 
 public class ProtocolHttp {
 
-	public static RequestHttp readRequest(InputStream input) throws IOException, InterruptedException {
+	public static RequestHttp readRequest(InputStream input) throws IOException {
 
 		Queue<String> httpData = new LinkedList<String>();
 		String reqLine;
-		BufferedReader buffer = new BufferedReader(new InputStreamReader(input));
-		String responseHeaders[] = null;
-		Map<String, String> mapHeaders = null;
-		String body = null;
-		int character;
-		StringBuilder str = new StringBuilder();
 
-		while ((character = buffer.read()) != -1) {
-		    System.out.print((char) character);
-		}
-		
-		while ((character = buffer.read()) != -1) {
+		try (Scanner scanner = new Scanner(input)) {
+			while(scanner.hasNextLine()) {
 
-			if (character == '\n' || character == '\r') {
+				httpData.add(scanner.nextLine());
 
-				str.append((char)character);
-				httpData.add(str.toString());
-				System.out.print(str.toString());
-				str = new StringBuilder();
-
-			}else {
-				
-				str.append((char)character);
-				
 			}
-
 		}
 		
-		if(httpData.isEmpty()) {
-			
-			return null;
-			
-		}
-
-		responseHeaders = httpData.poll().split("\s");
-		mapHeaders = new HashMap<String, String>();
+		String responseHeaders[] = httpData.poll().split("\s");
+		Map<String, String> mapHeaders = new HashMap<String, String>();
 		while (!(reqLine = httpData.poll()).isEmpty()) {
 
 			String[] header = reqLine.split(":\s");
@@ -68,10 +42,22 @@ public class ProtocolHttp {
 
 		}
 
+		String body = bodyJson.toString().replaceAll("\\s+", "");
+
+		System.out.println(responseHeaders[0]);
+		System.out.println(responseHeaders[1]);
+		System.out.println(responseHeaders[2]);
+		for (Map.Entry<String, String> currentObject : mapHeaders.entrySet()) {
+
+			System.out.println(currentObject.getKey());
+			System.out.println(currentObject.getValue());
+
+		}
+
+		System.out.println(body);
+
 		return new RequestHttp(responseHeaders[0], responseHeaders[1], responseHeaders[2], mapHeaders,
 				new JSONObject(body));
-
-
 	}
 
 	public static void sendResponse() {
