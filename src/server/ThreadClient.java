@@ -1,12 +1,10 @@
 package server;
-
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.Socket;
-import apirest.ProtocolHttp;
-import apirest.RequestHttp;
+
+import utilityclasses.ProtocolHttp;
+import utilityclasses.RequestHttp;
 
 public class ThreadClient implements Runnable {
 
@@ -44,6 +42,10 @@ public class ThreadClient implements Runnable {
 		} catch (IOException e) {
 
 			System.out.println("Conexao encerrada:"+ socket.getLocalPort());
+			
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}

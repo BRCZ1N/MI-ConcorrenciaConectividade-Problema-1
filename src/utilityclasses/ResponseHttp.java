@@ -1,4 +1,4 @@
-package apirest;
+package utilityclasses;
 
 import java.util.Map;
 
