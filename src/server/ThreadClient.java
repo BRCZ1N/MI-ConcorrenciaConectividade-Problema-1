@@ -3,9 +3,7 @@ package server;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
-
 import utilityclasses.HttpMethods;
-import utilityclasses.HttpPath;
 import utilityclasses.ProtocolHttp;
 import utilityclasses.RequestHttp;
 
@@ -43,15 +41,8 @@ public class ThreadClient implements Runnable {
 				if (req != null) {
 
 					HttpMethods method = HttpMethods.valueOf(req.getMethod());
-					HttpPath path = HttpPath.valueOf(req.getPath());
 
 					if (method == HttpMethods.GET) {
-
-						if (path == HttpPath.PATH_HISTORIC) {
-
-						} else {
-
-						}
 
 					} else if (method == HttpMethods.PUT) {
 

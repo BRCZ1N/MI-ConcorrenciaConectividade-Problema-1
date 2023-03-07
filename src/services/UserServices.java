@@ -1,12 +1,7 @@
 package services;
-
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import org.json.JSONObject;
-import resources.Consumer;
-import resources.Invoice;
 import resources.User;
 
 public class UserServices {
@@ -35,7 +30,7 @@ public class UserServices {
 
 	}
 
-	public static boolean deleteClient(String id) {
+	public static boolean deleteUser(String id) {
 
 		if (getUser(id) != null) {
 
@@ -64,86 +59,86 @@ public class UserServices {
 
 	}
 
-	public static JSONObject getConsumptionAccumulated(String id) {
+//	public static JSONObject getConsumptionAccumulated(String id) {
+//
+//		Consumer client = (Consumer) getUser(id);
+//		JSONObject json = new JSONObject();
+//		if (client != null) {
+//
+//			json.put("id", client.getId());
+//			json.put("consumptionAccumulated", client.getConsumptionAccumulated());
+//
+//			return json;
+//
+//		}
+//
+//		return null;
+//	}
 
-		Consumer client = (Consumer) getUser(id);
-		JSONObject json = new JSONObject();
-		if (client != null) {
+//	public static JSONObject getAllHistoryOfConsumption(String id) {
+//
+//		Consumer client = (Consumer) getUser(id);
+//		JSONObject json = new JSONObject();
+//
+//		if (client != null) {
+//
+//			json.put("id", client.getId());
+//			json.put("consumptionAccumulated", client.getConsumptionAccumulated());
+//			json.put("listConsumption", client.getListConsumption());
+//
+//			return json;
+//
+//		}
+//
+//		return null;
+//	}
 
-			json.put("id", client.getId());
-			json.put("consumptionAccumulated", client.getConsumptionAccumulated());
+//	public static JSONObject getListInvoices(String id) {
+//
+//		User client = getUser(id);
+//		JSONObject json = new JSONObject();
+//
+//		if (client != null) {
+//
+//			json.put("id", client.getId());
+//			json.put("mapInvoices", client.getMapInvoices());
+//
+//			return json;
+//
+//		}
+//
+//		return null;
+//
+//	}
 
-			return json;
-
-		}
-
-		return null;
-	}
-
-	public static JSONObject getAllHistoryOfConsumption(String id) {
-
-		Consumer client = (Consumer) getUser(id);
-		JSONObject json = new JSONObject();
-
-		if (client != null) {
-
-			json.put("id", client.getId());
-			json.put("consumptionAccumulated", client.getConsumptionAccumulated());
-			json.put("listConsumption", client.getListConsumption());
-
-			return json;
-
-		}
-
-		return null;
-	}
-
-	public static JSONObject getListInvoices(String id) {
-
-		Consumer client = (Consumer) getUser(id);
-		JSONObject json = new JSONObject();
-
-		if (client != null) {
-
-			json.put("id", client.getId());
-			json.put("mapInvoices", client.getMapInvoices());
-
-			return json;
-
-		}
-
-		return null;
-
-	}
-
-	public static JSONObject getInvoice(String id) {
-
-		Consumer client = (Consumer) getUser(id);
-		JSONObject json = new JSONObject();
-
-		for (Entry<String, Invoice> invoice : client.getMapInvoices().entrySet()) {
-
-			if (invoice.getKey().equals(LocalDateTime.now().getMonth().toString())) {
-
-				json.put("id", invoice.getValue().getId());
-				json.put("name", client.getName());
-				json.put("expirationDate", invoice.getValue().getExpirationDate());
-				json.put("issuanceDate", invoice.getValue().getIssuanceDate());
-				json.put("billingPeriod", invoice.getValue().getBillingPeriod());
-				json.put("valueFare", invoice.getValue().getValueFare());
-				json.put("totalConsumption", invoice.getValue().getTotalConsumption());
-				json.put("totalInvoice", invoice.getValue().getTotalInvoice());
-
-				return json;
-
-			}
-
-		}
-
-		return null;
-
-	}
-
+//	public static JSONObject getInvoice(String id) {
+//
+//		Consumer client = (Consumer) getUser(id);
+//		JSONObject json = new JSONObject();
+//
+//		for (Entry<String, Invoice> invoice : client.getMapInvoices().entrySet()) {
+//
+//			if (invoice.getKey().equals(LocalDateTime.now().getMonth().toString())) {
+//
+//				json.put("id", invoice.getValue().getId());
+//				json.put("name", client.getName());
+//				json.put("expirationDate", invoice.getValue().getExpirationDate());
+//				json.put("issuanceDate", invoice.getValue().getIssuanceDate());
+//				json.put("billingPeriod", invoice.getValue().getBillingPeriod());
+//				json.put("valueFare", invoice.getValue().getValueFare());
+//				json.put("totalConsumption", invoice.getValue().getTotalConsumption());
+//				json.put("totalInvoice", invoice.getValue().getTotalInvoice());
+//
+//				return json;
+//
+//			}
+//
+//		}
+//
+//		return null;
+//
+//	}
+		
 //	public static Map<String, Consumer> getAllClients() {
 //
 //		Map<String, Consumer> mapClients = new HashMap<String, Consumer>();

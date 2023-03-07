@@ -10,7 +10,7 @@ public class Invoice {
 	private String billingPeriod;
 	private double valueFare;
 	private double totalConsumption;
-	private long idClient;
+	private String idClient;
 	private double totalInvoice;
 
 	public String getId() {
@@ -61,11 +61,11 @@ public class Invoice {
 		this.totalConsumption = totalConsumption;
 	}
 
-	public long getIdClient() {
+	public String getIdClient() {
 		return idClient;
 	}
 
-	public void setIdClient(long idClient) {
+	public void setIdClient(String idClient) {
 		this.idClient = idClient;
 	}
 
