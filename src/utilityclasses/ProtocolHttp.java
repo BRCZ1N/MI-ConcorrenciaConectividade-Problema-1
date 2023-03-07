@@ -29,7 +29,7 @@ public class ProtocolHttp {
 		
 		while ((character = buffer.read()) != -1) {
 
-			if (character == '\n' || character == '\r') {
+			if (character == '\n') {
 
 				str.append((char)character);
 				httpData.add(str.toString());

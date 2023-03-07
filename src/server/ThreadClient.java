@@ -40,39 +40,29 @@ public class ThreadClient implements Runnable {
 
 				req = ProtocolHttp.readRequest(socket.getInputStream());
 
-				HttpMethods method = HttpMethods.valueOf(req.getMethod());
-				HttpPath path = HttpPath.valueOf(req.getPath());
-				String versionHttp = req.getVersionHttp();
+				if (req != null) {
 
-				if (method == HttpMethods.GET) {
-					
-					if (path == HttpPath.PATH_HISTORIC) {
+					HttpMethods method = HttpMethods.valueOf(req.getMethod());
+					HttpPath path = HttpPath.valueOf(req.getPath());
 
-						
-						
-						
+					if (method == HttpMethods.GET) {
+
+						if (path == HttpPath.PATH_HISTORIC) {
+
+						} else {
+
+						}
+
+					} else if (method == HttpMethods.PUT) {
+
+					} else if (method == HttpMethods.POST) {
+
 					} else {
 
-						
-						
 					}
 
-				} else if (method == HttpMethods.PUT) {
-					
-					
-					
-
-				} else if (method == HttpMethods.POST) {
-					
-					
-					
-
-				} else {
-					
-					
-					
-
 				}
+
 			}
 
 		} catch (IOException e) {
