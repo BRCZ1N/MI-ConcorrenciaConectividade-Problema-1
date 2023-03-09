@@ -1,9 +1,8 @@
 package utilityclasses;
 
-import java.io.BufferedReader;
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -16,67 +15,58 @@ public class ProtocolHttp {
 
 		Queue<String> httpData = new LinkedList<String>();
 		String reqLine;
-		BufferedReader buffer = new BufferedReader(new InputStreamReader(input));
 		String responseHeaders[] = null;
 		Map<String, String> mapHeaders = null;
-		String body = null;
-		int character;
 		StringBuilder str = new StringBuilder();
-
-		while ((character = buffer.read()) != -1) {
-		    System.out.print((char) character);
-		}
+		String[] linesReq;
 		
-		while ((character = buffer.read()) != -1) {
+		BufferedInputStream buffer = new BufferedInputStream(input);
+		
+		if (buffer.available() > 0) {
+			
+			while (buffer.available() > 0) {
 
-			if (character == '\n') {
+				str.append((char) buffer.read());
 
-				str.append((char)character);
-				httpData.add(str.toString());
-				System.out.print(str.toString());
-				str = new StringBuilder();
-
-			}else {
-				
-				str.append((char)character);
-				
 			}
 
-		}
-		
-		if(httpData.isEmpty()) {
+			linesReq = str.toString().split("\r\n");
+
+			for (String line : linesReq) {
+
+				httpData.add(line);
+
+			}
+
+			responseHeaders = httpData.poll().split("\s");
+			mapHeaders = new HashMap<String, String>();
+			while (!(reqLine = httpData.poll()).isEmpty()) {
+
+				String[] header = reqLine.split(":\s");
+				mapHeaders.put(header[0], header[1]);
+
+			}
+
+			StringBuilder bodyJson = new StringBuilder();
+			String bodyLine;
+
+			while ((bodyLine = httpData.poll()) != null) {
+
+				bodyJson.append(bodyLine);
+
+			}
 			
-			return null;
-			
-		}
-
-		responseHeaders = httpData.poll().split("\s");
-		mapHeaders = new HashMap<String, String>();
-		while (!(reqLine = httpData.poll()).isEmpty()) {
-
-			String[] header = reqLine.split(":\s");
-			mapHeaders.put(header[0], header[1]);
+			return new RequestHttp(HttpMethods.valueOf(responseHeaders[0]), responseHeaders[1], responseHeaders[2], mapHeaders,
+					new JSONObject(bodyJson.toString()));
 
 		}
 
-		StringBuilder bodyJson = new StringBuilder();
-		String bodyLine;
-
-		while ((bodyLine = httpData.poll()) != null) {
-
-			bodyJson.append(bodyLine);
-
-		}
-
-		return new RequestHttp(responseHeaders[0], responseHeaders[1], responseHeaders[2], mapHeaders,
-				new JSONObject(body));
-
+		return null;
 
 	}
 
-	public static void sendResponse() {
+	public static void sendResponse(ResponseHttp response) {
 
 	}
 
 }
-

@@ -11,17 +11,15 @@ public class Client {
 	private Socket clientSocket;
 	private static Scanner scan = new Scanner(System.in);
 
-	private void generateClientSocket(String ip, int port) throws UnknownHostException, IOException {
-
-		clientSocket = new Socket(ip, port);
-
-	}
-
-	private void execClient(String ip, int port) {
+	private void generateSocketClient(String ip, int port) {
 
 		try {
 
-			generateClientSocket(ip, port);
+			clientSocket = new Socket(ip, port);
+
+		} catch (UnknownHostException e) {
+
+			e.printStackTrace();
 
 		} catch (IOException e) {
 
@@ -34,8 +32,7 @@ public class Client {
 	public static void main(String[] args) throws UnknownHostException, IOException {
 
 		Client client = new Client();
-		client.execClient("localhost", 12345);
-		client.clientExecution();
+		client.generateSocketClient("localhost", 8000);
 
 	}
 
@@ -43,7 +40,7 @@ public class Client {
 
 		String clientMessage = "";
 		String clientAuthentication = "";
-		
+
 		while (!clientMessage.equals("quit")) {
 
 			do {
@@ -58,8 +55,8 @@ public class Client {
 				Messages.sendMessage(clientSocket, clientID + ":" + clientPassword);
 				clientAuthentication = (String) Messages.receiveMessage(clientSocket);
 
-			} while(clientAuthentication.equals("USER NOT FOUND"));
-			
+			} while (clientAuthentication.equals("USER NOT FOUND"));
+
 		}
 
 		clientSocket.close();

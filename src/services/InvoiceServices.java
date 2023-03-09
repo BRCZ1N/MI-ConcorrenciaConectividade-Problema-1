@@ -1,24 +1,27 @@
 package services;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Map;
 import org.json.JSONObject;
 import resources.Invoice;
+import utilityclasses.Fares;
 
 public class InvoiceServices {
 
 	private static Map<String, ArrayList<Invoice>> mapInvoices;
 	private static long idInvoice = 0;
 
-	public static boolean addInvoice(String id) {
+	public static boolean addInvoice(String idClient) {
 
 		ArrayList<Invoice> listInvoices;
 
-		if (getInvoices(id) != null) {
+		if (getInvoices(idClient) != null) {
 
-			listInvoices = getInvoices(id);
-			listInvoices.add(new Invoice());
-			mapInvoices.replace(id, listInvoices);
+			listInvoices = getInvoices(idClient); 
+			//listInvoices.add(new Invoice(idInvoice,idClient,idMeasurer,Fares.TARIFA_1,consumption);
+			mapInvoices.replace(idClient, listInvoices);
 			idInvoice++;
 
 			return true;
@@ -70,8 +73,8 @@ public class InvoiceServices {
 
 		if (getInvoices(id) != null) {
 
-			json.put("id", id);
-			json.put("Invoices", mapInvoices.get(id));
+			json.put("idClient", id);
+			json.put("invoices", mapInvoices.get(id));
 
 			return json;
 
