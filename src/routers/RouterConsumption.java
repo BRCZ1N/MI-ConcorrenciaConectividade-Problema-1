@@ -1,17 +1,18 @@
 package routers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.regex.Pattern;
-
-import routers.RouterInvoice.Handler;
 import utilityclasses.HttpMethods;
 import utilityclasses.RequestHttp;
 
 public class RouterConsumption implements RouterInterface {
 
 	private Map<Pattern, Handler> routers = new HashMap<>();
-	private String datePattern = "(\\d{2}-\\d{2}-\\d{4})";
+//	private String datePattern = "(\\d{2}-\\d{2}-\\d{4})";
+	private Map<HttpMethods, ArrayList<Pattern>> methodPattern = new HashMap<>();
 	private String idPattern = "(\\d+)";
 
 	public RouterConsumption() {
@@ -19,36 +20,81 @@ public class RouterConsumption implements RouterInterface {
 		routers.put(Pattern.compile("/consumption/status/" + idPattern), this::getCurrentStateConsumption);
 		routers.put(Pattern.compile("/consumption/historic/" + idPattern), this::getHistoricConsumption);
 
+		ArrayList<Pattern> getPatterns = new ArrayList<>();
+
+		getPatterns.add(Pattern.compile("/consumption/status/" + idPattern));
+		getPatterns.add(Pattern.compile("/consumption/historic/" + idPattern));
+
+		methodPattern.put(HttpMethods.GET, getPatterns);
+
+	}
+
+	public boolean matchPattern(String path) {
+
+		for (Entry<Pattern, Handler> pattern : routers.entrySet()) {
+
+			if (pattern.getKey().matcher(path).matches()) {
+
+				return true;
+
+			}
+
+		}
+		return false;
+
+	}
+
+	public boolean verifyMethodInPath(HttpMethods httpMethod, String path) {
+
+		for (Pattern pattern : methodPattern.get(httpMethod)) {
+
+			if (pattern.matcher(path).matches()) {
+
+				return true;
+
+			}
+
+		}
+		
+		return false;
+
 	}
 
 	@Override
 	public void router(RequestHttp http) {
 
 		if (http.getMethod() == HttpMethods.GET) {
-			
-			Matcher match = Pattern.matches(idPattern, datePattern)
-			
-			if() {
+
+			if (matchPattern(http.getPath())) {
 				
-				
-			}else if(){
-				
-				
-			}else {
-				
-				
+				if(verifyMethodInPath(HttpMethods.GET)) {
+					
+					
+					
+				}
+
+			} else {
+
+				// Caminho invalido
+
 			}
 
 		} else if (http.getMethod() == HttpMethods.POST) {
-
-		} else if (http.getMethod() == HttpMethods.PUT) {
-
-		} else if(http.getMethod() == HttpMethods.DELETE) {
-
-		}else {
 			
 			//Não implementado
+
+		} else if (http.getMethod() == HttpMethods.PUT) {
 			
+			//Não implementado
+
+		} else if (http.getMethod() == HttpMethods.DELETE) {
+
+			// Não implementado
+
+		} else {
+
+			// Não implementado
+
 		}
 
 	}

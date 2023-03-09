@@ -17,8 +17,7 @@ public class RouterInvoice implements RouterInterface {
 
 		routers.put(Pattern.compile("/invoice/" + idPattern), this::getInvoice);
 		routers.put(Pattern.compile("/invoice/all"), this::getAllInvoices);
-		routers.put(Pattern.compile("/invoice/" + idPattern + "/data?inicio=" + datePattern + "&fim=" + datePattern),
-				this::createInvoice);
+		routers.put(Pattern.compile("/invoice/" + idPattern + "/data?inicio=" + datePattern + "&fim=" + datePattern),this::createInvoice);
 
 	}
 
@@ -26,7 +25,6 @@ public class RouterInvoice implements RouterInterface {
 	public void router(RequestHttp http) {
 
 		if (http.getMethod() == HttpMethods.GET) {
-			
 			
 			if() {
 				
@@ -36,6 +34,7 @@ public class RouterInvoice implements RouterInterface {
 				
 			}else {
 				
+				//ERRO PATH NÃO EXISTE
 				
 			}
 
