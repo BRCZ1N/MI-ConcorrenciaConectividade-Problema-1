@@ -1,6 +1,7 @@
 package server;
 
 import java.io.IOException;
+import java.net.DatagramSocket;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -8,6 +9,7 @@ public class Server {
 
 	private ServerSocket socketServer;
 	private Socket clientSocket;
+	private DatagramSocket measurerSocket;
 
 	private void generateServerSocket(int portServer) throws IOException {
 

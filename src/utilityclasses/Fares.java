@@ -2,7 +2,7 @@ package utilityclasses;
 
 public enum Fares {
 
-	TARIFA_1(0.5), TARIFA_2(1.0);
+	FARE_1(0.5), FARE_2(1.0);
 
 	private double fare;
 

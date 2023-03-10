@@ -1,4 +1,5 @@
 package services;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -6,12 +7,12 @@ import resources.User;
 
 public class UserServices {
 
-	private static Map<String, User> usersMap;
+	private static Map<String, User> mapUsers;
 	private static long id = 0;
 
 	public UserServices() {
 
-		usersMap = new HashMap<String, User>();
+		mapUsers = new HashMap<String, User>();
 
 	}
 
@@ -20,7 +21,7 @@ public class UserServices {
 		if (getUser(user.getName()) == null) {
 
 			user.setId(Long.toString(id));
-			usersMap.put(Long.toString(id), user);
+			mapUsers.put(Long.toString(id), user);
 			id += 1;
 			return true;
 
@@ -34,7 +35,7 @@ public class UserServices {
 
 		if (getUser(id) != null) {
 
-			usersMap.remove(id);
+			mapUsers.remove(id);
 			return true;
 
 		}
@@ -45,7 +46,7 @@ public class UserServices {
 
 	private static User getUser(String id) {
 
-		for (Entry<String, User> user : usersMap.entrySet()) {
+		for (Entry<String, User> user : mapUsers.entrySet()) {
 
 			if (user.getKey().equals(id)) {
 
@@ -56,6 +57,22 @@ public class UserServices {
 		}
 
 		return null;
+
+	}
+
+	public static byte[] authenticateClient(String idClient, String password) {
+
+		for (Map.Entry<String, User> user : mapUsers.entrySet()) {
+
+			if (user.getValue().getId().equals(idClient) && user.getValue().getPassword().equals(password)) {
+
+				return "authenticate".getBytes();
+
+			}
+
+		}
+
+		return "denied authenticate".getBytes();
 
 	}
 

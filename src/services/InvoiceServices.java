@@ -1,9 +1,10 @@
 package services;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Map.Entry;
+
 import org.json.JSONObject;
 import resources.Invoice;
 import utilityclasses.Fares;
@@ -13,30 +14,51 @@ public class InvoiceServices {
 	private static Map<String, ArrayList<Invoice>> mapInvoices;
 	private static long idInvoice = 0;
 
-	public static boolean addInvoice(String idClient) {
+	public static void addInvoice(String idClient, LocalDate dateInitial, LocalDate dateFinal) {
 
-		ArrayList<Invoice> listInvoices;
+		if (containsClient(idClient)) {
 
-		if (getInvoices(idClient) != null) {
-
-			listInvoices = getInvoices(idClient); 
-			//listInvoices.add(new Invoice(idInvoice,idClient,idMeasurer,Fares.TARIFA_1,consumption);
-			mapInvoices.replace(idClient, listInvoices);
+			Invoice invoice = new Invoice(Double.toString(idInvoice), idClient, Fares.FARE_1.getFare(),ConsumptionServices.consumptionInPeriod(idClient, dateInitial, dateFinal));
+			refreshInvoiceMap(idClient, invoice);
 			idInvoice++;
-
-			return true;
 
 		}
 
-		return false;
+	}
+
+	private static void refreshInvoiceMap(String idClient, Invoice invoice) {
+
+		ArrayList<Invoice> copyListInvoice = mapInvoices.get(idClient);
+		mapInvoices.replace(idClient, copyListInvoice);
 
 	}
 
-	private static ArrayList<Invoice> getInvoices(String idClient) {
+	public static JSONObject getInvoiceJSON(String idInvoice) {
 
-		if (mapInvoices.get(idClient) != null) {
+		Invoice invoice;
 
-			return mapInvoices.get(idClient);
+		if ((invoice = getInvoice(idInvoice)) != null) {
+
+			JSONObject json = new JSONObject();
+			json.put("idInvoice", idInvoice);
+			json.put("invoice", invoice);
+			return json;
+
+		}
+
+		return null;
+	}
+
+	public static JSONObject getInvoicesJSON(String idClient) {
+
+		JSONObject json = new JSONObject();
+
+		if (containsClient(idClient)) {
+
+			json.put("idClient", idClient);
+			json.put("invoices", mapInvoices.get(idClient));
+
+			return json;
 
 		}
 
@@ -44,19 +66,15 @@ public class InvoiceServices {
 
 	}
 
-	public static JSONObject getClientInvoice(String idClient, String idInvoice) {
+	public static Invoice getInvoice(String idInvoice) {
 
-		if (getInvoices(idClient) != null) {
+		for (Entry<String, ArrayList<Invoice>> objectMap : mapInvoices.entrySet()) {
 
-			for (Invoice invoice : getInvoices(idClient)) {
+			for (Invoice invoice : objectMap.getValue()) {
 
 				if (invoice.getId().equals(idInvoice)) {
 
-					JSONObject json = new JSONObject();
-					json.put("idClient", idClient);
-					json.put("idInvoice", idInvoice);
-					json.put("invoice", invoice);
-					return json;
+					return invoice;
 
 				}
 
@@ -65,22 +83,21 @@ public class InvoiceServices {
 		}
 
 		return null;
+
 	}
 
-	public static JSONObject getClientInvoices(String id) {
+	public static boolean containsClient(String idClient) {
 
-		JSONObject json = new JSONObject();
+		for (String id : mapInvoices.keySet()) {
 
-		if (getInvoices(id) != null) {
+			if (id.equals(idClient)) {
 
-			json.put("idClient", id);
-			json.put("invoices", mapInvoices.get(id));
-
-			return json;
+				return true;
+			}
 
 		}
 
-		return null;
+		return false;
 
 	}
 

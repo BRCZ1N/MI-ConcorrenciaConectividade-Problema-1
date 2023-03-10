@@ -19,14 +19,14 @@ public class RouterInvoice implements RouterInterface {
 
 		routers.put(Pattern.compile("/invoice/" + idPattern), this::getInvoice);
 		routers.put(Pattern.compile("/invoice/all"), this::getAllInvoices);
-		routers.put(Pattern.compile("/invoice/" + idPattern + "/data?inicio=" + datePattern + "&fim=" + datePattern),
+		routers.put(Pattern.compile("/invoice/newInvoice/" + idPattern + "/data?inicio=" + datePattern + "&fim=" + datePattern),
 				this::createInvoice);
 
 		ArrayList<Pattern> patterns = new ArrayList<>();
 
 		patterns.add(Pattern.compile("/invoice/" + idPattern));
 		patterns.add(Pattern.compile("/invoice/all"));
-		patterns.add(Pattern.compile("/invoice/" + idPattern + "/data?inicio=" + datePattern + "&fim=" + datePattern));
+		patterns.add(Pattern.compile("/invoice/newInvoice/" + idPattern + "/data?inicio=" + datePattern + "&fim=" + datePattern));
 		httpPatterns.put(HttpMethods.GET, patterns);
 		patterns.clear();
 
