@@ -40,7 +40,6 @@ public class ThreadClient implements Runnable {
 				if (req != null) {
 
 					pathRouter.execRoute(req);
-
 					req = null;
 
 				}

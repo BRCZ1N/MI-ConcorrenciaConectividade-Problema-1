@@ -10,9 +10,8 @@ import utilityclasses.RequestHttp;
 
 public class RouterConsumption implements RouterInterface {
 
-	private Map<Pattern, Handler> routers = new HashMap<>();
-//	private String datePattern = "(\\d{2}-\\d{2}-\\d{4})";
-	private Map<HttpMethods, ArrayList<Pattern>> methodPattern = new HashMap<>();
+	private Map<Pattern, MethodRouter> routers = new HashMap<>();
+	private Map<HttpMethods, ArrayList<Pattern>> httpPatterns = new HashMap<>();
 	private String idPattern = "(\\d+)";
 
 	public RouterConsumption() {
@@ -20,18 +19,17 @@ public class RouterConsumption implements RouterInterface {
 		routers.put(Pattern.compile("/consumption/status/" + idPattern), this::getCurrentStateConsumption);
 		routers.put(Pattern.compile("/consumption/historic/" + idPattern), this::getHistoricConsumption);
 
-		ArrayList<Pattern> getPatterns = new ArrayList<>();
+		ArrayList<Pattern> patterns = new ArrayList<>();
 
-		getPatterns.add(Pattern.compile("/consumption/status/" + idPattern));
-		getPatterns.add(Pattern.compile("/consumption/historic/" + idPattern));
-
-		methodPattern.put(HttpMethods.GET, getPatterns);
+		patterns.add(Pattern.compile("/consumption/status/" + idPattern));
+		patterns.add(Pattern.compile("/consumption/historic/" + idPattern));
+		httpPatterns.put(HttpMethods.GET, patterns);
 
 	}
 
-	public boolean matchPattern(String path) {
+	public boolean verifyPath(String path) {
 
-		for (Entry<Pattern, Handler> pattern : routers.entrySet()) {
+		for (Entry<Pattern, MethodRouter> pattern : routers.entrySet()) {
 
 			if (pattern.getKey().matcher(path).matches()) {
 
@@ -40,57 +38,119 @@ public class RouterConsumption implements RouterInterface {
 			}
 
 		}
+
 		return false;
 
 	}
 
-	public boolean verifyMethodInPath(HttpMethods httpMethod, String path) {
+	public Pattern verifyPathInHttpMethod(HttpMethods httpMethod, String path) {
 
-		for (Pattern pattern : methodPattern.get(httpMethod)) {
+		for (Pattern pattern : httpPatterns.get(httpMethod)) {
 
 			if (pattern.matcher(path).matches()) {
 
-				return true;
+				return pattern;
 
 			}
 
 		}
-		
-		return false;
+
+		return null;
+
+	}
+
+	public void execMethodRouter(RequestHttp http, Pattern pattern) {
+
+		MethodRouter method = routers.get(pattern);
+		method.method(http);
 
 	}
 
 	@Override
 	public void router(RequestHttp http) {
 
+		Pattern pattern;
+
 		if (http.getMethod() == HttpMethods.GET) {
 
-			if (matchPattern(http.getPath())) {
-				
-				if(verifyMethodInPath(HttpMethods.GET)) {
-					
-					
-					
+			if (verifyPath(http.getPath())) {
+
+				if ((pattern = verifyPathInHttpMethod(HttpMethods.GET, http.getPath())) != null) {
+
+					execMethodRouter(http, pattern);
+
+				} else {
+
+					// Erro
+
 				}
 
 			} else {
 
-				// Caminho invalido
+				// Erro
 
 			}
 
 		} else if (http.getMethod() == HttpMethods.POST) {
-			
-			//Não implementado
+
+			if (verifyPath(http.getPath())) {
+
+				if ((pattern = verifyPathInHttpMethod(HttpMethods.POST, http.getPath())) != null) {
+
+					execMethodRouter(http, pattern);
+
+				} else {
+
+					// Erro
+
+				}
+
+			} else {
+
+				// Erro
+
+			}
 
 		} else if (http.getMethod() == HttpMethods.PUT) {
-			
-			//Não implementado
+
+			if (verifyPath(http.getPath())) {
+
+				if ((pattern = verifyPathInHttpMethod(HttpMethods.PUT, http.getPath())) != null) {
+
+					execMethodRouter(http, pattern);
+
+				} else {
+
+					// Erro
+
+				}
+
+			} else {
+
+				// Erro
+
+			}
 
 		} else if (http.getMethod() == HttpMethods.DELETE) {
 
-			// Não implementado
+			if (verifyPath(http.getPath())) {
 
+				if ((pattern = verifyPathInHttpMethod(HttpMethods.DELETE, http.getPath())) != null) {
+
+					execMethodRouter(http, pattern);
+
+				} else {
+
+					// Erro
+
+				}
+
+			} else {
+
+				// Erro
+
+			}
+			
 		} else {
 
 			// Não implementado
@@ -107,9 +167,9 @@ public class RouterConsumption implements RouterInterface {
 
 	}
 
-	public interface Handler {
+	public interface MethodRouter {
 
-		public void handler(RequestHttp http);
+		public void method(RequestHttp http);
 
 	}
 
