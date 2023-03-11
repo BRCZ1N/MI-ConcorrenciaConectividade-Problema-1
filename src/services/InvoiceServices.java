@@ -2,6 +2,7 @@ package services;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -13,12 +14,19 @@ public class InvoiceServices {
 
 	private static Map<String, ArrayList<Invoice>> mapInvoices;
 	private static long idInvoice = 0;
+	
+	public InvoiceServices() {
+
+		mapInvoices = new HashMap<>();
+
+	}
 
 	public static void addInvoice(String idClient, LocalDate dateInitial, LocalDate dateFinal) {
 
 		if (containsClient(idClient)) {
 
-			Invoice invoice = new Invoice(Double.toString(idInvoice), idClient, Fares.FARE_1.getFare(),ConsumptionServices.valueConsumptionInPeriod(idClient, dateInitial, dateFinal));
+			Invoice invoice = new Invoice(Double.toString(idInvoice), idClient, Fares.FARE_1.getFare(),
+					ConsumptionServices.valueConsumptionInPeriod(idClient, dateInitial, dateFinal));
 			refreshInvoiceMap(idClient, invoice);
 			idInvoice++;
 
@@ -98,6 +106,12 @@ public class InvoiceServices {
 		}
 
 		return false;
+
+	}
+
+	public static void addSlotClientInvoices(String idClient) {
+
+		mapInvoices.put(idClient, new ArrayList<Invoice>());
 
 	}
 

@@ -37,6 +37,7 @@ public class Server {
 
 	private void execServer(int portServerSocket, int portDatagramSocket) throws IOException {
 
+		UserServices.generateUsersTest();
 		boolean connection = true;
 
 		generateServer(portServerSocket, portDatagramSocket);

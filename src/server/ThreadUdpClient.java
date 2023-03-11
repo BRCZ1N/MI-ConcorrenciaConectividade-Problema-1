@@ -41,20 +41,20 @@ public class ThreadUdpClient implements Runnable {
 		while (true) {
 
 			String message = new String(packet.getData(), StandardCharsets.UTF_8);
-			Pattern pattern = Pattern
-					.compile("(\\d+)-(\\d+.\\d+)-(\\d{2})/(\\d{2})/(\\d{4}) (\\d{2}):(\\d{2}):(\\d{2})");
-			Pattern patternAuthenticator = Pattern.compile("\\w+:\\w+");
+			Pattern pattern = Pattern.compile("(\\d+)-(\\d+.\\d+)-(\\d{2})/(\\d{2})/(\\d{4}) (\\d{2}):(\\d{2}):(\\d{2})");
+			Pattern patternAuthenticator = Pattern.compile("(\\w+):(\\w+)");
 			Matcher matcher = pattern.matcher(message);
 			Matcher matcherAuthenticator = patternAuthenticator.matcher(message);
 			
-			if (matcher.matches()) {
-
+			
+			if (matcher.find()) {
+				
 				String[] messageConsumption = message.split("-");
 				Consumption consumption = new Consumption(Double.parseDouble(messageConsumption[1]),
 						messageConsumption[2]);
 				ConsumptionServices.addConsumption(messageConsumption[0], consumption);
 
-			} else if (matcherAuthenticator.matches()) {
+			} else if (matcherAuthenticator.find()) {
 
 				String[] messageCredentials = message.split(":");
 				dataPacket = UserServices.authenticateClient(messageCredentials[0], messageCredentials[1]);
