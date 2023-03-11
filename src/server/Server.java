@@ -36,8 +36,12 @@ public class Server {
 
 			while (connection) {
 
-				ThreadUdpClient threadUdpClient = new ThreadUdpClient(datagramSocket);
-				new Thread(threadUdpClient).start();
+				if (datagramSocket.getPort() != -1 || datagramSocket.getInetAddress() != null) {
+
+					ThreadUdpClient threadUdpClient = new ThreadUdpClient(datagramSocket);
+					new Thread(threadUdpClient).start();
+
+				}
 
 			}
 

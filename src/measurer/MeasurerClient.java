@@ -60,6 +60,7 @@ public class MeasurerClient {
 			userCredentials = String.format("%s:%s", idClient, passwordClient);
 			bytePackage = userCredentials.getBytes();
 			measurerPacket = new DatagramPacket(bytePackage, bytePackage.length, InetAddress.getByName("127.0.0.1"),8100);
+			
 			try {
 				measurerSocket.send(measurerPacket);
 				measurerSocket.receive(measurerPacket);
@@ -68,7 +69,7 @@ public class MeasurerClient {
 				e.printStackTrace();
 			}
 		} while ((authenticate = new String(measurerPacket.getData(), 0,measurerPacket.getLength())) != "authenticate");
-
+		
 		execMeasurer();
 
 	}
@@ -98,7 +99,19 @@ public class MeasurerClient {
 				DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 				String dateTime = String.format(LocalDate.now().toString(), dateTimeFormatter);
 				String str = String.format("%s-%s-%s", idClient, Double.toString(amount), dateTime);
-				measurerPacket.setData(str.getBytes());
+				bytePackage = str.getBytes();
+				try {
+					measurerPacket = new DatagramPacket(bytePackage, bytePackage.length, InetAddress.getByName("127.0.0.1"), 8100);
+				} catch (UnknownHostException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					measurerSocket.send(measurerPacket);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			}
 
