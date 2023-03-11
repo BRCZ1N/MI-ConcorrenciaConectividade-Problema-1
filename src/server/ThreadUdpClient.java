@@ -43,8 +43,10 @@ public class ThreadUdpClient implements Runnable {
 			String message = new String(packet.getData(), StandardCharsets.UTF_8);
 			Pattern pattern = Pattern
 					.compile("(\\d+)-(\\d+.\\d+)-(\\d{2})/(\\d{2})/(\\d{4}) (\\d{2}):(\\d{2}):(\\d{2})");
+			Pattern patternAuthenticator = Pattern.compile("\\w+:\\w+");
 			Matcher matcher = pattern.matcher(message);
-
+			Matcher matcherAuthenticator = patternAuthenticator.matcher(message);
+			
 			if (matcher.matches()) {
 
 				String[] messageConsumption = message.split("-");
@@ -52,16 +54,27 @@ public class ThreadUdpClient implements Runnable {
 						messageConsumption[2]);
 				ConsumptionServices.addConsumption(messageConsumption[0], consumption);
 
-			} else {
+			} else if (matcherAuthenticator.matches()) {
 
 				String[] messageCredentials = message.split(":");
-				System.out.println(message);
 				dataPacket = UserServices.authenticateClient(messageCredentials[0], messageCredentials[1]);
 				packet = new DatagramPacket(dataPacket, dataPacket.length, packet.getAddress(), packet.getPort());
 				try {
 					socket.send(packet);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			} else {
+
+				try {
+					
+					dataPacket = "denied authenticate".getBytes();
+					packet = new DatagramPacket(dataPacket, dataPacket.length,packet.getAddress(),packet.getPort());
+					socket.send(packet);
+					
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
 
