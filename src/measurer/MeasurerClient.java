@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+
 public class MeasurerClient {
 
 	private DatagramSocket measurerSocket;
@@ -60,16 +62,18 @@ public class MeasurerClient {
 			userCredentials = String.format("%s:%s", idClient, passwordClient);
 			bytePackage = userCredentials.getBytes();
 			measurerPacket = new DatagramPacket(bytePackage, bytePackage.length, InetAddress.getByName("127.0.0.1"),8100);
-			
+
 			try {
 				measurerSocket.send(measurerPacket);
+				measurerPacket = new DatagramPacket(bytePackage, bytePackage.length);
 				measurerSocket.receive(measurerPacket);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
 		} while ((authenticate = new String(measurerPacket.getData(), 0,measurerPacket.getLength())) != "authenticate");
-		
+
 		execMeasurer();
 
 	}
@@ -100,11 +104,12 @@ public class MeasurerClient {
 				String dateTime = String.format(LocalDate.now().toString(), dateTimeFormatter);
 				String str = String.format("%s-%s-%s", idClient, Double.toString(amount), dateTime);
 				bytePackage = str.getBytes();
+
 				try {
-					measurerPacket = new DatagramPacket(bytePackage, bytePackage.length, InetAddress.getByName("127.0.0.1"), 8100);
-				} catch (UnknownHostException e1) {
+					measurerPacket = new DatagramPacket(bytePackage, bytePackage.length,InetAddress.getByName("127.0.0.1"), 8100);
+				} catch (UnknownHostException e) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					e.printStackTrace();
 				}
 				try {
 					measurerSocket.send(measurerPacket);

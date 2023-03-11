@@ -1,15 +1,25 @@
 package server;
 
 import java.io.IOException;
+import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.ServerSocket;
 import java.net.Socket;
+
+import services.ConsumptionServices;
+import services.InvoiceServices;
+import services.UserServices;
 
 public class Server {
 
 	private ServerSocket socketServer;
 	private Socket clientSocket;
 	private DatagramSocket datagramSocket;
+	private DatagramPacket datagramPacket;
+	private byte[] bufferPacket = new byte[1024];
+	private UserServices userService = new UserServices();
+	private ConsumptionServices consumptionService = new ConsumptionServices();
+	private InvoiceServices invoiceService = new InvoiceServices();
 
 	private void generateServer(int portServerSocket, int portDatagramSocket) throws IOException {
 
@@ -36,9 +46,17 @@ public class Server {
 
 			while (connection) {
 
-				if (datagramSocket.getPort() != -1 || datagramSocket.getInetAddress() != null) {
+				try {
+					datagramPacket = new DatagramPacket(bufferPacket, bufferPacket.length);
+					datagramSocket.receive(datagramPacket);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
-					ThreadUdpClient threadUdpClient = new ThreadUdpClient(datagramSocket);
+				if (datagramPacket.getPort() != -1 || datagramPacket.getAddress() != null) {
+
+					ThreadUdpClient threadUdpClient = new ThreadUdpClient(datagramSocket, datagramPacket, bufferPacket);
 					new Thread(threadUdpClient).start();
 
 				}

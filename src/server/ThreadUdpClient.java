@@ -15,6 +15,8 @@ public class ThreadUdpClient implements Runnable {
 
 	private DatagramSocket socket;
 	private String connection;
+	private DatagramPacket packet;
+	private byte[] dataPacket;
 
 	public String getConnection() {
 		return connection;
@@ -24,9 +26,11 @@ public class ThreadUdpClient implements Runnable {
 		this.connection = connection;
 	}
 
-	public ThreadUdpClient(DatagramSocket socket) {
+	public ThreadUdpClient(DatagramSocket socket, DatagramPacket packet, byte[] dataPacket) {
 
 		this.socket = socket;
+		this.packet = packet;
+		this.dataPacket = dataPacket;
 		this.connection = (socket.getInetAddress() + ":" + socket.getPort());
 
 	}
@@ -36,28 +40,30 @@ public class ThreadUdpClient implements Runnable {
 
 		while (true) {
 
-			byte[] dataPacket = new byte[1024];
-			DatagramPacket packet = new DatagramPacket(dataPacket, dataPacket.length, socket.getInetAddress(),socket.getPort());
-			try {
-				socket.receive(packet);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			String message = new String(packet.getData(), StandardCharsets.UTF_8);
-			Pattern pattern = Pattern.compile("(\\d+)-(\\d+.\\d+)-(\\d{2})/(\\d{2})/(\\d{4}) (\\d{2}):(\\d{2}):(\\d{2})");
+			Pattern pattern = Pattern
+					.compile("(\\d+)-(\\d+.\\d+)-(\\d{2})/(\\d{2})/(\\d{4}) (\\d{2}):(\\d{2}):(\\d{2})");
 			Matcher matcher = pattern.matcher(message);
 
 			if (matcher.matches()) {
-				
+
 				String[] messageConsumption = message.split("-");
-				Consumption consumption = new Consumption(Double.parseDouble(messageConsumption[1]),messageConsumption[2]);
+				Consumption consumption = new Consumption(Double.parseDouble(messageConsumption[1]),
+						messageConsumption[2]);
 				ConsumptionServices.addConsumption(messageConsumption[0], consumption);
-			
+
 			} else {
 
 				String[] messageCredentials = message.split(":");
-				UserServices.authenticateClient(messageCredentials[0], messageCredentials[1]);
+				System.out.println(message);
+				dataPacket = UserServices.authenticateClient(messageCredentials[0], messageCredentials[1]);
+				packet = new DatagramPacket(dataPacket, dataPacket.length, packet.getAddress(), packet.getPort());
+				try {
+					socket.send(packet);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			}
 
