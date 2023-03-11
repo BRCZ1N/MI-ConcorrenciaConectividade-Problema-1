@@ -9,27 +9,39 @@ public class Server {
 
 	private ServerSocket socketServer;
 	private Socket clientSocket;
-	private DatagramSocket measurerSocket;
+	private DatagramSocket datagramSocket;
 
-	private void generateServerSocket(int portServer) throws IOException {
+	private void generateServer(int portServerSocket, int portDatagramSocket) throws IOException {
 
-		socketServer = new ServerSocket(portServer);
+		socketServer = new ServerSocket(portServerSocket);
+		datagramSocket = new DatagramSocket(portDatagramSocket);
 
 	}
 
 	private void generateAndStartThreadClient(Socket socketClient) {
 
-		ThreadClient threadClient = new ThreadClient(socketClient);
-		new Thread(threadClient).start();
+		ThreadTcpClient threadTcpClient = new ThreadTcpClient(socketClient);
+		new Thread(threadTcpClient).start();
 
 	}
 
-	private void execServer(int portServer) throws IOException {
+	private void execServer(int portServerSocket, int portDatagramSocket) throws IOException {
 
 		boolean connection = true;
 
-		generateServerSocket(portServer);
+		generateServer(portServerSocket, portDatagramSocket);
 		System.out.println("Server executado no IP:" + socketServer.getLocalPort());
+
+		new Thread(() -> {
+
+			while (connection) {
+
+				ThreadUdpClient threadUdpClient = new ThreadUdpClient(datagramSocket);
+				new Thread(threadUdpClient).start();
+
+			}
+
+		}).start();
 
 		while (connection) {
 
@@ -47,7 +59,7 @@ public class Server {
 	public static void main(String[] args) throws IOException {
 
 		Server serverMain = new Server();
-		serverMain.execServer(8000);
+		serverMain.execServer(8000, 8100);
 
 	}
 

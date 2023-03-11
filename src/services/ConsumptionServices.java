@@ -10,21 +10,18 @@ import resources.Consumption;
 public class ConsumptionServices {
 
 	private static Map<String, ArrayList<Consumption>> mapConsumptions;
-	private static long idConsumption = 0;
 
-	public static void addInvoice(String idClient, LocalDate dateInitial, LocalDate dateFinal) {
+	public static void addConsumption(String idClient, Consumption consumption) {
 
 		if (containsClient(idClient)) {
 
-			Consumption consumption = new Consumption(idConsumption);
 			refreshInvoiceMap(idClient, consumption);
-			idConsumption++;
 
 		}
 
 	}
 
-	public static double consumptionInPeriod(String idClient, LocalDate dateInitial, LocalDate dateFinal) {
+	public static double valueConsumptionInPeriod(String idClient, LocalDate dateInitial, LocalDate dateFinal) {
 
 		double consumptionTotal = 0;
 

@@ -18,7 +18,7 @@ public class InvoiceServices {
 
 		if (containsClient(idClient)) {
 
-			Invoice invoice = new Invoice(Double.toString(idInvoice), idClient, Fares.FARE_1.getFare(),ConsumptionServices.consumptionInPeriod(idClient, dateInitial, dateFinal));
+			Invoice invoice = new Invoice(Double.toString(idInvoice), idClient, Fares.FARE_1.getFare(),ConsumptionServices.valueConsumptionInPeriod(idClient, dateInitial, dateFinal));
 			refreshInvoiceMap(idClient, invoice);
 			idInvoice++;
 

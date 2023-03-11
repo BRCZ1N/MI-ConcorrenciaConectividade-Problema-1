@@ -6,7 +6,7 @@ import routers.PathRouter;
 import utilityclasses.ProtocolHttp;
 import utilityclasses.RequestHttp;
 
-public class ThreadClient implements Runnable {
+public class ThreadTcpClient implements Runnable {
 
 	private Socket socket;
 	private String connection;
@@ -19,7 +19,7 @@ public class ThreadClient implements Runnable {
 		this.connection = connection;
 	}
 
-	public ThreadClient(Socket socket) {
+	public ThreadTcpClient(Socket socket) {
 
 		this.socket = socket;
 		this.connection = (socket.getInetAddress() + ":" + socket.getPort());

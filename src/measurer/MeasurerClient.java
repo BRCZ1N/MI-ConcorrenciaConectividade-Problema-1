@@ -4,23 +4,21 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
-
-import resources.Consumption;
-import utilityclasses.ProtocolHttp;
-
 public class MeasurerClient {
 
 	private DatagramSocket measurerSocket;
 	private DatagramPacket measurerPacket;
-	private Consumption consumption;
 	private double amount = 0;
 	private double consumptionChangeVariable = 1;
 	private Scanner scanner = new Scanner(System.in);
 	private byte[] bytePackage = new byte[1024];
+	private String idClient;
+	private String passwordClient;
 
 	public static void main(String[] args) throws UnknownHostException {
 
@@ -46,22 +44,22 @@ public class MeasurerClient {
 			System.out.println("----------------------Medidor----------------------------");
 			System.out.println("---------------------------------------------------------");
 
-			System.out.println("Digite a porta do servidor:");
-			String portServer = scanner.nextLine();
-
-			System.out.println("Digite o IP do servidor:");
-			String ipServer = scanner.nextLine();
-			InetAddress ip = InetAddress.getByName(ipServer);
+//			System.out.println("Digite a porta do servidor:");
+//			String portServer = scanner.nextLine();
+//
+//			System.out.println("Digite o IP do servidor:");
+//			String ipServer = scanner.nextLine();
+//			InetAddress ip = InetAddress.getByName(ipServer);
 
 			System.out.println("Digite o ID do cliente:");
-			String idClient = scanner.nextLine();
+			idClient = scanner.nextLine();
 
 			System.out.println("Digite a senha do cliente:");
-			String passwordClient = scanner.nextLine();
-			
+			passwordClient = scanner.nextLine();
+
 			userCredentials = String.format("%s:%s", idClient, passwordClient);
 			bytePackage = userCredentials.getBytes();
-			measurerPacket = new DatagramPacket(bytePackage, bytePackage.length, ip, Integer.parseInt(portServer));
+			measurerPacket = new DatagramPacket(bytePackage, bytePackage.length, InetAddress.getByName("127.0.0.1"),8100);
 			try {
 				measurerSocket.send(measurerPacket);
 				measurerSocket.receive(measurerPacket);
@@ -69,7 +67,7 @@ public class MeasurerClient {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} while ((authenticate = new String(measurerPacket.getData(),0,measurerPacket.getLength())) != "authenticate");
+		} while ((authenticate = new String(measurerPacket.getData(), 0,measurerPacket.getLength())) != "authenticate");
 
 		execMeasurer();
 
@@ -82,12 +80,25 @@ public class MeasurerClient {
 			while (true) {
 
 				amount += consumptionChangeVariable;
+
+			}
+
+		}).start();
+
+		new Thread(() -> {
+
+			while (true) {
+
 				try {
-					Thread.sleep(5000);
+					Thread.sleep(60000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+				String dateTime = String.format(LocalDate.now().toString(), dateTimeFormatter);
+				String str = String.format("%s-%s-%s", idClient, Double.toString(amount), dateTime);
+				measurerPacket.setData(str.getBytes());
 
 			}
 
@@ -99,7 +110,7 @@ public class MeasurerClient {
 			double amountTest = scanner.nextDouble();
 			if (amount <= 0) {
 
-				System.out.println("Ritmo de consumo inválido");
+				System.out.println("Ritmo de consumo invï¿½lido");
 
 			} else {
 

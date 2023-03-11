@@ -1,21 +1,15 @@
 package resources;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 public class Consumption {
 
 	private String dateTime;
 	private double amount;
 	private final String unitMeasurement = "Kwh";
 
-	public Consumption(double amount) {
-
-		LocalDateTime currentDateTime = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-		this.dateTime = currentDateTime.format(formatter);
-		this.amount = amount;
+	public Consumption(double amount,String dateTime) {
 		
+		this.dateTime = dateTime;
+		this.amount = amount;
 	}
 
 	public String getDateTime() {
