@@ -7,7 +7,7 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
@@ -60,21 +60,24 @@ public class MeasurerClient {
 			passwordClient = scanner.next();
 
 			userCredentials = String.format("%s:%s", idClient, passwordClient);
-			bytePackage = userCredentials.getBytes();
-			measurerPacket = new DatagramPacket(bytePackage, bytePackage.length, InetAddress.getByName("127.0.0.1"),8100);
+
+			byte[] byteCopy = userCredentials.getBytes();
+			System.arraycopy(byteCopy, 0, bytePackage, 0, byteCopy.length);
 
 			try {
-				
+
+				measurerPacket = new DatagramPacket(bytePackage, bytePackage.length, InetAddress.getByName("127.0.0.1"),
+						8100);
 				measurerSocket.send(measurerPacket);
 				measurerPacket = new DatagramPacket(bytePackage, bytePackage.length);
 				measurerSocket.receive(measurerPacket);
-				
+
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
-		} while ((authenticate = new String(bytePackage, StandardCharsets.UTF_8)) != "authenticate");
+		} while ((authenticate = new String(bytePackage, StandardCharsets.UTF_8)).equals("authenticate"));
 
 		execMeasurer();
 
@@ -82,11 +85,19 @@ public class MeasurerClient {
 
 	private void execMeasurer() {
 
+		System.out.println("Medidor ativo");
+
 		new Thread(() -> {
 
 			while (true) {
 
 				amount += consumptionChangeVariable;
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			}
 
@@ -97,15 +108,17 @@ public class MeasurerClient {
 			while (true) {
 
 				try {
-					Thread.sleep(60000);
+					Thread.sleep(10000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-				String dateTime = String.format(LocalDate.now().toString(), dateTimeFormatter);
+				LocalDateTime dateHour = LocalDateTime.now();
+				String dateTime = dateHour.format(dateTimeFormatter);
 				String str = String.format("%s-%s-%s", idClient, Double.toString(amount), dateTime);
-				bytePackage = str.getBytes();
+				byte[] byteCopy = str.getBytes();
+				System.arraycopy(byteCopy, 0, bytePackage, 0, byteCopy.length);
 
 				try {
 					measurerPacket = new DatagramPacket(bytePackage, bytePackage.length,
@@ -127,16 +140,17 @@ public class MeasurerClient {
 
 		while (true) {
 
+			System.out.println("Se quiser alterar o valor de ritmo do medidor");
 			System.out.println("Digite o novo ritmo de consumo:");
-			double amountTest = scanner.nextDouble();
+			double rhythmConsumption = scanner.nextDouble();
 			if (amount <= 0) {
 
 				System.out.println("Ritmo de consumo inv�lido");
 
 			} else {
 
-				System.out.println("Consumo alterado");
-				amount = amountTest;
+				System.out.println("Ritmo de consumo alterado");
+				consumptionChangeVariable += rhythmConsumption;
 
 			}
 

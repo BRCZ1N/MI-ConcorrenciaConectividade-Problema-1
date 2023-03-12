@@ -45,28 +45,27 @@ public class Server {
 
 		new Thread(() -> {
 
-			while (connection) {
-
-				try {
+			try {
+				
+				while (connection) {
+					
 					datagramPacket = new DatagramPacket(bufferPacket, bufferPacket.length);
 					datagramSocket.receive(datagramPacket);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				if (datagramPacket.getPort() != -1 || datagramPacket.getAddress() != null) {
-
 					ThreadUdpClient threadUdpClient = new ThreadUdpClient(datagramSocket, datagramPacket, bufferPacket);
 					new Thread(threadUdpClient).start();
-
+					
 				}
 
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 
 		}).start();
 
-		while (connection) {
+		while (connection)
+
+		{
 
 			clientSocket = socketServer.accept();
 			System.out.println("Client connected");

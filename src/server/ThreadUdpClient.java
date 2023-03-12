@@ -38,50 +38,38 @@ public class ThreadUdpClient implements Runnable {
 	@Override
 	public void run() {
 
-		while (true) {
-
-			String message = new String(packet.getData(), StandardCharsets.UTF_8);
-			Pattern pattern = Pattern.compile("(\\d+)-(\\d+.\\d+)-(\\d{2})/(\\d{2})/(\\d{4}) (\\d{2}):(\\d{2}):(\\d{2})");
-			Pattern patternAuthenticator = Pattern.compile("(\\w+):(\\w+)");
+		try {
+			
+			String message = new String(dataPacket, StandardCharsets.UTF_8);
+			Pattern pattern = Pattern.compile("[0-9]+-[0-9]+\\.[0-9]+-[0-9]+/[0-9]+/[0-9]+ [0-9]+:[0-9]+:[0-9]+");
 			Matcher matcher = pattern.matcher(message);
-			Matcher matcherAuthenticator = patternAuthenticator.matcher(message);
 			
 			
 			if (matcher.find()) {
 				
 				String[] messageConsumption = message.split("-");
+				
 				Consumption consumption = new Consumption(Double.parseDouble(messageConsumption[1]),
 						messageConsumption[2]);
+
 				ConsumptionServices.addConsumption(messageConsumption[0], consumption);
 
-			} else if (matcherAuthenticator.find()) {
-
-				String[] messageCredentials = message.split(":");
-				dataPacket = UserServices.authenticateClient(messageCredentials[0], messageCredentials[1]);
-				packet = new DatagramPacket(dataPacket, dataPacket.length, packet.getAddress(), packet.getPort());
-				try {
-					socket.send(packet);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
 			} else {
+				
+				String[] messageCredentials = message.split(":");
 
-				try {
-					
-					dataPacket = "denied authenticate".getBytes();
-					packet = new DatagramPacket(dataPacket, dataPacket.length,packet.getAddress(),packet.getPort());
-					socket.send(packet);
-					
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				byte[] byteCopy = UserServices.authenticateClient(messageCredentials[0], messageCredentials[1]);
+				System.arraycopy(byteCopy, 0, dataPacket, 0, byteCopy.length);
+				packet = new DatagramPacket(dataPacket, dataPacket.length, packet.getAddress(), packet.getPort());
+
+				socket.send(packet);
 
 			}
 
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}
-
 }

@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+
 import org.json.JSONObject;
 import resources.Consumption;
 
@@ -22,11 +24,13 @@ public class ConsumptionServices {
 
 		if (containsClient(idClient)) {
 
-			refreshInvoiceMap(idClient, consumption);
+			refreshConsumptionMap(idClient, consumption);
 
 		}
 
 	}
+	
+	
 
 	public static double valueConsumptionInPeriod(String idClient, LocalDate dateInitial, LocalDate dateFinal) {
 
@@ -52,10 +56,33 @@ public class ConsumptionServices {
 
 	}
 
-	private static void refreshInvoiceMap(String idClient, Consumption consumption) {
+	public static double testAddConsumoClient(String id) {
 
-		ArrayList<Consumption> copyListInvoice = mapConsumptions.get(idClient);
-		mapConsumptions.replace(idClient, copyListInvoice);
+		double consumoTotal = 0;
+
+		for (Entry<String, ArrayList<Consumption>> user : mapConsumptions.entrySet()) {
+
+			if (user.getKey().equals(id)) {
+
+				for (Consumption consumo : user.getValue()) {
+
+					consumoTotal += consumo.getAmount();
+
+				}
+
+			}
+
+		}
+
+		return consumoTotal;
+
+	}
+
+	private static void refreshConsumptionMap(String idClient, Consumption consumption) {
+
+		ArrayList<Consumption> copyListConsumption = mapConsumptions.get(idClient);
+		copyListConsumption.add(consumption);
+		mapConsumptions.replace(idClient, copyListConsumption);
 
 	}
 

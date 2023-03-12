@@ -37,6 +37,7 @@ public class InvoiceServices {
 	private static void refreshInvoiceMap(String idClient, Invoice invoice) {
 
 		ArrayList<Invoice> copyListInvoice = mapInvoices.get(idClient);
+		copyListInvoice.add(invoice);
 		mapInvoices.replace(idClient, copyListInvoice);
 
 	}
