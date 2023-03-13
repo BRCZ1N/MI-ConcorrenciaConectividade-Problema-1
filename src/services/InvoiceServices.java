@@ -14,14 +14,14 @@ public class InvoiceServices {
 
 	private static Map<String, ArrayList<Invoice>> mapInvoices;
 	private static long idInvoice = 0;
-	
+
 	public InvoiceServices() {
 
 		mapInvoices = new HashMap<>();
 
 	}
 
-	public static void addInvoice(String idClient, LocalDate dateInitial, LocalDate dateFinal) {
+	public static String addInvoice(String idClient, LocalDate dateInitial, LocalDate dateFinal) {
 
 		if (containsClient(idClient)) {
 
@@ -30,7 +30,11 @@ public class InvoiceServices {
 			refreshInvoiceMap(idClient, invoice);
 			idInvoice++;
 
+			return invoice.getId();
+
 		}
+		
+		return null;
 
 	}
 

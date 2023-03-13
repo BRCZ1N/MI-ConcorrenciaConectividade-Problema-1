@@ -29,18 +29,20 @@ public class ThreadTcpClient implements Runnable {
 	@Override
 	public void run() {
 
-		RequestHttp req;
+		RequestHttp reqHttp;
 		PathRouter pathRouter = new PathRouter();
+		String respHttp;
+
 		try {
 
 			while (true) {
 
-				req = ProtocolHttp.readRequest(socket.getInputStream());
+				reqHttp = ProtocolHttp.readRequest(socket.getInputStream());
 
-				if (req != null) {
+				if (reqHttp != null) {
 
-					pathRouter.execRoute(req);
-					req = null;
+					respHttp = pathRouter.execRoute(reqHttp);
+					ProtocolHttp.sendResponse(socket.getOutputStream(), respHttp);
 
 				}
 

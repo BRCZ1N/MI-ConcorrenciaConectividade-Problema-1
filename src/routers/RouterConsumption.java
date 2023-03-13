@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import services.ConsumptionServices;
+import utilityclasses.HttpCodes;
 import utilityclasses.HttpMethods;
 import utilityclasses.RequestHttp;
+import utilityclasses.ResponseHttp;
 
 public class RouterConsumption implements RouterInterface {
 
@@ -59,17 +63,29 @@ public class RouterConsumption implements RouterInterface {
 
 	}
 
-	public void execMethodRouter(RequestHttp http, Pattern pattern) {
+	public String execMethodRouter(RequestHttp http, Pattern patternCurrent) {
 
-		MethodRouter method = routers.get(pattern);
-		method.method(http);
+		MethodRouter methodReq = null;
+		
+		for (Entry<Pattern, MethodRouter> methodRouter : routers.entrySet()) {
+
+			if (patternCurrent.pattern().equals(methodRouter.getKey().pattern())) {
+
+				methodReq = methodRouter.getValue();
+
+			}
+
+		}
+
+		return methodReq.method(http);
 
 	}
 
 	@Override
-	public void router(RequestHttp http) {
+	public String router(RequestHttp http) {
 
 		Pattern pattern;
+		String responseHttp = null;
 
 		if (http.getMethod() == HttpMethods.GET) {
 
@@ -77,7 +93,7 @@ public class RouterConsumption implements RouterInterface {
 
 				if ((pattern = verifyPathInHttpMethod(HttpMethods.GET, http.getPath())) != null) {
 
-					execMethodRouter(http, pattern);
+					responseHttp = execMethodRouter(http, pattern);
 
 				} else {
 
@@ -97,7 +113,7 @@ public class RouterConsumption implements RouterInterface {
 
 				if ((pattern = verifyPathInHttpMethod(HttpMethods.POST, http.getPath())) != null) {
 
-					execMethodRouter(http, pattern);
+					responseHttp = execMethodRouter(http, pattern);
 
 				} else {
 
@@ -117,7 +133,7 @@ public class RouterConsumption implements RouterInterface {
 
 				if ((pattern = verifyPathInHttpMethod(HttpMethods.PUT, http.getPath())) != null) {
 
-					execMethodRouter(http, pattern);
+					responseHttp = execMethodRouter(http, pattern);
 
 				} else {
 
@@ -137,7 +153,7 @@ public class RouterConsumption implements RouterInterface {
 
 				if ((pattern = verifyPathInHttpMethod(HttpMethods.DELETE, http.getPath())) != null) {
 
-					execMethodRouter(http, pattern);
+					responseHttp = execMethodRouter(http, pattern);
 
 				} else {
 
@@ -150,26 +166,70 @@ public class RouterConsumption implements RouterInterface {
 				// Erro
 
 			}
-			
+
 		} else {
 
-			// Não implementado
+			//
 
 		}
 
-	}
-
-	public void getCurrentStateConsumption(RequestHttp http) {
+		return responseHttp;
 
 	}
 
-	public void getHistoricConsumption(RequestHttp http) {
+	public String getCurrentStateConsumption(RequestHttp http) {
+
+		ResponseHttp response = null;
+//		String[] idClient = http.getPath().split("/");
+//		String jsonRespString = ConsumptionServices.getConsumptionsJSON(idClient[2]).toString();
+//		Map<String, String> mapHeaders = new HashMap<>();
+//
+//		if (jsonRespString == null) {
+//
+//			mapHeaders.put("Content-Length", "0");
+//			response = new ResponseHttp(HttpCodes.HTTP_404.toString(), mapHeaders);
+//
+//		} else {
+//
+//			mapHeaders.put("Content-Type", "application/json");
+//			mapHeaders.put("Content-Length", Integer.toString(jsonRespString.getBytes().length));
+//			response = new ResponseHttp(HttpCodes.HTTP_200.toString(), mapHeaders, jsonRespString);
+//
+//		}
+//
+		return response.toString();
+
+	}
+
+	public String getHistoricConsumption(RequestHttp http) {
+
+		Pattern pattern = Pattern.compile("/consumption/historic/" + idPattern);
+		Matcher matcher = pattern.matcher(http.getPath());
+		matcher.matches();
+		ResponseHttp response;
+		String jsonRespString = ConsumptionServices.getConsumptionsJSON(matcher.group(1)).toString();
+		Map<String, String> mapHeaders = new HashMap<>();
+
+		if (jsonRespString == null) {
+
+			mapHeaders.put("Content-Length", "0");
+			response = new ResponseHttp(HttpCodes.HTTP_404.toString(), mapHeaders);
+
+		} else {
+
+			mapHeaders.put("Content-Type", "application/json");
+			mapHeaders.put("Content-Length", Integer.toString(jsonRespString.getBytes().length));
+			response = new ResponseHttp(HttpCodes.HTTP_200.toString(), mapHeaders, jsonRespString);
+
+		}
+
+		return response.toString();
 
 	}
 
 	public interface MethodRouter {
 
-		public void method(RequestHttp http);
+		public String method(RequestHttp http);
 
 	}
 

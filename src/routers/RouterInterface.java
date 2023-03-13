@@ -4,6 +4,6 @@ import utilityclasses.RequestHttp;
 
 public interface RouterInterface {
 
-	void router(RequestHttp http);
+	String router(RequestHttp http);
 
 }

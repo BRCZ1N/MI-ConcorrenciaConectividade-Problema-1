@@ -30,6 +30,31 @@ public class ConsumptionServices {
 
 	}
 	
+//	public static JSONObject currentStatusConsumption(String idClient) {
+//		
+//		JSONObject json = new JSONObject();
+//
+//		if (containsClient(idClient)) {
+//
+//			json.put("idClient", idClient);
+//			
+//			double currentConsumption = 0;
+//			
+//			for(Consumption consumption:mapConsumptions.get(idClient)) {
+//				
+//				 currentConsumption += consumption.getAmount();
+//				
+//			}
+//			
+//			
+//
+//			return json;
+//
+//		}
+//
+//		return null;
+//		
+//	}
 	
 
 	public static double valueConsumptionInPeriod(String idClient, LocalDate dateInitial, LocalDate dateFinal) {

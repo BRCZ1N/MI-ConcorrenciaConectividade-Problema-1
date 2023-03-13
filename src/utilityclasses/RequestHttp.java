@@ -12,13 +12,26 @@ public class RequestHttp {
 	private Map<String, String> headers;
 	private JSONObject body;
 
-	public RequestHttp(HttpMethods method, String path, String versionHttp, Map<String, String> headers, JSONObject body) {
-		
+	public RequestHttp(HttpMethods method, String path, String versionHttp, Map<String, String> headers,JSONObject body) {
+
 		this.method = method;
 		this.path = path;
 		this.versionHttp = versionHttp;
 		this.headers = headers;
 		this.body = body;
+	}
+
+	public RequestHttp(HttpMethods method, String path, String versionHttp, Map<String, String> headers) {
+
+		this.method = method;
+		this.path = path;
+		this.versionHttp = versionHttp;
+		this.headers = headers;
+
+	}
+
+	public RequestHttp() {
+		
 	}
 
 	public HttpMethods getMethod() {

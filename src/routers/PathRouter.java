@@ -16,27 +16,30 @@ public class PathRouter {
 
 	}
 
-	public void execRoute(RequestHttp http) {
+	public String execRoute(RequestHttp http) {
 
 		String endpointService = searchEndpoint(http.getPath());
-
+		String responseHttp = null;
+		
 		if (routes.containsKey(endpointService)) {
 
-			routes.get(endpointService).router(http);
+			responseHttp = routes.get(endpointService).router(http);
 
 		} else {
 
 			// Falta implementar o erro
 
 		}
+		
+		return responseHttp;
 
 	}
 
 	public String searchEndpoint(String path) {
 
-		String[] pathArray = path.split("\"");
-
-		return pathArray[0];
+		String[] pathArray = path.split("/");
+		
+		return "/"+pathArray[1];
 	}
 
 }

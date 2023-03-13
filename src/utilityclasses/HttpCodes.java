@@ -11,14 +11,14 @@ public enum HttpCodes {
 	HTTP_404("HTTP/1.1 404 Not Found\r\n"),
 	HTTP_500("HTTP/1.1 500 Internal Server Error\r\n");
 
-//	200 OK: a solicitação foi bem-sucedida e o servidor retornou a resposta solicitada.
-//	201 Created: a solicitação foi bem-sucedida e o servidor criou um novo recurso como resultado.
-//	204 No Content: a solicitação foi bem-sucedida, mas não há conteúdo a ser retornado.
-//	400 Bad Request: a solicitação não pode ser processada devido a uma sintaxe inválida ou outras informações incorretas na solicitação.
-//	401 Unauthorized: a solicitação não foi autorizada devido a credenciais inválidas ou ausentes.
-//	403 Forbidden: a solicitação foi entendida, mas o servidor se recusa a fornecer o recurso.
-//	404 Not Found: o recurso solicitado não foi encontrado no servidor.
-//	500 Internal Server Error: ocorreu um erro interno no servidor que impediu a conclusão da solicitação.
+//	200 OK: a solicitaï¿½ï¿½o foi bem-sucedida e o servidor retornou a resposta solicitada.
+//	201 Created: a solicitaï¿½ï¿½o foi bem-sucedida e o servidor criou um novo recurso como resultado.
+//	204 No Content: a solicitaï¿½ï¿½o foi bem-sucedida, mas nï¿½o hï¿½ conteï¿½do a ser retornado.
+//	400 Bad Request: a solicitaï¿½ï¿½o nï¿½o pode ser processada devido a uma sintaxe invï¿½lida ou outras informaï¿½ï¿½es incorretas na solicitaï¿½ï¿½o.
+//	401 Unauthorized: a solicitaï¿½ï¿½o nï¿½o foi autorizada devido a credenciais invï¿½lidas ou ausentes.
+//	403 Forbidden: a solicitaï¿½ï¿½o foi entendida, mas o servidor se recusa a fornecer o recurso.
+//	404 Not Found: o recurso solicitado nï¿½o foi encontrado no servidor.
+//	500 Internal Server Error: ocorreu um erro interno no servidor que impediu a conclusï¿½o da solicitaï¿½ï¿½o.
 
 	private String versionHttp;
 

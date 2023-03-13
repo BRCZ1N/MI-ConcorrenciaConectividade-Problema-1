@@ -1,17 +1,18 @@
 package resources;
 
+import utilityclasses.StatusConsumeEnum;
+
 public class User {
 
 	private String id;
 	private String name;
 	private String password;
+	private StatusConsumeEnum statusConsumption;
 
-	
 	public User(String name, String password) {
-	
+		
 		this.name = name;
 		this.password = password;
-		
 	}
 
 	public String getId() {
@@ -36,6 +37,14 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public StatusConsumeEnum getStatusConsumption() {
+		return statusConsumption;
+	}
+
+	public void setStatusConsumption(StatusConsumeEnum statusConsumption) {
+		this.statusConsumption = statusConsumption;
 	}
 
 }

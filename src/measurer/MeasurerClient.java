@@ -117,6 +117,7 @@ public class MeasurerClient {
 				LocalDateTime dateHour = LocalDateTime.now();
 				String dateTime = dateHour.format(dateTimeFormatter);
 				String str = String.format("%s-%s-%s", idClient, Double.toString(amount), dateTime);
+				System.out.println(str);
 				byte[] byteCopy = str.getBytes();
 				System.arraycopy(byteCopy, 0, bytePackage, 0, byteCopy.length);
 

@@ -1,12 +1,18 @@
 package routers;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import services.InvoiceServices;
+import utilityclasses.HttpCodes;
 import utilityclasses.HttpMethods;
 import utilityclasses.RequestHttp;
+import utilityclasses.ResponseHttp;
 
 public class RouterInvoice implements RouterInterface {
 
@@ -18,15 +24,15 @@ public class RouterInvoice implements RouterInterface {
 	public RouterInvoice() {
 
 		routers.put(Pattern.compile("/invoice/" + idPattern), this::getInvoice);
-		routers.put(Pattern.compile("/invoice/all"), this::getAllInvoices);
-		routers.put(Pattern.compile("/invoice/newInvoice/" + idPattern + "/data?inicio=" + datePattern + "&fim=" + datePattern),
-				this::createInvoice);
+		routers.put(Pattern.compile("/invoice/all/" + idPattern), this::getAllInvoices);
+		routers.put(Pattern.compile("/invoice/newInvoice/" + idPattern + "/data?inicio=" + datePattern + "&fim=" + datePattern),this::createInvoice);
 
 		ArrayList<Pattern> patterns = new ArrayList<>();
 
 		patterns.add(Pattern.compile("/invoice/" + idPattern));
 		patterns.add(Pattern.compile("/invoice/all"));
-		patterns.add(Pattern.compile("/invoice/newInvoice/" + idPattern + "/data?inicio=" + datePattern + "&fim=" + datePattern));
+		patterns.add(Pattern
+				.compile("/invoice/newInvoice/" + idPattern + "/data?inicio=" + datePattern + "&fim=" + datePattern));
 		httpPatterns.put(HttpMethods.GET, patterns);
 		patterns.clear();
 
@@ -64,17 +70,18 @@ public class RouterInvoice implements RouterInterface {
 
 	}
 
-	public void execMethodRouter(RequestHttp http, Pattern pattern) {
+	public String execMethodRouter(RequestHttp http, Pattern pattern) {
 
 		MethodRouter method = routers.get(pattern);
-		method.method(http);
+		return method.method(http);
 
 	}
 
 	@Override
-	public void router(RequestHttp http) {
+	public String router(RequestHttp http) {
 
 		Pattern pattern;
+		String responseHttp = null;
 
 		if (http.getMethod() == HttpMethods.GET) {
 
@@ -82,7 +89,7 @@ public class RouterInvoice implements RouterInterface {
 
 				if ((pattern = verifyPathInHttpMethod(HttpMethods.GET, http.getPath())) != null) {
 
-					execMethodRouter(http, pattern);
+					responseHttp = execMethodRouter(http, pattern);
 
 				} else {
 
@@ -102,7 +109,7 @@ public class RouterInvoice implements RouterInterface {
 
 				if ((pattern = verifyPathInHttpMethod(HttpMethods.POST, http.getPath())) != null) {
 
-					execMethodRouter(http, pattern);
+					responseHttp = execMethodRouter(http, pattern);
 
 				} else {
 
@@ -142,7 +149,7 @@ public class RouterInvoice implements RouterInterface {
 
 				if ((pattern = verifyPathInHttpMethod(HttpMethods.DELETE, http.getPath())) != null) {
 
-					execMethodRouter(http, pattern);
+					responseHttp = execMethodRouter(http, pattern);
 
 				} else {
 
@@ -158,27 +165,95 @@ public class RouterInvoice implements RouterInterface {
 
 		} else {
 
-			// Não implementado
+			// Nï¿½o implementado
+
+		}
+		
+		return responseHttp;
+
+	}
+
+	public String getInvoice(RequestHttp http) {
+		
+		Pattern pattern = Pattern.compile("/invoice/" + idPattern);
+		Matcher matcher = pattern.matcher(http.getPath());
+		matcher.matches();
+		ResponseHttp response;
+		String jsonRespString = InvoiceServices.getInvoice(matcher.group(1)).toString();
+		Map<String, String> mapHeaders = new HashMap<>();
+
+		if (jsonRespString == null) {
+
+			mapHeaders.put("Content-Length", "0");
+			response = new ResponseHttp(HttpCodes.HTTP_404.toString(), mapHeaders);
+
+		} else {
+
+			mapHeaders.put("Content-Type", "application/json");
+			mapHeaders.put("Content-Length", Integer.toString(jsonRespString.getBytes().length));
+			response = new ResponseHttp(HttpCodes.HTTP_200.toString(), mapHeaders, jsonRespString);
 
 		}
 
-	}
-
-	public void getInvoice(RequestHttp http) {
+		return response.toString();
 
 	}
 
-	public void getAllInvoices(RequestHttp http) {
+	public String getAllInvoices(RequestHttp http) {
+
+		Pattern pattern = Pattern.compile("/invoice/all" + idPattern);
+		Matcher matcher = pattern.matcher(http.getPath());
+		matcher.matches();
+		ResponseHttp response;
+		String jsonRespString = InvoiceServices.getInvoicesJSON(matcher.group(1)).toString();
+		Map<String, String> mapHeaders = new HashMap<>();
+
+		if (jsonRespString == null) {
+
+			mapHeaders.put("Content-Length", "0");
+			response = new ResponseHttp(HttpCodes.HTTP_404.toString(), mapHeaders);
+
+		} else {
+
+			mapHeaders.put("Content-Type", "application/json");
+			mapHeaders.put("Content-Length", Integer.toString(jsonRespString.getBytes().length));
+			response = new ResponseHttp(HttpCodes.HTTP_200.toString(), mapHeaders, jsonRespString);
+
+		}
+
+		return response.toString();
 
 	}
 
-	public void createInvoice(RequestHttp http) {
+	public String createInvoice(RequestHttp http) {
+
+		Pattern pattern = Pattern.compile("/invoice/newInvoice/" + idPattern + "/data?inicio=" + datePattern + "&fim=" + datePattern);
+		Matcher matcher = pattern.matcher(http.getPath());
+		matcher.matches();
+		ResponseHttp response;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		Map<String, String> mapHeaders = new HashMap<>();
+		String respMethod = InvoiceServices.addInvoice(matcher.group(1), LocalDate.parse(matcher.group(2), formatter),LocalDate.parse(matcher.group(3), formatter)).toString();
+
+		if (respMethod == null) {
+
+			mapHeaders.put("Content-Length", "0");
+			response = new ResponseHttp(HttpCodes.HTTP_404.toString(), mapHeaders);
+
+		} else {
+
+			mapHeaders.put("Location", "/invoice/" + respMethod);
+			response = new ResponseHttp(HttpCodes.HTTP_201.toString(), mapHeaders);
+
+		}
+
+		return response.toString();
 
 	}
 
 	public interface MethodRouter {
 
-		public void method(RequestHttp http);
+		public String method(RequestHttp http);
 
 	}
 
