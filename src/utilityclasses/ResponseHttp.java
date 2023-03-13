@@ -5,29 +5,29 @@ import java.util.Map.Entry;
 
 public class ResponseHttp {
 
-	private HttpCodes statusLine;
+	private String statusLine;
 	private Map<String, String> headers;
 	private String body;
 
-	public ResponseHttp(HttpCodes statusLine, Map<String, String> headers, String body) {
+	public ResponseHttp(String statusLine, Map<String, String> headers, String body) {
 
 		this.statusLine = statusLine;
 		this.headers = headers;
 		this.body = body;
 	}
 
-	public ResponseHttp(HttpCodes statusLine, Map<String, String> headers) {
+	public ResponseHttp(String statusLine, Map<String, String> headers) {
 
 		this.statusLine = statusLine;
 		this.headers = headers;
 
 	}
 
-	public HttpCodes getStatusLine() {
+	public String getStatusLine() {
 		return statusLine;
 	}
 
-	public void setStatusLine(HttpCodes statusLine) {
+	public void setStatusLine(String statusLine) {
 		this.statusLine = statusLine;
 	}
 

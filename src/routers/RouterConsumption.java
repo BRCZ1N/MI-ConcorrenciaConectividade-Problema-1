@@ -213,13 +213,13 @@ public class RouterConsumption implements RouterInterface {
 		if (jsonRespString == null) {
 
 			mapHeaders.put("Content-Length", "0");
-			response = new ResponseHttp(HttpCodes.HTTP_404, mapHeaders);
+			response = new ResponseHttp(HttpCodes.HTTP_404.getCodeHttp(), mapHeaders);
 
 		} else {
 
 			mapHeaders.put("Content-Type", "application/json");
 			mapHeaders.put("Content-Length", Integer.toString(jsonRespString.getBytes().length));
-			response = new ResponseHttp(HttpCodes.HTTP_200, mapHeaders, jsonRespString);
+			response = new ResponseHttp(HttpCodes.HTTP_200.getCodeHttp(), mapHeaders, jsonRespString);
 
 		}
 

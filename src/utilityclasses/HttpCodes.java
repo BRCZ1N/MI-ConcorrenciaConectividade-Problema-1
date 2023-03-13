@@ -20,20 +20,20 @@ public enum HttpCodes {
 //	404 Not Found: o recurso solicitado n�o foi encontrado no servidor.
 //	500 Internal Server Error: ocorreu um erro interno no servidor que impediu a conclus�o da solicita��o.
 
-	private String versionHttp;
+	private String codeHttp;
 
-	private HttpCodes(String versionHttp) {
+	private HttpCodes(String codeHttp) {
 
-		this.versionHttp = versionHttp;
+		this.codeHttp = codeHttp;
 
 	}
 
-	public String getVersionHttp() {
-		return versionHttp;
+	public String getCodeHttp() {
+		return codeHttp;
 	}
 
-	public void setVersionHttp(String versionHttp) {
-		this.versionHttp = versionHttp;
+	public void setCodeHttp(String codeHttp) {
+		this.codeHttp = codeHttp;
 	}
 
 }

@@ -183,13 +183,13 @@ public class RouterInvoice implements RouterInterface {
 		if (jsonRespString == null) {
 
 			mapHeaders.put("Content-Length", "0");
-			response = new ResponseHttp(HttpCodes.HTTP_404, mapHeaders);
+			response = new ResponseHttp(HttpCodes.HTTP_404.getCodeHttp(), mapHeaders);
 
 		} else {
 
 			mapHeaders.put("Content-Type", "application/json");
 			mapHeaders.put("Content-Length", Integer.toString(jsonRespString.getBytes().length));
-			response = new ResponseHttp(HttpCodes.HTTP_200, mapHeaders, jsonRespString);
+			response = new ResponseHttp(HttpCodes.HTTP_200.getCodeHttp(), mapHeaders, jsonRespString);
 
 		}
 
@@ -209,13 +209,13 @@ public class RouterInvoice implements RouterInterface {
 		if (jsonRespString == null) {
 
 			mapHeaders.put("Content-Length", "0");
-			response = new ResponseHttp(HttpCodes.HTTP_404, mapHeaders);
+			response = new ResponseHttp(HttpCodes.HTTP_404.getCodeHttp(), mapHeaders);
 
 		} else {
 
 			mapHeaders.put("Content-Type", "application/json");
 			mapHeaders.put("Content-Length", Integer.toString(jsonRespString.getBytes().length));
-			response = new ResponseHttp(HttpCodes.HTTP_200, mapHeaders, jsonRespString);
+			response = new ResponseHttp(HttpCodes.HTTP_200.getCodeHttp(), mapHeaders, jsonRespString);
 
 		}
 
@@ -236,12 +236,12 @@ public class RouterInvoice implements RouterInterface {
 		if (respMethod == null) {
 
 			mapHeaders.put("Content-Length", "0");
-			response = new ResponseHttp(HttpCodes.HTTP_404, mapHeaders);
+			response = new ResponseHttp(HttpCodes.HTTP_404.getCodeHttp(), mapHeaders);
 
 		} else {
 
 			mapHeaders.put("Location", "/invoice/" + respMethod);
-			response = new ResponseHttp(HttpCodes.HTTP_201, mapHeaders);
+			response = new ResponseHttp(HttpCodes.HTTP_201.getCodeHttp(), mapHeaders);
 
 		}
 
