@@ -46,14 +46,14 @@ public class Server {
 		new Thread(() -> {
 
 			try {
-				
+
 				while (connection) {
-					
+
 					datagramPacket = new DatagramPacket(bufferPacket, bufferPacket.length);
 					datagramSocket.receive(datagramPacket);
 					ThreadUdpClient threadUdpClient = new ThreadUdpClient(datagramSocket, datagramPacket, bufferPacket);
 					new Thread(threadUdpClient).start();
-					
+
 				}
 
 			} catch (IOException e) {
@@ -63,13 +63,10 @@ public class Server {
 
 		}).start();
 
-		while (connection)
-
-		{
+		while (connection) {
 
 			clientSocket = socketServer.accept();
-			System.out.println("Client connected");
-			System.out.println(clientSocket.getInetAddress());
+			System.out.println("Cliente conectado a partir da porta:" + clientSocket.getPort());
 			generateAndStartThreadClient(clientSocket);
 
 		}

@@ -84,9 +84,7 @@ public class ProtocolHttp {
 	public static void sendResponse(OutputStream out, String response) throws IOException {
 
 		BufferedOutputStream buffer = new BufferedOutputStream(out);
-
-		System.out.println(response);
-
+		
 		buffer.write(response.getBytes("UTF-8"));
 		buffer.flush();
 

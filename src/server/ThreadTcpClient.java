@@ -33,9 +33,11 @@ public class ThreadTcpClient implements Runnable {
 		PathRouter pathRouter = new PathRouter();
 		String respHttp;
 
+		
 		try {
 
 			while (true) {
+				
 
 				if(socket.getInputStream().available() > 0) {
 					
@@ -45,6 +47,11 @@ public class ThreadTcpClient implements Runnable {
 
 						respHttp = pathRouter.execRoute(reqHttp);
 						ProtocolHttp.sendResponse(socket.getOutputStream(), respHttp);
+						System.out.println();
+						System.out.println("===================================================================");
+						System.out.println("Resposta enviada ao cliente conectado na porta:" + socket.getPort());
+						System.out.println(respHttp);
+						System.out.println("===================================================================");
 						reqHttp = null;
 
 					}

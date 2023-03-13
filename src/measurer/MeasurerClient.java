@@ -59,8 +59,7 @@ public class MeasurerClient {
 
 			try {
 
-				measurerPacket = new DatagramPacket(bytePackage, bytePackage.length, InetAddress.getByName("127.0.0.1"),
-						8100);
+				measurerPacket = new DatagramPacket(bytePackage, bytePackage.length, InetAddress.getByName("127.0.0.1"),8100);
 				measurerSocket.send(measurerPacket);
 				measurerPacket = new DatagramPacket(bytePackage, bytePackage.length);
 				measurerSocket.receive(measurerPacket);
@@ -101,7 +100,7 @@ public class MeasurerClient {
 			while (true) {
 
 				try {
-					Thread.sleep(10000);
+					Thread.sleep(60000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -110,7 +109,6 @@ public class MeasurerClient {
 				LocalDateTime dateHour = LocalDateTime.now();
 				String dateTime = dateHour.format(dateTimeFormatter);
 				String str = String.format("%s-%s-%s", idClient, Double.toString(amount), dateTime);
-				System.out.println(str);
 				byte[] byteCopy = str.getBytes();
 				System.arraycopy(byteCopy, 0, bytePackage, 0, byteCopy.length);
 
