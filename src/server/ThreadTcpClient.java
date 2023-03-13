@@ -2,9 +2,10 @@ package server;
 
 import java.io.IOException;
 import java.net.Socket;
+
+import http.ProtocolHttp;
+import http.RequestHttp;
 import routers.PathRouter;
-import utilityclasses.ProtocolHttp;
-import utilityclasses.RequestHttp;
 
 public class ThreadTcpClient implements Runnable {
 

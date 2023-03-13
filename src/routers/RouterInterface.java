@@ -1,6 +1,6 @@
 package routers;
 
-import utilityclasses.RequestHttp;
+import http.RequestHttp;
 
 public interface RouterInterface {
 

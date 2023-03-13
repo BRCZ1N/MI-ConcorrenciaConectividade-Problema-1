@@ -1,6 +1,7 @@
 package services;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,12 +39,15 @@ public class ConsumptionServices {
 
 			for (Consumption consumption : consumptions.getValue()) {
 
-				LocalDate dateConsumption = LocalDate.parse(consumption.getDateTime(),
-						DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+				DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+				LocalDateTime dateTime = LocalDateTime.parse(consumption.getDateTime(), dateFormatter);
+				LocalDate dateConsumption = dateTime.toLocalDate();
 
-				if (dateConsumption.isAfter(dateInitial) && dateConsumption.isBefore(dateFinal)) {
+				if ((dateConsumption.isAfter(dateInitial) && dateConsumption.isBefore(dateFinal))
+						|| dateConsumption.equals(dateInitial) || dateConsumption.equals(dateFinal)) {
 
-					consumptionTotal = consumption.getAmount();
+					consumptionTotal += consumption.getAmount();
+
 				}
 
 			}

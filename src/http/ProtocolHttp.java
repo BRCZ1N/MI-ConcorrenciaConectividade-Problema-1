@@ -1,4 +1,4 @@
-package utilityclasses;
+package http;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -12,6 +12,8 @@ import java.util.Queue;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import utilityclasses.HttpMethods;
 
 public class ProtocolHttp {
 

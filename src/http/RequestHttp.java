@@ -1,8 +1,10 @@
-package utilityclasses;
+package http;
 
 import java.util.Map;
 
 import org.json.JSONObject;
+
+import utilityclasses.HttpMethods;
 
 public class RequestHttp {
 

@@ -1,4 +1,4 @@
-package utilityclasses;
+package http;
 
 import java.util.Map;
 import java.util.Map.Entry;
