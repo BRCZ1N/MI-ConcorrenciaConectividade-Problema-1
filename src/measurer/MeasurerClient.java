@@ -46,13 +46,6 @@ public class MeasurerClient {
 			System.out.println("----------------------Medidor----------------------------");
 			System.out.println("---------------------------------------------------------");
 
-//			System.out.println("Digite a porta do servidor:");
-//			String portServer = scanner.nextLine();
-//
-//			System.out.println("Digite o IP do servidor:");
-//			String ipServer = scanner.nextLine();
-//			InetAddress ip = InetAddress.getByName(ipServer);
-
 			System.out.println("Digite o ID do cliente:");
 			idClient = scanner.next();
 

@@ -50,8 +50,6 @@ public class ThreadTcpClient implements Runnable {
 					}
 					
 				}
-				
-				System.out.println("consegui");
 
 			}
 
