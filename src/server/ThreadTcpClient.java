@@ -37,14 +37,21 @@ public class ThreadTcpClient implements Runnable {
 
 			while (true) {
 
-				reqHttp = ProtocolHttp.readRequest(socket.getInputStream());
+				if(socket.getInputStream().available() > 0) {
+					
+					reqHttp = ProtocolHttp.readRequest(socket.getInputStream());
 
-				if (reqHttp != null) {
+					if (reqHttp != null) {
 
-					respHttp = pathRouter.execRoute(reqHttp);
-					ProtocolHttp.sendResponse(socket.getOutputStream(), respHttp);
+						respHttp = pathRouter.execRoute(reqHttp);
+						ProtocolHttp.sendResponse(socket.getOutputStream(), respHttp);
+						reqHttp = null;
 
+					}
+					
 				}
+				
+				System.out.println("consegui");
 
 			}
 

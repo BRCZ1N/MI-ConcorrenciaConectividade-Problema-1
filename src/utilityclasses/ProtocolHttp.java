@@ -89,7 +89,6 @@ public class ProtocolHttp {
 
 		buffer.write(response.getBytes("UTF-8"));
 		buffer.flush();
-		buffer.close();
 
 	}
 
