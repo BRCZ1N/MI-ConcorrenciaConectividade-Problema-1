@@ -120,6 +120,7 @@ public class MeasurerClient {
 					e.printStackTrace();
 				}
 				try {
+					amount = 0;
 					measurerSocket.send(measurerPacket);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
