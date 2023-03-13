@@ -31,9 +31,7 @@ public class RouterInvoice implements RouterInterface {
 
 		patterns.add(Pattern.compile("/invoice/" + idPattern));
 		patterns.add(Pattern.compile("/invoice/all"));
-		patterns.add(Pattern
-				.compile("/invoice/newInvoice/" + idPattern + "/data?inicio=" + datePattern + "&fim=" + datePattern));
-		httpPatterns.put(HttpMethods.GET, patterns);
+		patterns.add(Pattern.compile("/invoice/newInvoice/" + idPattern + "/data?inicio=" + datePattern + "&fim=" + datePattern));httpPatterns.put(HttpMethods.GET, patterns);
 		patterns.clear();
 
 	}
@@ -185,13 +183,13 @@ public class RouterInvoice implements RouterInterface {
 		if (jsonRespString == null) {
 
 			mapHeaders.put("Content-Length", "0");
-			response = new ResponseHttp(HttpCodes.HTTP_404.toString(), mapHeaders);
+			response = new ResponseHttp(HttpCodes.HTTP_404, mapHeaders);
 
 		} else {
 
 			mapHeaders.put("Content-Type", "application/json");
 			mapHeaders.put("Content-Length", Integer.toString(jsonRespString.getBytes().length));
-			response = new ResponseHttp(HttpCodes.HTTP_200.toString(), mapHeaders, jsonRespString);
+			response = new ResponseHttp(HttpCodes.HTTP_200, mapHeaders, jsonRespString);
 
 		}
 
@@ -211,13 +209,13 @@ public class RouterInvoice implements RouterInterface {
 		if (jsonRespString == null) {
 
 			mapHeaders.put("Content-Length", "0");
-			response = new ResponseHttp(HttpCodes.HTTP_404.toString(), mapHeaders);
+			response = new ResponseHttp(HttpCodes.HTTP_404, mapHeaders);
 
 		} else {
 
 			mapHeaders.put("Content-Type", "application/json");
 			mapHeaders.put("Content-Length", Integer.toString(jsonRespString.getBytes().length));
-			response = new ResponseHttp(HttpCodes.HTTP_200.toString(), mapHeaders, jsonRespString);
+			response = new ResponseHttp(HttpCodes.HTTP_200, mapHeaders, jsonRespString);
 
 		}
 
@@ -238,12 +236,12 @@ public class RouterInvoice implements RouterInterface {
 		if (respMethod == null) {
 
 			mapHeaders.put("Content-Length", "0");
-			response = new ResponseHttp(HttpCodes.HTTP_404.toString(), mapHeaders);
+			response = new ResponseHttp(HttpCodes.HTTP_404, mapHeaders);
 
 		} else {
 
 			mapHeaders.put("Location", "/invoice/" + respMethod);
-			response = new ResponseHttp(HttpCodes.HTTP_201.toString(), mapHeaders);
+			response = new ResponseHttp(HttpCodes.HTTP_201, mapHeaders);
 
 		}
 

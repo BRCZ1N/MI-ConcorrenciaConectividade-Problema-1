@@ -5,29 +5,29 @@ import java.util.Map.Entry;
 
 public class ResponseHttp {
 
-	private String statusLine;
+	private HttpCodes statusLine;
 	private Map<String, String> headers;
 	private String body;
 
-	public ResponseHttp(String statusLine, Map<String, String> headers, String body) {
+	public ResponseHttp(HttpCodes statusLine, Map<String, String> headers, String body) {
 
 		this.statusLine = statusLine;
 		this.headers = headers;
 		this.body = body;
 	}
 
-	public ResponseHttp(String statusLine, Map<String, String> headers) {
+	public ResponseHttp(HttpCodes statusLine, Map<String, String> headers) {
 
 		this.statusLine = statusLine;
 		this.headers = headers;
 
 	}
 
-	public String getStatusLine() {
+	public HttpCodes getStatusLine() {
 		return statusLine;
 	}
 
-	public void setStatusLine(String statusLine) {
+	public void setStatusLine(HttpCodes statusLine) {
 		this.statusLine = statusLine;
 	}
 
@@ -52,7 +52,7 @@ public class ResponseHttp {
 		StringBuilder stringHeaders = new StringBuilder();
 		for (Entry<String, String> header : headers.entrySet()) {
 
-			stringHeaders.append(header.getKey() + header.getValue() + "\r\n");
+			stringHeaders.append(header.getKey()+":"+header.getValue() + "\r\n");
 
 		}
 
@@ -63,7 +63,7 @@ public class ResponseHttp {
 	@Override
 	public String toString() {
 
-		return this.statusLine + headersToString() + "\r\n" + body;
+		return this.statusLine + this.headersToString() + "\r\n" + this.body;
 
 	}
 
