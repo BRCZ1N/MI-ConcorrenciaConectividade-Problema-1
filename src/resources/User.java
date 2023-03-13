@@ -9,10 +9,11 @@ public class User {
 	private String password;
 	private StatusConsumeEnum statusConsumption;
 
-	public User(String name, String password) {
+	public User(String name, String password, StatusConsumeEnum statusConsumption) {
 		
 		this.name = name;
 		this.password = password;
+		this.statusConsumption = statusConsumption;
 	}
 
 	public String getId() {

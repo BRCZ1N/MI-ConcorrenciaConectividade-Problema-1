@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import org.json.JSONObject;
 import resources.Consumption;
 
@@ -24,38 +23,12 @@ public class ConsumptionServices {
 
 		if (containsClient(idClient)) {
 
+			UserServices.refreshStatusConsumption(idClient, consumption.getAmount());
 			refreshConsumptionMap(idClient, consumption);
 
 		}
 
 	}
-	
-//	public static JSONObject currentStatusConsumption(String idClient) {
-//		
-//		JSONObject json = new JSONObject();
-//
-//		if (containsClient(idClient)) {
-//
-//			json.put("idClient", idClient);
-//			
-//			double currentConsumption = 0;
-//			
-//			for(Consumption consumption:mapConsumptions.get(idClient)) {
-//				
-//				 currentConsumption += consumption.getAmount();
-//				
-//			}
-//			
-//			
-//
-//			return json;
-//
-//		}
-//
-//		return null;
-//		
-//	}
-	
 
 	public static double valueConsumptionInPeriod(String idClient, LocalDate dateInitial, LocalDate dateFinal) {
 
@@ -147,6 +120,29 @@ public class ConsumptionServices {
 	public static void addSlotClientConsumptions(String idClient) {
 
 		mapConsumptions.put(idClient, new ArrayList<Consumption>());
+
+	}
+
+	public static double averageConsumptions(String idClient) {
+
+		double average = 0;
+		double totalConsumptionClient = 0;
+		int amountMeasurements = 0;
+
+		if (containsClient(idClient)) {
+
+			for (Consumption consumption : mapConsumptions.get(idClient)) {
+
+				totalConsumptionClient += consumption.getAmount();
+
+			}
+			amountMeasurements = mapConsumptions.get(idClient).size();
+
+			average = totalConsumptionClient / amountMeasurements;
+
+		}
+
+		return average;
 
 	}
 
