@@ -63,23 +63,6 @@ public class Server {
 
 		}).start();
 
-		new Thread(() -> {
-			
-			while (true) {
-
-				try {
-					Thread.sleep(30000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				System.out.println(UserServices.getUser("0").getStatusConsumption());
-
-			}
-
-		}).start();
-		;
-
 		while (connection) {
 
 			clientSocket = socketServer.accept();

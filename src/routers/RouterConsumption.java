@@ -6,6 +6,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.json.JSONObject;
+
 import services.ConsumptionServices;
 import utilityclasses.HttpCodes;
 import utilityclasses.HttpMethods;
@@ -20,12 +23,12 @@ public class RouterConsumption implements RouterInterface {
 
 	public RouterConsumption() {
 
-		routers.put(Pattern.compile("/consumption/status/" + idPattern), this::getCurrentStateConsumption);
+//		routers.put(Pattern.compile("/consumption/status/" + idPattern), this::getCurrentStateConsumption);
 		routers.put(Pattern.compile("/consumption/historic/" + idPattern), this::getHistoricConsumption);
 
 		ArrayList<Pattern> patterns = new ArrayList<>();
 
-		patterns.add(Pattern.compile("/consumption/status/" + idPattern));
+//		patterns.add(Pattern.compile("/consumption/status/" + idPattern));
 		patterns.add(Pattern.compile("/consumption/historic/" + idPattern));
 		httpPatterns.put(HttpMethods.GET, patterns);
 
@@ -66,7 +69,7 @@ public class RouterConsumption implements RouterInterface {
 	public String execMethodRouter(RequestHttp http, Pattern patternCurrent) {
 
 		MethodRouter methodReq = null;
-		
+
 		for (Entry<Pattern, MethodRouter> methodRouter : routers.entrySet()) {
 
 			if (patternCurrent.pattern().equals(methodRouter.getKey().pattern())) {
@@ -95,81 +98,86 @@ public class RouterConsumption implements RouterInterface {
 
 					responseHttp = execMethodRouter(http, pattern);
 
-				} else {
-
-					// Erro
-
 				}
+//				} else {
+//
+//					// Erro
+//
+//				}
 
 			} else {
 
-				// Erro
+				Map<String, String> mapHeaders = new HashMap<>();
+				mapHeaders.put("Content-Length", "0");
+				responseHttp = new ResponseHttp(HttpCodes.HTTP_404.getCodeHttp(), mapHeaders).toString();
 
 			}
 
-		} else if (http.getMethod() == HttpMethods.POST) {
-
-			if (verifyPath(http.getPath())) {
-
-				if ((pattern = verifyPathInHttpMethod(HttpMethods.POST, http.getPath())) != null) {
-
-					responseHttp = execMethodRouter(http, pattern);
-
-				} else {
-
-					// Erro
-
-				}
-
-			} else {
-
-				// Erro
-
-			}
-
-		} else if (http.getMethod() == HttpMethods.PUT) {
-
-			if (verifyPath(http.getPath())) {
-
-				if ((pattern = verifyPathInHttpMethod(HttpMethods.PUT, http.getPath())) != null) {
-
-					responseHttp = execMethodRouter(http, pattern);
-
-				} else {
-
-					// Erro
-
-				}
-
-			} else {
-
-				// Erro
-
-			}
-
-		} else if (http.getMethod() == HttpMethods.DELETE) {
-
-			if (verifyPath(http.getPath())) {
-
-				if ((pattern = verifyPathInHttpMethod(HttpMethods.DELETE, http.getPath())) != null) {
-
-					responseHttp = execMethodRouter(http, pattern);
-
-				} else {
-
-					// Erro
-
-				}
-
-			} else {
-
-				// Erro
-
-			}
+//		} else if (http.getMethod() == HttpMethods.POST) {
+//
+//			if (verifyPath(http.getPath())) {
+//
+//				if ((pattern = verifyPathInHttpMethod(HttpMethods.POST, http.getPath())) != null) {
+//
+//					responseHttp = execMethodRouter(http, pattern);
+//
+//				} else {
+//
+//					// Erro
+//
+//				}
+//
+//			} else {
+//
+//				// Erro
+//
+//			}
+//
+//		} else if (http.getMethod() == HttpMethods.PUT) {
+//
+//			if (verifyPath(http.getPath())) {
+//
+//				if ((pattern = verifyPathInHttpMethod(HttpMethods.PUT, http.getPath())) != null) {
+//
+//					responseHttp = execMethodRouter(http, pattern);
+//
+//				} else {
+//
+//					// Erro
+//
+//				}
+//
+//			} else {
+//
+//				// Erro
+//
+//			}
+//
+//		} else if (http.getMethod() == HttpMethods.DELETE) {
+//
+//			if (verifyPath(http.getPath())) {
+//
+//				if ((pattern = verifyPathInHttpMethod(HttpMethods.DELETE, http.getPath())) != null) {
+//
+//					responseHttp = execMethodRouter(http, pattern);
+//
+//				} else {
+//
+//					// Erro
+//
+//				}
+//
+//			} else {
+//
+//				// Erro
+//
+//			}
 
 		} else {
 
-			//
+			Map<String, String> mapHeaders = new HashMap<>();
+			mapHeaders.put("Content-Length", "0");
+			responseHttp = new ResponseHttp(HttpCodes.HTTP_501.getCodeHttp(), mapHeaders).toString();
 
 		}
 
@@ -177,9 +185,9 @@ public class RouterConsumption implements RouterInterface {
 
 	}
 
-	public String getCurrentStateConsumption(RequestHttp http) {
-
-		ResponseHttp response = null;
+//	public String getCurrentStateConsumption(RequestHttp http) {
+//
+//		ResponseHttp response = null;
 //		String[] idClient = http.getPath().split("/");
 //		String jsonRespString = ConsumptionServices.getConsumptionsJSON(idClient[2]).toString();
 //		Map<String, String> mapHeaders = new HashMap<>();
@@ -197,9 +205,9 @@ public class RouterConsumption implements RouterInterface {
 //
 //		}
 //
-		return response.toString();
-
-	}
+//		return response.toString();
+//
+//	}
 
 	public String getHistoricConsumption(RequestHttp http) {
 
@@ -207,7 +215,7 @@ public class RouterConsumption implements RouterInterface {
 		Matcher matcher = pattern.matcher(http.getPath());
 		matcher.matches();
 		ResponseHttp response;
-		String jsonRespString = ConsumptionServices.getConsumptionsJSON(matcher.group(1)).toString();
+		JSONObject jsonRespString = ConsumptionServices.getConsumptionsJSON(matcher.group(1));
 		Map<String, String> mapHeaders = new HashMap<>();
 
 		if (jsonRespString == null) {
@@ -218,8 +226,8 @@ public class RouterConsumption implements RouterInterface {
 		} else {
 
 			mapHeaders.put("Content-Type", "application/json");
-			mapHeaders.put("Content-Length", Integer.toString(jsonRespString.getBytes().length));
-			response = new ResponseHttp(HttpCodes.HTTP_200.getCodeHttp(), mapHeaders, jsonRespString);
+			mapHeaders.put("Content-Length", Integer.toString(jsonRespString.toString().getBytes().length));
+			response = new ResponseHttp(HttpCodes.HTTP_200.getCodeHttp(), mapHeaders, jsonRespString.toString());
 
 		}
 

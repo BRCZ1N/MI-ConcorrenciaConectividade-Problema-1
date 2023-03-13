@@ -25,15 +25,16 @@ public class InvoiceServices {
 
 		if (containsClient(idClient)) {
 
-			Invoice invoice = new Invoice(Double.toString(idInvoice), idClient, Fares.FARE_1.getFare(),
-					ConsumptionServices.valueConsumptionInPeriod(idClient, dateInitial, dateFinal));
+			Invoice invoice = new Invoice(Long.toString(idInvoice), idClient, Fares.FARE_1.getFare(),
+					ConsumptionServices.valueConsumptionInPeriod(idClient, dateInitial, dateFinal),
+					UserServices.getUser(idClient).getStatusConsumption());
 			refreshInvoiceMap(idClient, invoice);
 			idInvoice++;
 
 			return invoice.getId();
 
 		}
-		
+
 		return null;
 
 	}
@@ -53,8 +54,15 @@ public class InvoiceServices {
 		if ((invoice = getInvoice(idInvoice)) != null) {
 
 			JSONObject json = new JSONObject();
-			json.put("idInvoice", idInvoice);
-			json.put("invoice", invoice);
+			json.put("idInvoice", invoice.getId());
+			json.put("idClient", invoice.getIdClient());
+			json.put("issuanceDate", invoice.getIssuanceDate());
+			json.put("expirationDate", invoice.getExpirationDate());
+			json.put("fare", invoice.getFare());
+			json.put("consumption", invoice.getConsumption());
+			json.put("invoiceValue", invoice.getInvoiceValue());
+			json.put("currentStatusClient", invoice.getCurrentStatus());
+
 			return json;
 
 		}
@@ -68,7 +76,6 @@ public class InvoiceServices {
 
 		if (containsClient(idClient)) {
 
-			json.put("idClient", idClient);
 			json.put("invoices", mapInvoices.get(idClient));
 
 			return json;

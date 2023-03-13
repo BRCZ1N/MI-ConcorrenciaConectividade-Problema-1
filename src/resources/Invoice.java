@@ -3,6 +3,8 @@ package resources;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import utilityclasses.StatusConsumeEnum;
+
 public class Invoice {
 
 	private String id;
@@ -12,8 +14,9 @@ public class Invoice {
 	private double fare;
 	private double consumption;
 	private double invoiceValue;
+	private StatusConsumeEnum currentStatus;
 
-	public Invoice(String id, String idClient, double fare, double consumption) {
+	public Invoice(String id, String idClient, double fare, double consumption, StatusConsumeEnum currentStatus) {
 
 		LocalDate currentDate = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -25,6 +28,7 @@ public class Invoice {
 		this.fare = fare;
 		this.consumption = consumption;
 		this.invoiceValue = consumption * fare;
+		this.currentStatus = currentStatus;
 
 	
 	}
@@ -83,6 +87,14 @@ public class Invoice {
 
 	public void setInvoiceValue(double invoiceValue) {
 		this.invoiceValue = invoiceValue;
+	}
+
+	public StatusConsumeEnum getCurrentStatus() {
+		return currentStatus;
+	}
+
+	public void setCurrentStatus(StatusConsumeEnum currentStatus) {
+		this.currentStatus = currentStatus;
 	}
 
 }

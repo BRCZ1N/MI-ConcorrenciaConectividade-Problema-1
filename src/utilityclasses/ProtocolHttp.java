@@ -19,7 +19,7 @@ public class ProtocolHttp {
 
 		RequestHttp req = new RequestHttp();
 		Queue<String> httpData = new LinkedList<String>();
-		String reqLine;
+		String reqLine = null;
 		String responseHeaders[] = null;
 		Map<String, String> mapHeaders = null;
 		StringBuilder str = new StringBuilder();
@@ -45,7 +45,8 @@ public class ProtocolHttp {
 
 			responseHeaders = httpData.poll().split("\s");
 			mapHeaders = new HashMap<String, String>();
-			while (!(reqLine = httpData.poll()).isEmpty()) {
+
+			while (!httpData.isEmpty() && !(reqLine = httpData.poll()).isBlank()) {
 
 				String[] header = reqLine.split(":\s");
 				mapHeaders.put(header[0], header[1]);
@@ -60,7 +61,7 @@ public class ProtocolHttp {
 				bodyJson.append(bodyLine);
 
 			}
-
+			
 			try {
 
 				req = new RequestHttp(HttpMethods.valueOf(responseHeaders[0]), responseHeaders[1], responseHeaders[2],
@@ -84,7 +85,7 @@ public class ProtocolHttp {
 	public static void sendResponse(OutputStream out, String response) throws IOException {
 
 		BufferedOutputStream buffer = new BufferedOutputStream(out);
-		
+
 		buffer.write(response.getBytes("UTF-8"));
 		buffer.flush();
 
