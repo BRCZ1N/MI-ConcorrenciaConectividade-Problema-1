@@ -24,7 +24,6 @@
 						<configuration>
 							<source>15</source>
 							<target>15</target>
-							<mainClass>src.measurer.MeasurerClient</mainClass>
 						</configuration>
 					</execution>
 					<execution>
@@ -36,77 +35,62 @@
 						<configuration>
 							<source>15</source>
 							<target>15</target>
-							<mainClass>src.measurer.Server</mainClass>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>3.2.0</version>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.0.0</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-dependency-plugin</artifactId>
+						<version>3.2.0</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<source>11</source>
+					<target>11</target>
+				</configuration>
 				<executions>
 					<execution>
-						<id>copy-dependencies-main1</id>
+						<id>measurer</id>
 						<phase>package</phase>
 						<goals>
-							<goal>copy-dependencies</goal>
+							<goal>single</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${project.build.directory}/dependencies/MeasurerClient</outputDirectory>
-							<includeScope>runtime</includeScope>
-							<excludeTransitive>true</excludeTransitive>
-							<stripVersion>true</stripVersion>
-						</configuration>
-					</execution>
-					<execution>
-						<id>copy-dependencies-main2</id>
-						<phase>package</phase>
-						<goals>
-							<goal>copy-dependencies</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.directory}/dependencies/Server</outputDirectory>
-							<includeScope>runtime</includeScope>
-							<excludeTransitive>true</excludeTransitive>
-							<stripVersion>true</stripVersion>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.2.0</version>
-				<executions>
-					<execution>
-						<id>make-a-jar</id>
-						<phase>package</phase>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-						<configuration>
-							<finalName>Measurer</finalName>
-							<classifier>main1</classifier>
-							<includes>
-								<include>target/classes/Measurer.class</include>
-							</includes>
+							<descriptorRefs>
+								<descriptorRef>jar-with-dependencies</descriptorRef>
+							</descriptorRefs>
+							<archive>
+								<manifest>
+									<mainClass>measurer/MeasurerClient</mainClass>
+								</manifest>
+							</archive>
+							<finalName>Measurer</finalName> 
 							<outputDirectory>${basedir}/src/dockerfile/measurer</outputDirectory>
 						</configuration>
 					</execution>
 					<execution>
-						<id>make-a-jar-main2</id>
+						<id>server</id>
 						<phase>package</phase>
 						<goals>
-							<goal>jar</goal>
+							<goal>single</goal>
 						</goals>
 						<configuration>
-							<finalName>Server</finalName>
-							<classifier>main2</classifier>
-							<includes>
-								<include>target/classes/Server.class</include>
-							</includes>
+							<descriptorRefs>
+								<descriptorRef>jar-with-dependencies</descriptorRef>
+							</descriptorRefs>
+							<archive>
+								<manifest>
+									<mainClass>server/Server</mainClass>
+								</manifest>
+							</archive>
 							<outputDirectory>${basedir}/src/dockerfile/server</outputDirectory>
+							<finalName>Server</finalName> 
 						</configuration>
 					</execution>
 				</executions>

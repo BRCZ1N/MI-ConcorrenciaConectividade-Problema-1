@@ -1,6 +1,7 @@
 FROM openjdk:latest
 WORKDIR /server
-COPY Server-main2.jar /server
-EXPOSE 8101
-CMD ["java", "-jar" , "Server-main2.jar"]
+COPY Server-jar-with-dependencies.jar /server
+EXPOSE 8000
+EXPOSE 8100
+CMD ["java", "-jar" , "Server-jar-with-dependencies.jar"]
 
