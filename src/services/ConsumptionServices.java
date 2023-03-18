@@ -1,5 +1,6 @@
 package services;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -38,43 +39,51 @@ public class ConsumptionServices {
 
 	}
 
+	public LocalDate getLastInvoiceDateOrInitialDate(String idClient) {
+
+		if (InvoiceServices.getMapInvoices().get(idClient).isEmpty()) {
+
+			return LocalDate.now();
+
+		}
+
+		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		ArrayList<Invoice> userInvoices = InvoiceServices.getMapInvoices().get(idClient);
+		Invoice invoice = userInvoices.get(userInvoices.size() - 1);
+		LocalDate invoiceDate = LocalDate.parse(invoice.getIssuanceDate(), dateFormatter);
+
+		return invoiceDate;
+
+	}
+
 	public static double valueConsumptionInPeriod(String idClient) {
 
 		double consumptionTotal = 0;
-		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDateTime consumptionDate;
 		LocalDateTime currentDate = LocalDateTime.now();
 
 		for (Consumption consumption : mapConsumptions.get(idClient)) {
 
-			consumptionDate = LocalDateTime.parse(consumption.getDateTime(), dateFormatter);
+			consumptionDate = LocalDateTime.parse(consumption.getDateTime(), dateTimeFormatter);
+			ArrayList<Invoice> userInvoices = InvoiceServices.getMapInvoices().get(idClient);
+			Invoice invoice = userInvoices.get(userInvoices.size() - 1);
+			LocalDate invoiceDate = LocalDate.parse(invoice.getIssuanceDate(), dateFormatter);
 
-			if (InvoiceServices.getMapInvoices().get(idClient).isEmpty()) {
+			if ((consumptionDate.toLocalDate().isAfter(invoiceDate)
+					&& consumptionDate.toLocalDate().isBefore(currentDate.toLocalDate()))
+					|| consumptionDate.toLocalDate().equals(currentDate.toLocalDate())) {
 
-				if (consumptionDate.isBefore(currentDate) || consumptionDate.equals(currentDate)) {
-
-					consumptionTotal += consumption.getAmount();
-
-				}
-
-			} else {
-
-				ArrayList<Invoice> userInvoices = InvoiceServices.getMapInvoices().get(idClient);
-				Invoice invoice = userInvoices.get(userInvoices.size() - 1);
-				LocalDateTime invoiceDate = LocalDateTime.parse(invoice.getIssuanceDate(), dateFormatter);
-
-				if ((consumptionDate.isAfter(invoiceDate) && consumptionDate.isBefore(currentDate))
-						|| consumptionDate.equals(currentDate)) {
-
-					consumptionTotal += consumption.getAmount();
-
-				}
+				consumptionTotal += consumption.getAmount();
 
 			}
 
 		}
 
-		return consumptionTotal;
+	}
+
+	return consumptionTotal;
 
 	}
 
