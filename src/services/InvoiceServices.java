@@ -156,14 +156,7 @@ public class InvoiceServices {
 		ArrayList<Invoice> userInvoices = InvoiceServices.getMapInvoices().get(idClient);
 		Invoice lastInvoice = userInvoices.get(userInvoices.size() - 1);
 		LocalDateTime lastInvoiceDate = LocalDateTime.parse(lastInvoice.getIssuanceDate(), dateTimeFormatter);
-		LocalDateTime newInvoiceDate = lastInvoiceDate.plusDays(1);
-
-		for (Invoice invoice : userInvoices) {
-			LocalDateTime invoiceDate = LocalDateTime.parse(invoice.getIssuanceDate(), dateTimeFormatter);
-			if (invoiceDate.equals(newInvoiceDate)) {
-				newInvoiceDate = newInvoiceDate.plusDays(1);
-			}
-		}
+		LocalDateTime newInvoiceDate = lastInvoiceDate.plusSeconds(10);
 		
 		return newInvoiceDate;
 
