@@ -70,7 +70,7 @@
 									<mainClass>measurer/MeasurerClient</mainClass>
 								</manifest>
 							</archive>
-							<finalName>Measurer</finalName> 
+							<finalName>Measurer</finalName>
 							<outputDirectory>${basedir}/src/dockerfile/measurer</outputDirectory>
 						</configuration>
 					</execution>
@@ -90,7 +90,26 @@
 								</manifest>
 							</archive>
 							<outputDirectory>${basedir}/src/dockerfile/server</outputDirectory>
-							<finalName>Server</finalName> 
+							<finalName>Server</finalName>
+						</configuration>
+					</execution>
+					<execution>
+						<id>client</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<descriptorRefs>
+								<descriptorRef>jar-with-dependencies</descriptorRef>
+							</descriptorRefs>
+							<archive>
+								<manifest>
+									<mainClass>client/Client</mainClass>
+								</manifest>
+							</archive>
+							<outputDirectory>${basedir}/src/dockerfile/client</outputDirectory>
+							<finalName>Server</finalName>
 						</configuration>
 					</execution>
 				</executions>
