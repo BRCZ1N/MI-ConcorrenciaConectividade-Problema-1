@@ -6,34 +6,28 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.json.JSONObject;
-
 import http.RequestHttp;
 import http.ResponseHttp;
-import services.InvoiceServices;
+import services.UserServices;
 import utilityclasses.HttpCodes;
 import utilityclasses.HttpMethods;
 
-public class RouterInvoice implements RouterInterface {
+public class RouterUsers implements RouterInterface {
 
 	private Map<Pattern, MethodRouter> routers = new HashMap<>();
 	private Map<HttpMethods, ArrayList<Pattern>> httpPatterns = new HashMap<>();
 	private String idPattern = "(\\d+)";
+	private String passwordPattern = "(\\w+)";
 
-	public RouterInvoice() {
+	public RouterUsers() {
 
-		routers.put(Pattern.compile("/invoice/" + idPattern), this::getInvoice);
-		routers.put(Pattern.compile("/invoice/all/" + idPattern), this::getAllInvoices);
-		routers.put(Pattern.compile("/invoice/newInvoice/" + idPattern), this::generateInvoice);
+		routers.put(Pattern.compile("/users/statusConsumption/" + idPattern), this::getCurrentStateConsumption);
+		routers.put(Pattern.compile("/users/auth/id:"+ idPattern + "password:"+ passwordPattern), this::authClient);
 
 		ArrayList<Pattern> patterns = new ArrayList<>();
 
-		patterns.add(Pattern.compile("/invoice/" + idPattern));
-		patterns.add(Pattern.compile("/invoice/all/" + idPattern));
-		patterns.add(Pattern.compile("/invoice/newInvoice/" + idPattern ));
+		patterns.add(Pattern.compile("/consumption/statusConsumption/" + idPattern));
 		httpPatterns.put(HttpMethods.GET, patterns);
-		patterns = new ArrayList<>();
 
 	}
 
@@ -101,14 +95,12 @@ public class RouterInvoice implements RouterInterface {
 
 					responseHttp = execMethodRouter(http, pattern);
 
-				} else {
-
-					Map<String, String> mapHeaders = new HashMap<>();
-					mapHeaders.put("Allow", "POST");
-					mapHeaders.put("Content-Length", "0");
-					responseHttp = new ResponseHttp(HttpCodes.HTTP_405.getCodeHttp(), mapHeaders).toString();
-
 				}
+//				} else {
+//
+//					// Erro
+//
+//				}
 
 			} else {
 
@@ -128,28 +120,23 @@ public class RouterInvoice implements RouterInterface {
 //
 //				} else {
 //
-//					Map<String, String> mapHeaders = new HashMap<>();
-//					mapHeaders.put("Allow", "GET");
-//					mapHeaders.put("Content-Length", "0");
-//					responseHttp = new ResponseHttp(HttpCodes.HTTP_405.getCodeHttp(), mapHeaders).toString();
+//					// Erro
 //
 //				}
 //
 //			} else {
 //
-//				Map<String, String> mapHeaders = new HashMap<>();
-//				mapHeaders.put("Content-Length", "0");
-//				responseHttp = new ResponseHttp(HttpCodes.HTTP_404.getCodeHttp(), mapHeaders).toString();
+//				// Erro
 //
 //			}
-
+//
 //		} else if (http.getMethod() == HttpMethods.PUT) {
 //
 //			if (verifyPath(http.getPath())) {
 //
 //				if ((pattern = verifyPathInHttpMethod(HttpMethods.PUT, http.getPath())) != null) {
 //
-//					execMethodRouter(http, pattern);
+//					responseHttp = execMethodRouter(http, pattern);
 //
 //				} else {
 //
@@ -195,77 +182,51 @@ public class RouterInvoice implements RouterInterface {
 
 	}
 
-	public String getInvoice(RequestHttp http) {
+	public String getCurrentStateConsumption(RequestHttp http) {
 
-		Pattern pattern = Pattern.compile("/invoice/" + idPattern);
+		Pattern pattern = Pattern.compile("/users/statusConsumption/" + idPattern);
 		Matcher matcher = pattern.matcher(http.getPath());
 		matcher.matches();
-		ResponseHttp response;
-		JSONObject jsonRespString = InvoiceServices.getInvoiceJSON(matcher.group(1));
+		ResponseHttp response = null;
+		String jsonRespString = UserServices.getStatusConsumptionJSON(matcher.group(1)).toString();
 		Map<String, String> mapHeaders = new HashMap<>();
 
 		if (jsonRespString == null) {
 
 			mapHeaders.put("Content-Length", "0");
-			response = new ResponseHttp(HttpCodes.HTTP_404.getCodeHttp(), mapHeaders);
+			response = new ResponseHttp(HttpCodes.HTTP_404.toString(), mapHeaders);
 
 		} else {
 
 			mapHeaders.put("Content-Type", "application/json");
-			mapHeaders.put("Content-Length", Integer.toString(jsonRespString.toString().getBytes().length));
-			response = new ResponseHttp(HttpCodes.HTTP_200.getCodeHttp(), mapHeaders, jsonRespString.toString());
+			mapHeaders.put("Content-Length", Integer.toString(jsonRespString.getBytes().length));
+			response = new ResponseHttp(HttpCodes.HTTP_200.toString(), mapHeaders, jsonRespString);
 
 		}
 
 		return response.toString();
 
 	}
+	
+	public String authClient(RequestHttp http) {
 
-	public String getAllInvoices(RequestHttp http) {
-
-		Pattern pattern = Pattern.compile("/invoice/all/" + idPattern);
+		Pattern pattern = Pattern.compile("/users/auth/id:"+ idPattern + "password:"+ passwordPattern);
 		Matcher matcher = pattern.matcher(http.getPath());
 		matcher.matches();
-		ResponseHttp response;
-		JSONObject jsonRespString = InvoiceServices.getInvoicesJSON(matcher.group(1));
+		ResponseHttp response = null;
+		String authResp = UserServices.authClient(matcher.group(1), matcher.group(2));
 		Map<String, String> mapHeaders = new HashMap<>();
 
-		if (jsonRespString == null) {
+		if (authResp == null) {
 
 			mapHeaders.put("Content-Length", "0");
-			response = new ResponseHttp(HttpCodes.HTTP_404.getCodeHttp(), mapHeaders);
+			response = new ResponseHttp(HttpCodes.HTTP_404.toString(), mapHeaders);
 
 		} else {
 
-			mapHeaders.put("Content-Type", "application/json");
-			mapHeaders.put("Content-Length", Integer.toString(jsonRespString.toString().getBytes().length));
-			response = new ResponseHttp(HttpCodes.HTTP_200.getCodeHttp(), mapHeaders, jsonRespString.toString());
-
-		}
-
-		return response.toString();
-
-	}
-
-	public String generateInvoice(RequestHttp http) {
-
-		Pattern pattern = Pattern.compile("/invoice/newInvoice/" + idPattern);
-		Matcher matcher = pattern.matcher(http.getPath());
-		matcher.matches();
-		ResponseHttp response;
-		Map<String, String> mapHeaders = new HashMap<>();
-		String respMethod = InvoiceServices.addInvoice(matcher.group(1)).toString();
-
-		if (respMethod == null) {
-
-			mapHeaders.put("Content-Length", "0");
-			response = new ResponseHttp(HttpCodes.HTTP_404.getCodeHttp(), mapHeaders);
-
-		} else {
-
-			mapHeaders.put("Content-Length", "0");
-			mapHeaders.put("Location", "/invoice/" + respMethod);
-			response = new ResponseHttp(HttpCodes.HTTP_201.getCodeHttp(), mapHeaders);
+			mapHeaders.put("Content-Type", "text/plain");
+			mapHeaders.put("Content-Length", Integer.toString(authResp.getBytes().length));
+			response = new ResponseHttp(HttpCodes.HTTP_200.toString(), mapHeaders, authResp);
 
 		}
 

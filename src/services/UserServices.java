@@ -3,6 +3,9 @@ package services;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import org.json.JSONObject;
+
 import resources.User;
 import utilityclasses.StatusConsumeEnum;
 
@@ -19,13 +22,13 @@ public class UserServices {
 
 	public static void generateUsersTest() {
 
-		UserServices.addUser(new User("Usuario1", "Test1",StatusConsumeEnum.NORMAL));// 0 - ID
-		UserServices.addUser(new User("Usuario2", "Test2",StatusConsumeEnum.NORMAL));// 1 - ID
-		UserServices.addUser(new User("Usuario3", "Test3",StatusConsumeEnum.NORMAL));// 2 - ID
-		UserServices.addUser(new User("Usuario4", "Test4",StatusConsumeEnum.NORMAL));// 3 - ID
-		UserServices.addUser(new User("Usuario5", "Test5",StatusConsumeEnum.NORMAL));// 4 - ID
-		UserServices.addUser(new User("Usuario6", "Test6",StatusConsumeEnum.NORMAL));// 5 - ID
-		UserServices.addUser(new User("Usuario7", "Test7",StatusConsumeEnum.NORMAL));// 6 - ID
+		UserServices.addUser(new User("Usuario1", "Test1", StatusConsumeEnum.NORMAL));// 0 - ID
+		UserServices.addUser(new User("Usuario2", "Test2", StatusConsumeEnum.NORMAL));// 1 - ID
+		UserServices.addUser(new User("Usuario3", "Test3", StatusConsumeEnum.NORMAL));// 2 - ID
+		UserServices.addUser(new User("Usuario4", "Test4", StatusConsumeEnum.NORMAL));// 3 - ID
+		UserServices.addUser(new User("Usuario5", "Test5", StatusConsumeEnum.NORMAL));// 4 - ID
+		UserServices.addUser(new User("Usuario6", "Test6", StatusConsumeEnum.NORMAL));// 5 - ID
+		UserServices.addUser(new User("Usuario7", "Test7", StatusConsumeEnum.NORMAL));// 6 - ID
 
 	}
 
@@ -110,14 +113,31 @@ public class UserServices {
 		}
 
 	}
-	
+
+	public static JSONObject getStatusConsumptionJSON(String idClient) {
+
+		JSONObject json = new JSONObject();
+
+		if (containsClient(idClient)) {
+
+			json.put("idClient", idClient);
+			json.put("statusConsumption", mapUsers.get(idClient).getStatusConsumption().getTypeConsume());
+
+			return json;
+
+		}
+
+		return null;
+
+	}
+
 	public static void refreshStatusConsumption(String idClient, double currentConsumption) {
 
 		User user = getUser(idClient);
 
 		System.out.println(currentConsumption);
 		System.out.println(ConsumptionServices.averageConsumptions(idClient) + 200);
-		
+
 		if (currentConsumption > ConsumptionServices.averageConsumptions(idClient) + 200) {
 
 			user.setStatusConsumption(StatusConsumeEnum.HIGH);
@@ -129,6 +149,36 @@ public class UserServices {
 			editUser(user);
 
 		}
+
+	}
+
+	public static boolean containsClient(String idClient) {
+
+		for (String id : mapUsers.keySet()) {
+
+			if (id.equals(idClient)) {
+
+				return true;
+			}
+
+		}
+
+		return false;
+
+	}
+	
+	public static String authClient(String idClient, String password) {
+
+		for (String id : mapUsers.keySet()) {
+
+			if (id.equals(idClient)) {
+
+				return "AUTENTICADO";
+			}
+
+		}
+
+		return "NAO AUTENTICADO";
 
 	}
 

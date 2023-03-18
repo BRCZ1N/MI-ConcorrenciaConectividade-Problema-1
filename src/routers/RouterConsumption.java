@@ -23,12 +23,10 @@ public class RouterConsumption implements RouterInterface {
 
 	public RouterConsumption() {
 
-//		routers.put(Pattern.compile("/consumption/status/" + idPattern), this::getCurrentStateConsumption);
 		routers.put(Pattern.compile("/consumption/historic/" + idPattern), this::getHistoricConsumption);
 
 		ArrayList<Pattern> patterns = new ArrayList<>();
-
-//		patterns.add(Pattern.compile("/consumption/status/" + idPattern));
+		
 		patterns.add(Pattern.compile("/consumption/historic/" + idPattern));
 		httpPatterns.put(HttpMethods.GET, patterns);
 
@@ -184,30 +182,6 @@ public class RouterConsumption implements RouterInterface {
 		return responseHttp;
 
 	}
-
-//	public String getCurrentStateConsumption(RequestHttp http) {
-//
-//		ResponseHttp response = null;
-//		String[] idClient = http.getPath().split("/");
-//		String jsonRespString = ConsumptionServices.getConsumptionsJSON(idClient[2]).toString();
-//		Map<String, String> mapHeaders = new HashMap<>();
-//
-//		if (jsonRespString == null) {
-//
-//			mapHeaders.put("Content-Length", "0");
-//			response = new ResponseHttp(HttpCodes.HTTP_404.toString(), mapHeaders);
-//
-//		} else {
-//
-//			mapHeaders.put("Content-Type", "application/json");
-//			mapHeaders.put("Content-Length", Integer.toString(jsonRespString.getBytes().length));
-//			response = new ResponseHttp(HttpCodes.HTTP_200.toString(), mapHeaders, jsonRespString);
-//
-//		}
-//
-//		return response.toString();
-//
-//	}
 
 	public String getHistoricConsumption(RequestHttp http) {
 

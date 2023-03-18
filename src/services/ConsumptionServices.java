@@ -1,14 +1,13 @@
 package services;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import org.json.JSONObject;
 import resources.Consumption;
+import resources.Invoice;
 
 public class ConsumptionServices {
 
@@ -18,6 +17,14 @@ public class ConsumptionServices {
 
 		mapConsumptions = new HashMap<>();
 
+	}
+
+	public static Map<String, ArrayList<Consumption>> getMapConsumptions() {
+		return mapConsumptions;
+	}
+
+	public static void setMapConsumptions(Map<String, ArrayList<Consumption>> mapConsumptions) {
+		ConsumptionServices.mapConsumptions = mapConsumptions;
 	}
 
 	public static void addConsumption(String idClient, Consumption consumption) {
@@ -31,20 +38,33 @@ public class ConsumptionServices {
 
 	}
 
-	public static double valueConsumptionInPeriod(String idClient, LocalDate dateInitial, LocalDate dateFinal) {
+	public static double valueConsumptionInPeriod(String idClient) {
 
 		double consumptionTotal = 0;
+		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime consumptionDate;
+		LocalDateTime currentDate = LocalDateTime.now();
 
-		for (Map.Entry<String, ArrayList<Consumption>> consumptions : mapConsumptions.entrySet()) {
+		for (Consumption consumption : mapConsumptions.get(idClient)) {
 
-			for (Consumption consumption : consumptions.getValue()) {
+			consumptionDate = LocalDateTime.parse(consumption.getDateTime(), dateFormatter);
 
-				DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-				LocalDateTime dateTime = LocalDateTime.parse(consumption.getDateTime(), dateFormatter);
-				LocalDate dateConsumption = dateTime.toLocalDate();
+			if (InvoiceServices.getMapInvoices().get(idClient).isEmpty()) {
 
-				if ((dateConsumption.isAfter(dateInitial) && dateConsumption.isBefore(dateFinal))
-						|| dateConsumption.equals(dateInitial) || dateConsumption.equals(dateFinal)) {
+				if (consumptionDate.isBefore(currentDate) || consumptionDate.equals(currentDate)) {
+
+					consumptionTotal += consumption.getAmount();
+
+				}
+
+			} else {
+
+				ArrayList<Invoice> userInvoices = InvoiceServices.getMapInvoices().get(idClient);
+				Invoice invoice = userInvoices.get(userInvoices.size() - 1);
+				LocalDateTime invoiceDate = LocalDateTime.parse(invoice.getIssuanceDate(), dateFormatter);
+
+				if ((consumptionDate.isAfter(invoiceDate) && consumptionDate.isBefore(currentDate))
+						|| consumptionDate.equals(currentDate)) {
 
 					consumptionTotal += consumption.getAmount();
 
@@ -55,28 +75,6 @@ public class ConsumptionServices {
 		}
 
 		return consumptionTotal;
-
-	}
-
-	public static double testAddConsumoClient(String id) {
-
-		double consumoTotal = 0;
-
-		for (Entry<String, ArrayList<Consumption>> user : mapConsumptions.entrySet()) {
-
-			if (user.getKey().equals(id)) {
-
-				for (Consumption consumo : user.getValue()) {
-
-					consumoTotal += consumo.getAmount();
-
-				}
-
-			}
-
-		}
-
-		return consumoTotal;
 
 	}
 

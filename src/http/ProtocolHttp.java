@@ -63,7 +63,7 @@ public class ProtocolHttp {
 				bodyJson.append(bodyLine);
 
 			}
-			
+
 			try {
 
 				req = new RequestHttp(HttpMethods.valueOf(responseHeaders[0]), responseHeaders[1], responseHeaders[2],
@@ -84,77 +84,12 @@ public class ProtocolHttp {
 
 	}
 
-	public static void sendResponse(OutputStream out, String response) throws IOException {
+	public static void sendMessage(OutputStream out, String response) throws IOException {
 
 		BufferedOutputStream buffer = new BufferedOutputStream(out);
 
 		buffer.write(response.getBytes("UTF-8"));
 		buffer.flush();
-
-	}
-	
-	public ResponseHttp readResponse(InputStream input) throws IOException {
-
-		ResponseHttp req = new ResponseHttp();
-		Queue<String> httpData = new LinkedList<String>();
-		String reqLine = null;
-		String responseHeaders = null;
-		Map<String, String> mapHeaders = null;
-		StringBuilder str = new StringBuilder();
-		String[] linesReq;
-
-		BufferedInputStream buffer = new BufferedInputStream(input);
-
-		if (buffer.available() > 0) {
-
-			while (buffer.available() > 0) {
-
-				str.append((char) buffer.read());
-
-			}
-
-			linesReq = str.toString().split("\r\n");
-
-			for (String line : linesReq) {
-
-				httpData.add(line);
-
-			}
-
-			responseHeaders = httpData.poll();
-			mapHeaders = new HashMap<String, String>();
-
-			while (!httpData.isEmpty() && !(reqLine = httpData.poll()).isBlank()) {
-
-				String[] header = reqLine.split(":\s");
-				mapHeaders.put(header[0], header[1]);
-
-			}
-
-			StringBuilder bodyJson = new StringBuilder();
-			String bodyLine;
-
-			while ((bodyLine = httpData.poll()) != null) {
-
-				bodyJson.append(bodyLine);
-
-			}
-
-			try {
-
-				req = new ResponseHttp(responseHeaders, mapHeaders, bodyJson.toString());
-
-			} catch (JSONException e) {
-
-			} finally {
-
-				req = new ResponseHttp(responseHeaders, mapHeaders);
-
-			}
-
-		}
-
-		return req;
 
 	}
 

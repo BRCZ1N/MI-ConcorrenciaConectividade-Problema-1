@@ -9,6 +9,7 @@ public class Invoice {
 
 	private String id;
 	private String idClient;
+	private String nameClient;
 	private String issuanceDate;
 	private String expirationDate;
 	private double fare;
@@ -16,13 +17,15 @@ public class Invoice {
 	private double invoiceValue;
 	private StatusConsumeEnum currentStatus;
 
-	public Invoice(String id, String idClient, double fare, double consumption, StatusConsumeEnum currentStatus) {
+	public Invoice(String id, String idClient, String nameClient, double fare, double consumption,
+			StatusConsumeEnum currentStatus) {
 
 		LocalDate currentDate = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		
+
 		this.id = id;
 		this.idClient = idClient;
+		this.nameClient = nameClient;
 		this.issuanceDate = currentDate.format(formatter);
 		this.expirationDate = currentDate.plusDays(15).format(formatter);
 		this.fare = fare;
@@ -30,7 +33,6 @@ public class Invoice {
 		this.invoiceValue = consumption * fare;
 		this.currentStatus = currentStatus;
 
-	
 	}
 
 	public String getId() {
@@ -47,6 +49,14 @@ public class Invoice {
 
 	public void setIdClient(String idClient) {
 		this.idClient = idClient;
+	}
+
+	public String getNameClient() {
+		return nameClient;
+	}
+
+	public void setNameClient(String nameClient) {
+		this.nameClient = nameClient;
 	}
 
 	public String getIssuanceDate() {

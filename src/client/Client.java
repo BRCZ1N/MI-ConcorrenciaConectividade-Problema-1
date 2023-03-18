@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.*;
+import java.net.http.HttpClient;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -11,15 +12,16 @@ import java.util.Queue;
 import java.util.Scanner;
 
 import org.json.JSONException;
+
+import http.ProtocolHttp;
 import http.RequestHttp;
 import http.ResponseHttp;
 import utilityclasses.HttpMethods;
-import utilityclasses.Messages;
 
 public class Client {
 
 	private Socket clientSocket;
-	private static Scanner scan = new Scanner(System.in);
+	private Scanner scan = new Scanner(System.in);
 	private String clientID;
 	private String clientPassword;
 
@@ -45,12 +47,12 @@ public class Client {
 
 		Client client = new Client();
 		client.generateSocketClient("localhost", 8000);
+		client.clientExecution();
 
 	}
 
 	private void clientExecution() throws IOException {
 
-		String clientMessage = "";
 		String clientAuthentication = "";
 
 		do {
@@ -63,12 +65,21 @@ public class Client {
 			clientID = scan.nextLine();
 			System.out.println("Digite a senha:");
 			clientPassword = scan.nextLine();
-			Messages.sendMessage(clientSocket, clientID + ":" + clientPassword);
-			clientAuthentication = (String) Messages.receiveMessage(clientSocket);
+			
+			Map<String,String >mapHeaders = new HashMap<>();
+			mapHeaders.put("Content-Length", "0");
+			RequestHttp request = new RequestHttp(HttpMethods.GET, "/user/historic/" + clientID, "HTTP/1.1");
+			ProtocolHttp.sendMessage(clientSocket.getOutputStream(),request.toString());
+			
+		} while (readResponse(clientSocket.getInputStream()).getBody().equals("NAO AUTENTICADO"));
 
-		} while (clientAuthentication.equals("USER NOT FOUND"));
+	}
 
-		while (true) {
+	private void clientMenu() throws IOException {
+
+		boolean connection;
+		
+		while ((connection = true)) {
 
 			System.out.println("===================================================");
 			System.out.println("========= Consumo de energia inteligente ==========");
@@ -80,6 +91,7 @@ public class Client {
 			System.out.println("====== (3) - Visualizar todas as faturas geradas ==");
 			System.out.println("====== (4) - Visualizar fatura					 ==");
 			System.out.println("====== (5) - Status de consumo do cliente	   	 ==");
+			System.out.println("====== (6) - Desconectar 					   	 ==");
 			System.out.println("=========== Digite a opção desejada ===============");
 
 			String opcao = scan.nextLine();
@@ -92,36 +104,45 @@ public class Client {
 			case "1":
 
 				request = new RequestHttp(HttpMethods.GET, "/consumption/historic/" + clientID, "HTTP/1.1");
+				ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
 				response = readResponse(clientSocket.getInputStream());
 				System.out.println("Histórico do cliente:");
+				System.out.println(response);
 				break;
 
 			case "2":
 
 				request = new RequestHttp(HttpMethods.GET, "/invoice/newInvoice/" + clientID, "HTTP/1.1");
+				ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
 				response = readResponse(clientSocket.getInputStream());
 				System.out.println("Fatura gerada:");
+				System.out.println(response);
 				break;
 
 			case "3":
 
 				request = new RequestHttp(HttpMethods.GET, "/invoice/" + clientID, "HTTP/1.1");
+				ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
 				response = readResponse(clientSocket.getInputStream());
 				System.out.println("Fatura:");
+				System.out.println(response);
 				break;
 
 			case "4":
 
 				request = new RequestHttp(HttpMethods.GET, "/invoice/all/" + clientID, "HTTP/1.1");
+				ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
 				response = readResponse(clientSocket.getInputStream());
 				System.out.println("Faturas:");
 				break;
 
 			case "5":
 
-				request = new RequestHttp(HttpMethods.GET, "/client/statusConsumption/" + clientID, "HTTP/1.1");
+				request = new RequestHttp(HttpMethods.GET, "/consumption/statusConsumption/" + clientID, "HTTP/1.1");
+				ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
 				response = readResponse(clientSocket.getInputStream());
 				System.out.println("Status de consumo:");
+				System.out.println(response);
 				break;
 
 			default:
@@ -185,7 +206,6 @@ public class Client {
 			try {
 
 				req = new ResponseHttp(responseHeaders, mapHeaders, bodyJson.toString());
-				;
 
 			} catch (JSONException e) {
 

@@ -47,7 +47,7 @@ public class ThreadTcpClient implements Runnable {
 					if (reqHttp != null) {
 
 						respHttp = pathRouter.execRoute(reqHttp);
-						ProtocolHttp.sendResponse(socket.getOutputStream(), respHttp);
+						ProtocolHttp.sendMessage(socket.getOutputStream(), respHttp);
 						System.out.println();
 						System.out.println("===================================================================");
 						System.out.println("Resposta enviada ao cliente conectado na porta:" + socket.getPort());

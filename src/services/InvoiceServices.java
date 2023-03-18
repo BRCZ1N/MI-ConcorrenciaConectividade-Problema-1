@@ -1,6 +1,5 @@
 package services;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,12 +20,28 @@ public class InvoiceServices {
 
 	}
 
-	public static String addInvoice(String idClient, LocalDate dateInitial, LocalDate dateFinal) {
+	public static Map<String, ArrayList<Invoice>> getMapInvoices() {
+		return mapInvoices;
+	}
+
+	public static void setMapInvoices(Map<String, ArrayList<Invoice>> mapInvoices) {
+		InvoiceServices.mapInvoices = mapInvoices;
+	}
+
+	public static long getIdInvoice() {
+		return idInvoice;
+	}
+
+	public static void setIdInvoice(long idInvoice) {
+		InvoiceServices.idInvoice = idInvoice;
+	}
+
+	public static String addInvoice(String idClient) {
 
 		if (containsClient(idClient)) {
 
-			Invoice invoice = new Invoice(Long.toString(idInvoice), idClient, Fares.FARE_1.getFare(),
-					ConsumptionServices.valueConsumptionInPeriod(idClient, dateInitial, dateFinal),
+			Invoice invoice = new Invoice(Long.toString(idInvoice), idClient, UserServices.getUser(idClient).getName(),
+					Fares.FARE_1.getFare(), ConsumptionServices.valueConsumptionInPeriod(idClient),
 					UserServices.getUser(idClient).getStatusConsumption());
 			refreshInvoiceMap(idClient, invoice);
 			idInvoice++;

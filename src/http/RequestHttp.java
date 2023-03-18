@@ -1,6 +1,7 @@
 package http;
 
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.json.JSONObject;
 
@@ -14,7 +15,8 @@ public class RequestHttp {
 	private Map<String, String> headers;
 	private JSONObject body;
 
-	public RequestHttp(HttpMethods method, String path, String versionHttp, Map<String, String> headers,JSONObject body) {
+	public RequestHttp(HttpMethods method, String path, String versionHttp, Map<String, String> headers,
+			JSONObject body) {
 
 		this.method = method;
 		this.path = path;
@@ -31,7 +33,7 @@ public class RequestHttp {
 		this.headers = headers;
 
 	}
-	
+
 	public RequestHttp(HttpMethods method, String path, String versionHttp) {
 
 		this.method = method;
@@ -41,7 +43,7 @@ public class RequestHttp {
 	}
 
 	public RequestHttp() {
-		
+
 	}
 
 	public HttpMethods getMethod() {
@@ -82,6 +84,34 @@ public class RequestHttp {
 
 	public void setBody(JSONObject body) {
 		this.body = body;
+	}
+
+	public String headersToString() {
+
+		StringBuilder stringHeaders = new StringBuilder();
+		for (Entry<String, String> header : headers.entrySet()) {
+
+			stringHeaders.append(header.getKey() + ":" + header.getValue() + "\r\n");
+
+		}
+
+		return stringHeaders.toString();
+
+	}
+
+	@Override
+	public String toString() {
+
+		if (body != null) {
+
+			return this.method +" "+ this.path +" "+ this.versionHttp + "\r\n" + this.headersToString() + "\r\n" + this.body;
+
+		} else {
+
+			return this.method + this.path + this.versionHttp + "\r\n" + this.headersToString() + "\r\n";
+
+		}
+
 	}
 
 }
