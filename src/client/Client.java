@@ -57,7 +57,6 @@ public class Client {
 
 		do {
 
-			clientAuthentication = ".";
 			System.out.println("===================================================");
 			System.out.println("========= Consumo de energia inteligente ==========");
 			System.out.println("===================================================");
