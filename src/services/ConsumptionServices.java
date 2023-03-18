@@ -60,20 +60,16 @@ public class ConsumptionServices {
 
 		double consumptionTotal = 0;
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDateTime consumptionDate;
-		LocalDateTime currentDate = LocalDateTime.now();
+		LocalDateTime currentDateTime = LocalDateTime.now();
+		LocalDateTime invoiceDateTime = InvoiceServices.getInitialDateInvoiceOrInitialDate(idClient);
 
 		for (Consumption consumption : mapConsumptions.get(idClient)) {
 
 			consumptionDate = LocalDateTime.parse(consumption.getDateTime(), dateTimeFormatter);
-			ArrayList<Invoice> userInvoices = InvoiceServices.getMapInvoices().get(idClient);
-			Invoice invoice = userInvoices.get(userInvoices.size() - 1);
-			LocalDate invoiceDate = LocalDate.parse(invoice.getIssuanceDate(), dateFormatter);
 
-			if ((consumptionDate.toLocalDate().isAfter(invoiceDate)
-					&& consumptionDate.toLocalDate().isBefore(currentDate.toLocalDate()))
-					|| consumptionDate.toLocalDate().equals(currentDate.toLocalDate())) {
+			if ((consumptionDate.isAfter(invoiceDateTime) && consumptionDate.isBefore(currentDateTime))
+					|| consumptionDate.equals(currentDateTime)) {
 
 				consumptionTotal += consumption.getAmount();
 
@@ -81,11 +77,10 @@ public class ConsumptionServices {
 
 		}
 
-	}
-
-	return consumptionTotal;
+		return consumptionTotal;
 
 	}
+
 
 	private static void refreshConsumptionMap(String idClient, Consumption consumption) {
 

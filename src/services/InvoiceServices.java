@@ -1,5 +1,7 @@
 package services;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -139,6 +141,31 @@ public class InvoiceServices {
 	public static void addSlotClientInvoices(String idClient) {
 
 		mapInvoices.put(idClient, new ArrayList<Invoice>());
+
+	}
+
+	public static LocalDateTime getInitialDateInvoiceOrInitialDate(String idClient) {
+
+		if (InvoiceServices.getMapInvoices().get(idClient).isEmpty()) {
+
+			return LocalDateTime.MIN;
+
+		}
+
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		ArrayList<Invoice> userInvoices = InvoiceServices.getMapInvoices().get(idClient);
+		Invoice lastInvoice = userInvoices.get(userInvoices.size() - 1);
+		LocalDateTime lastInvoiceDate = LocalDateTime.parse(lastInvoice.getIssuanceDate(), dateTimeFormatter);
+		LocalDateTime newInvoiceDate = lastInvoiceDate.plusDays(1);
+
+		for (Invoice invoice : userInvoices) {
+			LocalDateTime invoiceDate = LocalDateTime.parse(invoice.getIssuanceDate(), dateTimeFormatter);
+			if (invoiceDate.equals(newInvoiceDate)) {
+				newInvoiceDate = newInvoiceDate.plusDays(1);
+			}
+		}
+		
+		return newInvoiceDate;
 
 	}
 
