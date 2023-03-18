@@ -1,15 +1,27 @@
 package client;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
 import java.util.Scanner;
 
+import org.json.JSONException;
+import http.RequestHttp;
+import http.ResponseHttp;
+import utilityclasses.HttpMethods;
 import utilityclasses.Messages;
 
 public class Client {
 
 	private Socket clientSocket;
 	private static Scanner scan = new Scanner(System.in);
+	private String clientID;
+	private String clientPassword;
 
 	private void generateSocketClient(String ip, int port) {
 
@@ -41,25 +53,151 @@ public class Client {
 		String clientMessage = "";
 		String clientAuthentication = "";
 
-		while (!clientMessage.equals("quit")) {
+		do {
 
-			do {
+			clientAuthentication = "";
+			System.out.println("===================================================");
+			System.out.println("========= Consumo de energia inteligente ==========");
+			System.out.println("===================================================");
+			System.out.println("Digite o id:");
+			clientID = scan.nextLine();
+			System.out.println("Digite a senha:");
+			clientPassword = scan.nextLine();
+			Messages.sendMessage(clientSocket, clientID + ":" + clientPassword);
+			clientAuthentication = (String) Messages.receiveMessage(clientSocket);
 
-				System.out.println(clientAuthentication);
-				clientAuthentication = "";
-				System.out.println("------------Consumo de energia inteligente software------------");
-				System.out.println("Digite o id:");
-				String clientID = scan.nextLine();
-				System.out.println("Digite a senha:");
-				String clientPassword = scan.nextLine();
-				Messages.sendMessage(clientSocket, clientID + ":" + clientPassword);
-				clientAuthentication = (String) Messages.receiveMessage(clientSocket);
+		} while (clientAuthentication.equals("USER NOT FOUND"));
 
-			} while (clientAuthentication.equals("USER NOT FOUND"));
+		while (true) {
+
+			System.out.println("===================================================");
+			System.out.println("========= Consumo de energia inteligente ==========");
+			System.out.println("===================================================");
+			System.out.println("================ Menu de cliente ==================");
+			System.out.println("===================================================");
+			System.out.println("====== (1) - Visualizar histórico de consumo     ==");
+			System.out.println("====== (2) - Gerar fatura					     ==");
+			System.out.println("====== (3) - Visualizar todas as faturas geradas ==");
+			System.out.println("====== (4) - Visualizar fatura					 ==");
+			System.out.println("====== (5) - Status de consumo do cliente	   	 ==");
+			System.out.println("=========== Digite a opção desejada ===============");
+
+			String opcao = scan.nextLine();
+
+			RequestHttp request;
+			ResponseHttp response;
+
+			switch (opcao) {
+
+			case "1":
+
+				request = new RequestHttp(HttpMethods.GET, "/consumption/historic/" + clientID, "HTTP/1.1");
+				response = readResponse(clientSocket.getInputStream());
+				System.out.println("Histórico do cliente:");
+				break;
+
+			case "2":
+
+				request = new RequestHttp(HttpMethods.GET, "/invoice/newInvoice/" + clientID, "HTTP/1.1");
+				response = readResponse(clientSocket.getInputStream());
+				System.out.println("Fatura gerada:");
+				break;
+
+			case "3":
+
+				request = new RequestHttp(HttpMethods.GET, "/invoice/" + clientID, "HTTP/1.1");
+				response = readResponse(clientSocket.getInputStream());
+				System.out.println("Fatura:");
+				break;
+
+			case "4":
+
+				request = new RequestHttp(HttpMethods.GET, "/invoice/all/" + clientID, "HTTP/1.1");
+				response = readResponse(clientSocket.getInputStream());
+				System.out.println("Faturas:");
+				break;
+
+			case "5":
+
+				request = new RequestHttp(HttpMethods.GET, "/client/statusConsumption/" + clientID, "HTTP/1.1");
+				response = readResponse(clientSocket.getInputStream());
+				System.out.println("Status de consumo:");
+				break;
+
+			default:
+
+				System.out.println("Opção invalida");
+				break;
+
+			}
 
 		}
 
-		clientSocket.close();
+	}
+
+	public ResponseHttp readResponse(InputStream input) throws IOException {
+
+		ResponseHttp req = new ResponseHttp();
+		Queue<String> httpData = new LinkedList<String>();
+		String reqLine = null;
+		String responseHeaders = null;
+		Map<String, String> mapHeaders = null;
+		StringBuilder str = new StringBuilder();
+		String[] linesReq;
+
+		BufferedInputStream buffer = new BufferedInputStream(input);
+
+		if (buffer.available() > 0) {
+
+			while (buffer.available() > 0) {
+
+				str.append((char) buffer.read());
+
+			}
+
+			linesReq = str.toString().split("\r\n");
+
+			for (String line : linesReq) {
+
+				httpData.add(line);
+
+			}
+
+			responseHeaders = httpData.poll();
+			mapHeaders = new HashMap<String, String>();
+
+			while (!httpData.isEmpty() && !(reqLine = httpData.poll()).isBlank()) {
+
+				String[] header = reqLine.split(":\s");
+				mapHeaders.put(header[0], header[1]);
+
+			}
+
+			StringBuilder bodyJson = new StringBuilder();
+			String bodyLine;
+
+			while ((bodyLine = httpData.poll()) != null) {
+
+				bodyJson.append(bodyLine);
+
+			}
+
+			try {
+
+				req = new ResponseHttp(responseHeaders, mapHeaders, bodyJson.toString());
+				;
+
+			} catch (JSONException e) {
+
+			} finally {
+
+				req = new ResponseHttp(responseHeaders, mapHeaders);
+
+			}
+
+		}
+
+		return req;
 
 	}
 

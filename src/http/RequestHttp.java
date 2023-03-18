@@ -31,6 +31,14 @@ public class RequestHttp {
 		this.headers = headers;
 
 	}
+	
+	public RequestHttp(HttpMethods method, String path, String versionHttp) {
+
+		this.method = method;
+		this.path = path;
+		this.versionHttp = versionHttp;
+
+	}
 
 	public RequestHttp() {
 		

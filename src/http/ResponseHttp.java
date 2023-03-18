@@ -23,6 +23,10 @@ public class ResponseHttp {
 
 	}
 
+	public ResponseHttp() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getStatusLine() {
 		return statusLine;
 	}

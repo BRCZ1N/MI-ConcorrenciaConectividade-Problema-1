@@ -28,24 +28,23 @@ public class RouterInvoice implements RouterInterface {
 
 		routers.put(Pattern.compile("/invoice/" + idPattern), this::getInvoice);
 		routers.put(Pattern.compile("/invoice/all/" + idPattern), this::getAllInvoices);
-		routers.put(Pattern.compile("/invoice/newInvoice/" + idPattern + "/data\\?inicio=" + datePattern + "&fim=" + datePattern),
-				this::createInvoice);
+		routers.put(Pattern.compile("/invoice/newInvoice/" + idPattern), this::generateInvoice);
 
 		ArrayList<Pattern> patterns = new ArrayList<>();
 
 		patterns.add(Pattern.compile("/invoice/" + idPattern));
 		patterns.add(Pattern.compile("/invoice/all/" + idPattern));
+		patterns.add(Pattern
+				.compile("/invoice/newInvoice/" + idPattern + "/data\\?inicio=" + datePattern + "&fim=" + datePattern));
 		httpPatterns.put(HttpMethods.GET, patterns);
 		patterns = new ArrayList<>();
-		patterns.add(Pattern.compile("/invoice/newInvoice/" + idPattern + "/data\\?inicio=" + datePattern + "&fim=" + datePattern));
-		httpPatterns.put(HttpMethods.POST, patterns);
 
 	}
 
 	public boolean verifyPath(String path) {
 
 		for (Entry<Pattern, MethodRouter> pattern : routers.entrySet()) {
-			
+
 			if (pattern.getKey().matcher(path).matches()) {
 
 				return true;
@@ -124,9 +123,9 @@ public class RouterInvoice implements RouterInterface {
 			}
 
 		} else if (http.getMethod() == HttpMethods.POST) {
-			
+
 			if (verifyPath(http.getPath())) {
-				
+
 				if ((pattern = verifyPathInHttpMethod(HttpMethods.POST, http.getPath())) != null) {
 
 					responseHttp = execMethodRouter(http, pattern);
@@ -252,15 +251,17 @@ public class RouterInvoice implements RouterInterface {
 
 	}
 
-	public String createInvoice(RequestHttp http) {
+	public String generateInvoice(RequestHttp http) {
 
-		Pattern pattern = Pattern.compile("/invoice/newInvoice/" + idPattern + "/data\\?inicio=" + datePattern + "&fim=" + datePattern);
+		Pattern pattern = Pattern
+				.compile("/invoice/newInvoice/" + idPattern + "/data\\?inicio=" + datePattern + "&fim=" + datePattern);
 		Matcher matcher = pattern.matcher(http.getPath());
 		matcher.matches();
 		ResponseHttp response;
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		Map<String, String> mapHeaders = new HashMap<>();
-		String respMethod = InvoiceServices.addInvoice(matcher.group(1), LocalDate.parse(matcher.group(2), formatter),LocalDate.parse(matcher.group(3), formatter)).toString();
+		String respMethod = InvoiceServices.addInvoice(matcher.group(1), LocalDate.parse(matcher.group(2), formatter),
+				LocalDate.parse(matcher.group(3), formatter)).toString();
 
 		if (respMethod == null) {
 
