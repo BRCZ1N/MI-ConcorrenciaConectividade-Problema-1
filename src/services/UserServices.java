@@ -166,12 +166,12 @@ public class UserServices {
 		return false;
 
 	}
-	
-	public static String authClient(String idClient, String password) {
 
-		for (String id : mapUsers.keySet()) {
+	public static String authClient(String idClient, String passwordClient) {
 
-			if (id.equals(idClient)) {
+		for (Entry<String, User> client : mapUsers.entrySet()) {
+
+			if (client.getValue().getId().equals(idClient) && client.getValue().getPassword().equals(passwordClient)) {
 
 				return "AUTENTICADO";
 			}

@@ -42,8 +42,16 @@ public class InvoiceServices {
 
 		if (containsClient(idClient)) {
 
+			LocalDateTime currentDate = LocalDateTime.now();
+
+			if (containsInvoiceDate(idClient)) {
+
+				currentDate = currentDate.plusDays(1);
+
+			}
+
 			Invoice invoice = new Invoice(Long.toString(idInvoice), idClient, UserServices.getUser(idClient).getName(),
-					Fares.FARE_1.getFare(), ConsumptionServices.valueConsumptionInPeriod(idClient),
+					currentDate, Fares.FARE_1.getFare(), ConsumptionServices.valueConsumptionInPeriod(idClient),
 					UserServices.getUser(idClient).getStatusConsumption());
 			refreshInvoiceMap(idClient, invoice);
 			idInvoice++;
@@ -73,6 +81,7 @@ public class InvoiceServices {
 			JSONObject json = new JSONObject();
 			json.put("idInvoice", invoice.getId());
 			json.put("idClient", invoice.getIdClient());
+			json.put("name", invoice.getNameClient());
 			json.put("issuanceDate", invoice.getIssuanceDate());
 			json.put("expirationDate", invoice.getExpirationDate());
 			json.put("fare", invoice.getFare());
@@ -138,6 +147,21 @@ public class InvoiceServices {
 
 	}
 
+	public static boolean containsInvoiceDate(String idClient) {
+
+		for (Invoice invoice : mapInvoices.get(idClient)) {
+
+			if (invoice.getIssuanceDate().equals(idClient)) {
+
+				return true;
+			}
+
+		}
+
+		return false;
+
+	}
+
 	public static void addSlotClientInvoices(String idClient) {
 
 		mapInvoices.put(idClient, new ArrayList<Invoice>());
@@ -157,7 +181,7 @@ public class InvoiceServices {
 		Invoice lastInvoice = userInvoices.get(userInvoices.size() - 1);
 		LocalDateTime lastInvoiceDate = LocalDateTime.parse(lastInvoice.getIssuanceDate(), dateTimeFormatter);
 		LocalDateTime newInvoiceDate = lastInvoiceDate.plusSeconds(10);
-		
+
 		return newInvoiceDate;
 
 	}

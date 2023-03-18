@@ -68,7 +68,7 @@ public class Client {
 			
 			Map<String,String >mapHeaders = new HashMap<>();
 			mapHeaders.put("Content-Length", "0");
-			RequestHttp request = new RequestHttp(HttpMethods.GET, "/user/historic/" + clientID, "HTTP/1.1");
+			RequestHttp request = new RequestHttp(HttpMethods.GET, "/user/auth/id:" + clientID + "&password:"+clientPassword, "HTTP/1.1");
 			ProtocolHttp.sendMessage(clientSocket.getOutputStream(),request.toString());
 			
 		} while (readResponse(clientSocket.getInputStream()).getBody().equals("NAO AUTENTICADO"));

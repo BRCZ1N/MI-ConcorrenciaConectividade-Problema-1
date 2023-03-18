@@ -27,6 +27,7 @@ public class RouterUsers implements RouterInterface {
 		ArrayList<Pattern> patterns = new ArrayList<>();
 
 		patterns.add(Pattern.compile("/consumption/statusConsumption/" + idPattern));
+		patterns.add(Pattern.compile("/users/auth/id:"+ idPattern + "password:"+ passwordPattern));
 		httpPatterns.put(HttpMethods.GET, patterns);
 
 	}

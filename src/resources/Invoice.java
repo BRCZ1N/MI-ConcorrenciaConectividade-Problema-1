@@ -1,4 +1,5 @@
 package resources;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import utilityclasses.StatusConsumeEnum;
@@ -15,16 +16,16 @@ public class Invoice {
 	private double invoiceValue;
 	private StatusConsumeEnum currentStatus;
 
-	public Invoice(String id, String idClient, String nameClient, double fare, double consumption,StatusConsumeEnum currentStatus) {
+	public Invoice(String id, String idClient, String nameClient, LocalDateTime issuanceDate, double fare,
+			double consumption, StatusConsumeEnum currentStatus) {
 
-		LocalDateTime currentDate = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
 		this.id = id;
 		this.idClient = idClient;
 		this.nameClient = nameClient;
-		this.issuanceDate = currentDate.format(formatter);
-		this.expirationDate = currentDate.plusDays(15).format(formatter);
+		this.issuanceDate = issuanceDate.format(formatter);
+		this.expirationDate = issuanceDate.plusDays(15).format(formatter);
 		this.fare = fare;
 		this.consumption = consumption;
 		this.invoiceValue = consumption * fare;
