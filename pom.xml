@@ -120,7 +120,7 @@
 								</manifest>
 							</archive>
 							<outputDirectory>${basedir}/src/dockerfile/client</outputDirectory>
-							<finalName>Server</finalName>
+							<finalName>Client</finalName>
 						</configuration>
 					</execution>
 				</executions>
