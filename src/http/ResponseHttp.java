@@ -69,11 +69,11 @@ public class ResponseHttp {
 
 		if (body != null) {
 			
-			return this.statusLine + "\r\n" + this.headersToString() + "\r\n" + this.body;
+			return this.statusLine + this.headersToString() + "\r\n" + this.body;
 
 		} else {
 
-			return this.statusLine + "\r\n" + this.headersToString() + "\r\n";
+			return this.statusLine + this.headersToString() + "\r\n";
 
 		}
 
