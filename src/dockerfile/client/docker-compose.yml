@@ -5,3 +5,8 @@ services:
    container_name: client-app
    ports:
       - 8000:8000
+   depends_on:
+      - app-server
+      
+      
+      

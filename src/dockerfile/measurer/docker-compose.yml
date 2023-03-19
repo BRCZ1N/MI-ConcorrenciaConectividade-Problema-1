@@ -4,4 +4,6 @@ services:
    image: brcz1n/measurer-app-tec502
    container_name: measurer-app
    ports:
-      - 8000:8000
+      - 8100:8100
+   depends_on:
+      - app-server
