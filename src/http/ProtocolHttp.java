@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Scanner;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,7 +37,9 @@ public class ProtocolHttp {
 				str.append((char) buffer.read());
 
 			}
-
+			
+			System.out.println(str.toString());
+			
 			linesReq = str.toString().split("\r\n");
 
 			for (String line : linesReq) {
@@ -44,7 +47,7 @@ public class ProtocolHttp {
 				httpData.add(line);
 
 			}
-
+			
 			responseHeaders = httpData.poll().split("\s");
 			mapHeaders = new HashMap<String, String>();
 

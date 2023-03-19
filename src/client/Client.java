@@ -64,20 +64,24 @@ public class Client {
 			clientID = scan.nextLine();
 			System.out.println("Digite a senha:");
 			clientPassword = scan.nextLine();
-			
-			Map<String,String >mapHeaders = new HashMap<>();
-			mapHeaders.put("Content-Length", "0");
-			RequestHttp request = new RequestHttp(HttpMethods.GET, "/user/auth/id:" + clientID + "&password:"+clientPassword, "HTTP/1.1");
-			ProtocolHttp.sendMessage(clientSocket.getOutputStream(),request.toString());
-			
+
+			Map<String, String> mapHeaders = new HashMap<>();
+			mapHeaders.put("Accept","*/*");
+			mapHeaders.put("Host",clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
+			RequestHttp request = new RequestHttp(HttpMethods.GET,
+					"/user/auth/id:" + clientID + "&password:" + clientPassword, "HTTP/1.1", mapHeaders);
+			ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
+
 		} while (readResponse(clientSocket.getInputStream()).getBody().equals("NAO AUTENTICADO"));
+
+		clientMenu();
 
 	}
 
 	private void clientMenu() throws IOException {
 
 		boolean connection;
-		
+
 		while ((connection = true)) {
 
 			System.out.println("===================================================");
@@ -100,54 +104,55 @@ public class Client {
 
 			switch (opcao) {
 
-			case "1":
+				case "1":
 
-				request = new RequestHttp(HttpMethods.GET, "/consumption/historic/" + clientID, "HTTP/1.1");
-				ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
-				response = readResponse(clientSocket.getInputStream());
-				System.out.println("Histórico do cliente:");
-				System.out.println(response);
-				break;
+					request = new RequestHttp(HttpMethods.GET, "/consumption/historic/" + clientID, "HTTP/1.1");
+					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
+					response = readResponse(clientSocket.getInputStream());
+					System.out.println("Histórico do cliente:");
+					System.out.println(response);
+					break;
 
-			case "2":
+				case "2":
 
-				request = new RequestHttp(HttpMethods.GET, "/invoice/newInvoice/" + clientID, "HTTP/1.1");
-				ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
-				response = readResponse(clientSocket.getInputStream());
-				System.out.println("Fatura gerada:");
-				System.out.println(response);
-				break;
+					request = new RequestHttp(HttpMethods.GET, "/invoice/newInvoice/" + clientID, "HTTP/1.1");
+					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
+					response = readResponse(clientSocket.getInputStream());
+					System.out.println("Fatura gerada:");
+					System.out.println(response);
+					break;
 
-			case "3":
+				case "3":
 
-				request = new RequestHttp(HttpMethods.GET, "/invoice/" + clientID, "HTTP/1.1");
-				ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
-				response = readResponse(clientSocket.getInputStream());
-				System.out.println("Fatura:");
-				System.out.println(response);
-				break;
+					request = new RequestHttp(HttpMethods.GET, "/invoice/" + clientID, "HTTP/1.1");
+					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
+					response = readResponse(clientSocket.getInputStream());
+					System.out.println("Fatura:");
+					System.out.println(response);
+					break;
 
-			case "4":
+				case "4":
 
-				request = new RequestHttp(HttpMethods.GET, "/invoice/all/" + clientID, "HTTP/1.1");
-				ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
-				response = readResponse(clientSocket.getInputStream());
-				System.out.println("Faturas:");
-				break;
+					request = new RequestHttp(HttpMethods.GET, "/invoice/all/" + clientID, "HTTP/1.1");
+					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
+					response = readResponse(clientSocket.getInputStream());
+					System.out.println("Faturas:");
+					break;
 
-			case "5":
+				case "5":
 
-				request = new RequestHttp(HttpMethods.GET, "/consumption/statusConsumption/" + clientID, "HTTP/1.1");
-				ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
-				response = readResponse(clientSocket.getInputStream());
-				System.out.println("Status de consumo:");
-				System.out.println(response);
-				break;
+					request = new RequestHttp(HttpMethods.GET, "/consumption/statusConsumption/" + clientID,
+							"HTTP/1.1");
+					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
+					response = readResponse(clientSocket.getInputStream());
+					System.out.println("Status de consumo:");
+					System.out.println(response);
+					break;
 
-			default:
+				default:
 
-				System.out.println("Opção invalida");
-				break;
+					System.out.println("Opção invalida");
+					break;
 
 			}
 

@@ -91,7 +91,7 @@ public class RequestHttp {
 		StringBuilder stringHeaders = new StringBuilder();
 		for (Entry<String, String> header : headers.entrySet()) {
 
-			stringHeaders.append(header.getKey() + ":" + header.getValue() + "\r\n");
+			stringHeaders.append(header.getKey() + ":" + " " + header.getValue() + "\r\n");
 
 		}
 
@@ -108,7 +108,7 @@ public class RequestHttp {
 
 		} else {
 
-			return this.method + this.path + this.versionHttp + "\r\n" + this.headersToString() + "\r\n";
+			return this.method + " "+ this.path +" "+ this.versionHttp + "\r\n" + this.headersToString() + "\r\n";
 
 		}
 

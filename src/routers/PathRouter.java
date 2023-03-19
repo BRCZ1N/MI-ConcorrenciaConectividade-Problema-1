@@ -19,6 +19,7 @@ public class PathRouter {
 
 	public String execRoute(RequestHttp http) {
 
+		
 		String endpointService = searchEndpoint(http.getPath());
 		String responseHttp = null;
 		
