@@ -1,0 +1,7 @@
+version: '3.7'
+services:
+   app-measurer:
+   image: brcz1n/measurer-app-tec502
+   container_name: measurer-app
+   ports:
+      - 8000:8000

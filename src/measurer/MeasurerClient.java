@@ -32,7 +32,7 @@ public class MeasurerClient {
 	private void startMeasurer() throws UnknownHostException {
 
 		try {
-			measurerSocket = new DatagramSocket();
+			measurerSocket = new DatagramSocket(8100);
 		} catch (SocketException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

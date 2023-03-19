@@ -1,0 +1,8 @@
+version: '3.7'
+services:
+   app-server:
+   image: brcz1n/server-app-tec502
+   container_name: server-app
+   ports:
+      - 8000:8000
+      - 8100:8100
