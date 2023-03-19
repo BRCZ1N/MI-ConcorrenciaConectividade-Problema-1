@@ -1,12 +1,13 @@
 version: '3.7'
 services:
    app-client:
-   image: brcz1n/client-app-tec502
-   container_name: client-app
-   ports:
-      - 8000:8000
-   depends_on:
-      - app-server
+      image: brcz1n/client-app-tec502
+      container_name: client-app
+      ports:
+         - 8100:8100
+      depends_on:
+         - app-server
+      network_mode: host
       
       
       
