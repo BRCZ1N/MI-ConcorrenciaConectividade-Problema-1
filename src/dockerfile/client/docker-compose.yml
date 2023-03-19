@@ -3,11 +3,10 @@ services:
    app-client:
       image: brcz1n/client-app-tec502
       tty: true
+      stdin_open: true
       container_name: client-app
       ports:
-         - 8100:8100
-      depends_on:
-         - app-server
+         - 8000:8000
       network_mode: host
       
       

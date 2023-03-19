@@ -3,8 +3,10 @@ package server;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 import services.ConsumptionServices;
 import services.InvoiceServices;
@@ -41,9 +43,9 @@ public class Server {
 		boolean connection = true;
 
 		generateServer(portServerSocket, portDatagramSocket);
-		System.out.println("Server executado no IP:" + socketServer.getLocalSocketAddress());
+		System.out.println("Server executado no IP:" + InetAddress.getLocalHost().getHostAddress());
 		System.out.println("Server executado na porta:" + socketServer.getLocalPort());
-
+		
 		new Thread(() -> {
 
 			try {

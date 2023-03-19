@@ -135,9 +135,6 @@ public class UserServices {
 
 		User user = getUser(idClient);
 
-		System.out.println(currentConsumption);
-		System.out.println(ConsumptionServices.averageConsumptions(idClient) + 200);
-
 		if (currentConsumption > ConsumptionServices.averageConsumptions(idClient) + 200) {
 
 			user.setStatusConsumption(StatusConsumeEnum.HIGH);

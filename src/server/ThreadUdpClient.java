@@ -50,7 +50,6 @@ public class ThreadUdpClient implements Runnable {
 				String[] messageConsumption = message.split("-");
 				
 				Consumption consumption = new Consumption(Double.parseDouble(messageConsumption[1].trim()),messageConsumption[2].trim());
-
 				ConsumptionServices.addConsumption(messageConsumption[0].trim(), consumption);
 
 			} else {

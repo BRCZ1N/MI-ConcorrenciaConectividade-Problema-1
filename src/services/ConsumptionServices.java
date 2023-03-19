@@ -81,7 +81,6 @@ public class ConsumptionServices {
 
 	}
 
-
 	private static void refreshConsumptionMap(String idClient, Consumption consumption) {
 
 		ArrayList<Consumption> copyListConsumption = mapConsumptions.get(idClient);
