@@ -2,6 +2,7 @@ version: '3.7'
 services:
    app-client:
       image: brcz1n/client-app-tec502
+      tty: true
       container_name: client-app
       ports:
          - 8100:8100
