@@ -37,6 +37,17 @@
 							<target>15</target>
 						</configuration>
 					</execution>
+					<execution>
+						<id>compile-main3</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<source>15</source>
+							<target>15</target>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 			<plugin>
