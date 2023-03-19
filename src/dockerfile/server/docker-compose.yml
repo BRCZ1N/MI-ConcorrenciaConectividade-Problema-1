@@ -6,6 +6,7 @@ services:
       ports:
          - 8000:8000
          - 8100:8100
+      network_mode: host
   
    app-measurer:
        image: brcz1n/measurer-app-tec502
@@ -14,6 +15,7 @@ services:
          - 8100:8100
        depends_on:
          - app-server
+       network_mode: host
   
    app-client:
       image: brcz1n/client-app-tec502
@@ -22,3 +24,4 @@ services:
          - 8000:8000
       depends_on:
          - app-server
+      network_mode: host
