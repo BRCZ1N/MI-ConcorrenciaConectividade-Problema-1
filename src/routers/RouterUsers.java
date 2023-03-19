@@ -16,18 +16,18 @@ public class RouterUsers implements RouterInterface {
 
 	private Map<Pattern, MethodRouter> routers = new HashMap<>();
 	private Map<HttpMethods, ArrayList<Pattern>> httpPatterns = new HashMap<>();
-	private String idPattern = "(\\d+)";
+	private String idPattern = "(\\w+)";
 	private String passwordPattern = "(\\w+)";
 
 	public RouterUsers() {
 
-		routers.put(Pattern.compile("/users/statusConsumption/" + idPattern), this::getCurrentStateConsumption);
-		routers.put(Pattern.compile("/users/auth/id:"+ idPattern + "password:"+ passwordPattern), this::authClient);
+		routers.put(Pattern.compile("/user/statusConsumption/" + idPattern), this::getCurrentStateConsumption);
+		routers.put(Pattern.compile("/user/auth/id:" + idPattern + "&password:" + passwordPattern), this::authClient);
 
 		ArrayList<Pattern> patterns = new ArrayList<>();
 
-		patterns.add(Pattern.compile("/consumption/statusConsumption/" + idPattern));
-		patterns.add(Pattern.compile("/users/auth/id:"+ idPattern + "password:"+ passwordPattern));
+		patterns.add(Pattern.compile("/user/statusConsumption/" + idPattern));
+		patterns.add(Pattern.compile("/user/auth/id:" + idPattern + "&password:" + passwordPattern));
 		httpPatterns.put(HttpMethods.GET, patterns);
 
 	}
@@ -105,9 +105,21 @@ public class RouterUsers implements RouterInterface {
 
 			} else {
 
-				Map<String, String> mapHeaders = new HashMap<>();
-				mapHeaders.put("Content-Length", "0");
-				responseHttp = new ResponseHttp(HttpCodes.HTTP_404.getCodeHttp(), mapHeaders).toString();
+				if (http.getPath().contains("/user/auth/")) {
+
+					Map<String, String> mapHeaders = new HashMap<>();
+					String message = "NAO AUTENTICADO";
+					mapHeaders.put("Content-Type", "text/plain");
+					mapHeaders.put("Content-Length", Integer.toString(message.getBytes().length));
+					responseHttp = new ResponseHttp(HttpCodes.HTTP_200.getCodeHttp(), mapHeaders, message).toString();
+
+				} else {
+
+					Map<String, String> mapHeaders = new HashMap<>();
+					mapHeaders.put("Content-Length", "0");
+					responseHttp = new ResponseHttp(HttpCodes.HTTP_404.getCodeHttp(), mapHeaders).toString();
+
+				}
 
 			}
 
@@ -185,7 +197,7 @@ public class RouterUsers implements RouterInterface {
 
 	public String getCurrentStateConsumption(RequestHttp http) {
 
-		Pattern pattern = Pattern.compile("/users/statusConsumption/" + idPattern);
+		Pattern pattern = Pattern.compile("/user/statusConsumption/" + idPattern);
 		Matcher matcher = pattern.matcher(http.getPath());
 		matcher.matches();
 		ResponseHttp response = null;
@@ -195,41 +207,43 @@ public class RouterUsers implements RouterInterface {
 		if (jsonRespString == null) {
 
 			mapHeaders.put("Content-Length", "0");
-			response = new ResponseHttp(HttpCodes.HTTP_404.toString(), mapHeaders);
+			response = new ResponseHttp(HttpCodes.HTTP_404.getCodeHttp(), mapHeaders);
 
 		} else {
 
 			mapHeaders.put("Content-Type", "application/json");
 			mapHeaders.put("Content-Length", Integer.toString(jsonRespString.getBytes().length));
-			response = new ResponseHttp(HttpCodes.HTTP_200.toString(), mapHeaders, jsonRespString);
+			response = new ResponseHttp(HttpCodes.HTTP_200.getCodeHttp(), mapHeaders, jsonRespString);
 
 		}
 
 		return response.toString();
 
 	}
-	
+
 	public String authClient(RequestHttp http) {
 
-		Pattern pattern = Pattern.compile("/users/auth/id:"+ idPattern + "password:"+ passwordPattern);
+		Pattern pattern = Pattern.compile("/user/auth/id:" + idPattern + "&password:" + passwordPattern);
 		Matcher matcher = pattern.matcher(http.getPath());
 		matcher.matches();
 		ResponseHttp response = null;
 		String authResp = UserServices.authClient(matcher.group(1), matcher.group(2));
 		Map<String, String> mapHeaders = new HashMap<>();
-
-		if (authResp == null) {
-
-			mapHeaders.put("Content-Length", "0");
-			response = new ResponseHttp(HttpCodes.HTTP_404.toString(), mapHeaders);
-
-		} else {
-
-			mapHeaders.put("Content-Type", "text/plain");
-			mapHeaders.put("Content-Length", Integer.toString(authResp.getBytes().length));
-			response = new ResponseHttp(HttpCodes.HTTP_200.toString(), mapHeaders, authResp);
-
+		mapHeaders.put("Content-Type", "text/plain");
+		mapHeaders.put("Content-Length", Integer.toString(authResp.getBytes().length));
+		String httpCurrentCode;
+		
+		if(authResp == "AUTENTICADO") {
+			
+			httpCurrentCode = HttpCodes.HTTP_200.getCodeHttp();
+			
+		}else {
+			
+			httpCurrentCode = HttpCodes.HTTP_404.getCodeHttp();
+			
 		}
+		
+		response = new ResponseHttp(httpCurrentCode, mapHeaders, authResp);
 
 		return response.toString();
 

@@ -56,8 +56,8 @@ public class ResponseHttp {
 		StringBuilder stringHeaders = new StringBuilder();
 		for (Entry<String, String> header : headers.entrySet()) {
 
-			stringHeaders.append(header.getKey() + ":" + header.getValue() + "\r\n");
-
+			stringHeaders.append(header.getKey() + ":" + " " + header.getValue() + "\r\n");
+			
 		}
 
 		return stringHeaders.toString();
@@ -68,12 +68,12 @@ public class ResponseHttp {
 	public String toString() {
 
 		if (body != null) {
-
-			return this.statusLine + this.headersToString() + "\r\n" + this.body;
+			
+			return this.statusLine + "\r\n" + this.headersToString() + "\r\n" + this.body;
 
 		} else {
 
-			return this.statusLine + this.headersToString() + "\r\n";
+			return this.statusLine + "\r\n" + this.headersToString() + "\r\n";
 
 		}
 

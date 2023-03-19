@@ -13,15 +13,15 @@ public class PathRouter {
 
 		routes.put("/invoice", new RouterInvoice());
 		routes.put("/consumption", new RouterConsumption());
-		routes.put("/user", new RouterConsumption());
+		routes.put("/user", new RouterUsers());
 
 	}
 
 	public String execRoute(RequestHttp http) {
 
-		
 		String endpointService = searchEndpoint(http.getPath());
 		String responseHttp = null;
+
 		
 		if (routes.containsKey(endpointService)) {
 
@@ -32,7 +32,7 @@ public class PathRouter {
 			// Falta implementar o erro
 
 		}
-		
+
 		return responseHttp;
 
 	}
@@ -40,8 +40,8 @@ public class PathRouter {
 	public String searchEndpoint(String path) {
 
 		String[] pathArray = path.split("/");
-		
-		return "/"+pathArray[1];
+
+		return "/" + pathArray[1];
 	}
 
 }

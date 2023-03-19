@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
-import java.util.Scanner;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,9 +35,7 @@ public class ProtocolHttp {
 				str.append((char) buffer.read());
 
 			}
-			
-			System.out.println(str.toString());
-			
+
 			linesReq = str.toString().split("\r\n");
 
 			for (String line : linesReq) {
@@ -47,7 +43,7 @@ public class ProtocolHttp {
 				httpData.add(line);
 
 			}
-			
+
 			responseHeaders = httpData.poll().split("\s");
 			mapHeaders = new HashMap<String, String>();
 
@@ -90,9 +86,10 @@ public class ProtocolHttp {
 	public static void sendMessage(OutputStream out, String response) throws IOException {
 
 		BufferedOutputStream buffer = new BufferedOutputStream(out);
-
+		
 		buffer.write(response.getBytes("UTF-8"));
 		buffer.flush();
+	
 
 	}
 
