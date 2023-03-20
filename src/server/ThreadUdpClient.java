@@ -55,11 +55,9 @@ public class ThreadUdpClient implements Runnable {
 			} else {
 				
 				String[] messageCredentials = message.split(":");
-
 				byte[] byteCopy = UserServices.authenticateClient(messageCredentials[0], messageCredentials[1]);
 				System.arraycopy(byteCopy, 0, dataPacket, 0, byteCopy.length);
 				packet = new DatagramPacket(dataPacket, dataPacket.length, packet.getAddress(), packet.getPort());
-
 				socket.send(packet);
 
 			}

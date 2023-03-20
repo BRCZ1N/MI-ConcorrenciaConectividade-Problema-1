@@ -92,7 +92,7 @@ public class UserServices {
 
 		for (Map.Entry<String, User> user : mapUsers.entrySet()) {
 
-			if (user.getValue().getId().equals(idClient) && user.getValue().getPassword().equals(password.trim())) {
+			if (user.getValue().getId().trim().equals(idClient.trim()) && user.getValue().getPassword().trim().equals(password.trim())) {
 
 				return "authenticate".getBytes();
 

@@ -38,7 +38,7 @@ public class MeasurerClient {
 			e.printStackTrace();
 		}
 		String userCredentials;
-		String authenticate;
+		String authenticate = "denied authenticate";
 
 		do {
 
@@ -63,13 +63,14 @@ public class MeasurerClient {
 				measurerSocket.send(measurerPacket);
 				measurerPacket = new DatagramPacket(bytePackage, bytePackage.length);
 				measurerSocket.receive(measurerPacket);
-
+				authenticate = (new String(bytePackage, StandardCharsets.UTF_8));
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
-		} while ((authenticate = new String(bytePackage, StandardCharsets.UTF_8)).equals("authenticate"));
+		} while (authenticate.trim().equals("denied authenticate"));
 
 		execMeasurer();
 

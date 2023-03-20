@@ -2,16 +2,16 @@ package utilityclasses;
 
 public enum HttpCodes {
 
-	HTTP_200("HTTP/1.1 200 OK\r\n"), 
-	HTTP_201("HTTP/1.1 201 Created\r\n"), 
-	HTTP_204("HTTP/1.1 204 No Content\r\n"),
-	HTTP_400("HTTP/1.1 400 Bad Request\r\n"),
-	HTTP_401("HTTP/1.1 401 Unauthorized\r\n"),
-	HTTP_403("HTTP/1.1 403 Forbidden\r\n"), 
-	HTTP_404("HTTP/1.1 404 Not Found\r\n"),
-	HTTP_405("HTTP/1.1 405 Method Not Allowed\r\n"),
-	HTTP_500("HTTP/1.1 500 Internal Server Error\r\n"),
-	HTTP_501("HTTP/1.1 501 Not Implemented\r\n");
+	HTTP_200("HTTP/1.1 200 OK"), 
+	HTTP_201("HTTP/1.1 201 Created"), 
+	HTTP_204("HTTP/1.1 204 No Content"),
+	HTTP_400("HTTP/1.1 400 Bad Request"),
+	HTTP_401("HTTP/1.1 401 Unauthorized"),
+	HTTP_403("HTTP/1.1 403 Forbidden"), 
+	HTTP_404("HTTP/1.1 404 Not Found"),
+	HTTP_405("HTTP/1.1 405 Method Not Allowed"),
+	HTTP_500("HTTP/1.1 500 Internal Server Error"),
+	HTTP_501("HTTP/1.1 501 Not Implemented");
 
 //	200 OK: a solicita��o foi bem-sucedida e o servidor retornou a resposta solicitada.
 //	201 Created: a solicita��o foi bem-sucedida e o servidor criou um novo recurso como resultado.
