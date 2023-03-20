@@ -6,4 +6,12 @@ services:
       stdin_open: true
       container_name: measurer-app
       ports:
-         - 8100:8100
+         - 8101:8100
+      networks:
+         mynetwork:
+            ipv4_address: 172.28.1.2
+        
+networks:
+   mynetwork:
+      external:
+         name: server_mynetwork

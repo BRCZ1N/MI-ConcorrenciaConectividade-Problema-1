@@ -48,7 +48,7 @@ public class Client {
 	public static void main(String[] args) throws UnknownHostException, IOException, InterruptedException {
 
 		Client client = new Client();
-		client.generateSocketClient("localhost", 8000);
+		client.generateSocketClient("172.28.1.1", 8000);
 		client.clientExecution();
 
 	}
@@ -126,8 +126,7 @@ public class Client {
 						System.out.println("Historico do cliente:");
 						jsonBody = new JSONObject(response.getBody());
 						System.out.println("Idenficador do cliente: " + jsonBody.get("idClient"));
-						System.out.println("Historico de consumo do cliente:");
-						ArrayList
+						System.out.println("Historico de consumo do cliente:" jsonBody.get);
 //						System.out.println();
 
 					} else {

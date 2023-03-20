@@ -44,7 +44,6 @@ public class ThreadUdpClient implements Runnable {
 			Pattern pattern = Pattern.compile("[0-9]+-[0-9]+\\.[0-9]+-[0-9]+/[0-9]+/[0-9]+ [0-9]+:[0-9]+:[0-9]+");
 			Matcher matcher = pattern.matcher(message);
 			
-			
 			if (matcher.find()) {
 				
 				String[] messageConsumption = message.split("-");

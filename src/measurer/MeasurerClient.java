@@ -59,13 +59,18 @@ public class MeasurerClient {
 
 			try {
 
-				measurerPacket = new DatagramPacket(bytePackage, bytePackage.length, InetAddress.getByName("127.0.0.1"),8100);
+				measurerPacket = new DatagramPacket(bytePackage, bytePackage.length, InetAddress.getByName("172.28.1.1"),8100);
 				measurerSocket.send(measurerPacket);
 				measurerPacket = new DatagramPacket(bytePackage, bytePackage.length);
+				Thread.sleep(18);
 				measurerSocket.receive(measurerPacket);
 				authenticate = (new String(bytePackage, StandardCharsets.UTF_8));
+				bytePackage = new byte[1024];
 				
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -115,7 +120,7 @@ public class MeasurerClient {
 
 				try {
 					measurerPacket = new DatagramPacket(bytePackage, bytePackage.length,
-							InetAddress.getByName("127.0.0.1"), 8100);
+							InetAddress.getByName("172.28.1.1"), 8100);
 				} catch (UnknownHostException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
