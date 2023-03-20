@@ -6,4 +6,3 @@ services:
       ports:
          - 8000:8000
          - 8100:8100
-      network_mode: host

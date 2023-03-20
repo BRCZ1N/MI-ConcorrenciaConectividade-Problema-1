@@ -7,4 +7,3 @@ services:
       container_name: measurer-app
       ports:
          - 8100:8100
-      network_mode: host
