@@ -111,13 +111,13 @@ public class RouterUsers implements RouterInterface {
 					String message = "NAO AUTENTICADO";
 					mapHeaders.put("Content-Type", "text/plain");
 					mapHeaders.put("Content-Length", Integer.toString(message.getBytes().length));
-					responseHttp = new ResponseHttp(HttpCodes.HTTP_200.getCodeHttp(), mapHeaders, message).toString();
+					responseHttp = new ResponseHttp(HttpCodes.HTTP_204.getCodeHttp(), mapHeaders, message).toString();
 
 				} else {
 
 					Map<String, String> mapHeaders = new HashMap<>();
 					mapHeaders.put("Content-Length", "0");
-					responseHttp = new ResponseHttp(HttpCodes.HTTP_404.getCodeHttp(), mapHeaders).toString();
+					responseHttp = new ResponseHttp(HttpCodes.HTTP_400.getCodeHttp(), mapHeaders).toString();
 
 				}
 

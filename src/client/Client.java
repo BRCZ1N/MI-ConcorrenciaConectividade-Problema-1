@@ -119,11 +119,8 @@ public class Client {
 					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
 					Thread.sleep(18);
 					response = readResponse(clientSocket.getInputStream());
-					System.out.println(response.toString());
 
 					if (response.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp().replaceAll("\r\n", ""))) {
-
-						System.out.println(response);
 
 						System.out.println("Historico do cliente:");
 						jsonBody = new JSONObject(response.getBody());
@@ -134,6 +131,7 @@ public class Client {
 
 					} else {
 						
+						System.out.println("ERRO:");
 						System.out.println(response.getStatusLine());
 
 					}
@@ -148,9 +146,8 @@ public class Client {
 					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
 					Thread.sleep(18);
 					response = readResponse(clientSocket.getInputStream());
-					System.out.println(response.toString());
 					
-					if (response.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp())) {
+					if (response.getStatusLine().equals(HttpCodes.HTTP_201.getCodeHttp())) {
 
 						jsonBody = new JSONObject(response.getBody());
 						System.out.println("Fatura gerada:");
@@ -159,6 +156,7 @@ public class Client {
 
 					} else {
 
+						System.out.println("ERRO:");
 						System.out.println(response.getStatusLine());
 
 					}
@@ -174,7 +172,6 @@ public class Client {
 					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
 					Thread.sleep(18);
 					response = readResponse(clientSocket.getInputStream());
-					System.out.println(response.toString());
 					
 					if (response.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp())) {
 
@@ -185,6 +182,7 @@ public class Client {
 						
 					}else {
 						
+						System.out.println("ERRO:");
 						System.out.println(response.getStatusLine());
 						
 					}
@@ -198,7 +196,6 @@ public class Client {
 					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
 					Thread.sleep(18);
 					response = readResponse(clientSocket.getInputStream());
-					System.out.println(response.toString());
 					
 					if(response.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp())) {
 						
@@ -222,7 +219,6 @@ public class Client {
 					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
 					Thread.sleep(18);
 					response = readResponse(clientSocket.getInputStream());
-					System.out.println(response.toString());
 					
 					if(response.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp())) {
 						
@@ -233,6 +229,7 @@ public class Client {
 						
 					}else {
 						
+						System.out.println("ERRO:");
 						System.out.println(response.getStatusLine());
 							
 					}

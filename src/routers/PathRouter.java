@@ -22,7 +22,6 @@ public class PathRouter {
 		String endpointService = searchEndpoint(http.getPath());
 		String responseHttp = null;
 
-		
 		if (routes.containsKey(endpointService)) {
 
 			responseHttp = routes.get(endpointService).router(http);

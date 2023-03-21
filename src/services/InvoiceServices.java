@@ -38,7 +38,7 @@ public class InvoiceServices {
 		InvoiceServices.idInvoice = idInvoice;
 	}
 
-	public static String addInvoice(String idClient) {
+	public static Invoice addInvoice(String idClient) {
 
 		if (containsClient(idClient)) {
 
@@ -56,7 +56,7 @@ public class InvoiceServices {
 			refreshInvoiceMap(idClient, invoice);
 			idInvoice++;
 
-			return invoice.getId();
+			return invoice;
 
 		}
 

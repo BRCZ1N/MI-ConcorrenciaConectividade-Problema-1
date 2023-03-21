@@ -107,7 +107,7 @@ public class RouterConsumption implements RouterInterface {
 
 				Map<String, String> mapHeaders = new HashMap<>();
 				mapHeaders.put("Content-Length", "0");
-				responseHttp = new ResponseHttp(HttpCodes.HTTP_404.getCodeHttp(), mapHeaders).toString();
+				responseHttp = new ResponseHttp(HttpCodes.HTTP_400.getCodeHttp(), mapHeaders).toString();
 
 			}
 

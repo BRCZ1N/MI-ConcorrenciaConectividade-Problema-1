@@ -42,8 +42,7 @@ public class Server {
 		boolean connection = true;
 
 		generateServer(portServerSocket, portDatagramSocket);
-		System.out.println("Server executado no IP:" + InetAddress.getLocalHost().getHostAddress());
-		System.out.println("Server executado na porta:" + socketServer.getLocalPort());
+		System.out.println("Server executado no IP:" + InetAddress.getLocalHost().getHostAddress() + " - Porta:" + socketServer.getLocalPort());
 		
 		new Thread(() -> {
 

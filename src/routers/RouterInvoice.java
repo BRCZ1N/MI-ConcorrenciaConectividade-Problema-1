@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import http.RequestHttp;
 import http.ResponseHttp;
+import resources.Invoice;
 import services.InvoiceServices;
 import utilityclasses.HttpCodes;
 import utilityclasses.HttpMethods;
@@ -101,20 +102,13 @@ public class RouterInvoice implements RouterInterface {
 
 					responseHttp = execMethodRouter(http, pattern);
 
-				} else {
-
-					Map<String, String> mapHeaders = new HashMap<>();
-					mapHeaders.put("Allow", "POST");
-					mapHeaders.put("Content-Length", "0");
-					responseHttp = new ResponseHttp(HttpCodes.HTTP_405.getCodeHttp(), mapHeaders).toString();
-
-				}
+				} 
 
 			} else {
 
 				Map<String, String> mapHeaders = new HashMap<>();
 				mapHeaders.put("Content-Length", "0");
-				responseHttp = new ResponseHttp(HttpCodes.HTTP_404.getCodeHttp(), mapHeaders).toString();
+				responseHttp = new ResponseHttp(HttpCodes.HTTP_400.getCodeHttp(), mapHeaders).toString();
 
 			}
 
@@ -254,19 +248,20 @@ public class RouterInvoice implements RouterInterface {
 		matcher.matches();
 		ResponseHttp response;
 		Map<String, String> mapHeaders = new HashMap<>();
-		String respMethod = InvoiceServices.addInvoice(matcher.group(1)).toString();
-
-		if (respMethod == null) {
+		Invoice generateInvoice = InvoiceServices.addInvoice(matcher.group(1));
+		
+		if (generateInvoice == null) {
 
 			mapHeaders.put("Content-Length", "0");
 			response = new ResponseHttp(HttpCodes.HTTP_404.getCodeHttp(), mapHeaders);
 
 		} else {
-
-			mapHeaders.put("Content-Length", "0");
-			mapHeaders.put("Location", "/invoice/" + respMethod);
-			response = new ResponseHttp(HttpCodes.HTTP_201.getCodeHttp(), mapHeaders);
-
+			
+			mapHeaders.put("Content-Type", "application/json");
+			mapHeaders.put("Content-Length", Integer.toString(new JSONObject(generateInvoice).toString().length()));
+			mapHeaders.put("Location", "/invoice/" + generateInvoice.getId());
+			response = new ResponseHttp(HttpCodes.HTTP_201.getCodeHttp(), mapHeaders, new JSONObject(generateInvoice).toString());
+			
 		}
 
 		return response.toString();

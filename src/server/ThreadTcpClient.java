@@ -64,7 +64,6 @@ public class ThreadTcpClient implements Runnable {
 
 		} catch (IOException e) {
 
-			System.out.println("Conexao encerrada:" + socket.getLocalPort());
 			Thread.currentThread().interrupt();
 
 		} catch (InterruptedException e) {
