@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -48,7 +49,7 @@ public class Client {
 	public static void main(String[] args) throws UnknownHostException, IOException, InterruptedException {
 
 		Client client = new Client();
-		client.generateSocketClient("172.28.1.1", 8000);
+		client.generateSocketClient("localhost", 8000);
 		client.clientExecution();
 
 	}
@@ -65,15 +66,13 @@ public class Client {
 			System.out.println("========= Consumo de energia inteligente ==========");
 			System.out.println("===================================================");
 			System.out.println("Digite o id:");
-			clientID = scan.nextLine();
+			clientID = scan.next();
 			System.out.println("Digite a senha:");
-			clientPassword = scan.nextLine();
+			clientPassword = scan.next();
 
 			Map<String, String> mapHeaders = new HashMap<>();
 			mapHeaders.put("Host", clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
-			request = new RequestHttp(HttpMethods.GET,
-					"/user/auth/id:" + clientID.replace(" ", "") + "&password:" + clientPassword.replace(" ", ""),
-					"HTTP/1.1", mapHeaders);
+			request = new RequestHttp(HttpMethods.GET,"/user/auth/id:" + clientID.replace(" ", "") + "&password:" + clientPassword.replace(" ", ""),"HTTP/1.1", mapHeaders);
 			ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
 			Thread.sleep(36);
 			resp = readResponse(clientSocket.getInputStream());
@@ -118,19 +117,23 @@ public class Client {
 					mapHeaders.put("Host",clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
 					request = new RequestHttp(HttpMethods.GET, "/consumption/historic/" + clientID, "HTTP/1.1",mapHeaders);
 					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
-					Thread.sleep(36);
+					Thread.sleep(18);
 					response = readResponse(clientSocket.getInputStream());
+					System.out.println(response.toString());
 
 					if (response.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp().replaceAll("\r\n", ""))) {
+
+						System.out.println(response);
 
 						System.out.println("Historico do cliente:");
 						jsonBody = new JSONObject(response.getBody());
 						System.out.println("Idenficador do cliente: " + jsonBody.get("idClient"));
-						System.out.println("Historico de consumo do cliente:" jsonBody.get);
-//						System.out.println();
+						System.out.println("Historico de consumo do cliente:");
+						System.out.println(jsonBody.getJSONArray("historic"));
+						System.out.println();
 
 					} else {
-
+						
 						System.out.println(response.getStatusLine());
 
 					}
@@ -140,17 +143,25 @@ public class Client {
 				case "2":
 
 					mapHeaders = new HashMap<>();
-					mapHeaders.put("Host",
-							clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
-					request = new RequestHttp(HttpMethods.GET, "/invoice/newInvoice/" + clientID, "HTTP/1.1",
-							mapHeaders);
+					mapHeaders.put("Host",clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
+					request = new RequestHttp(HttpMethods.GET, "/invoice/newInvoice/" + clientID, "HTTP/1.1", mapHeaders);
 					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
 					Thread.sleep(18);
 					response = readResponse(clientSocket.getInputStream());
-					System.out.println("Fatura gerada:");
-					System.out.print(response.toString());
-					jsonBody = new JSONObject(response.getBody());
-					System.out.println();
+					System.out.println(response.toString());
+					
+					if (response.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp())) {
+
+						jsonBody = new JSONObject(response.getBody());
+						System.out.println("Fatura gerada:");
+						System.out.println(jsonBody);
+						System.out.println();
+
+					} else {
+
+						System.out.println(response.getStatusLine());
+
+					}
 					break;
 
 				case "3":
@@ -158,44 +169,73 @@ public class Client {
 					System.out.println("Digite o id da fatura:");
 					String idInvoice = scan.next();
 					mapHeaders = new HashMap<>();
-					mapHeaders.put("Host",
-							clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
+					mapHeaders.put("Host",clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
 					request = new RequestHttp(HttpMethods.GET, "/invoice/" + idInvoice, "HTTP/1.1", mapHeaders);
 					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
 					Thread.sleep(18);
 					response = readResponse(clientSocket.getInputStream());
-					System.out.println("Fatura:");
-					jsonBody = new JSONObject(response.getBody());
-					System.out.println();
+					System.out.println(response.toString());
+					
+					if (response.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp())) {
+
+						jsonBody = new JSONObject(response.getBody());
+						System.out.println("Fatura:");
+						System.out.println(jsonBody);
+						System.out.println();
+						
+					}else {
+						
+						System.out.println(response.getStatusLine());
+						
+					}
 					break;
 
 				case "4":
 
 					mapHeaders = new HashMap<>();
-					mapHeaders.put("Host",
-							clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
+					mapHeaders.put("Host",clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
 					request = new RequestHttp(HttpMethods.GET, "/invoice/all/" + clientID, "HTTP/1.1", mapHeaders);
 					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
 					Thread.sleep(18);
 					response = readResponse(clientSocket.getInputStream());
-					System.out.println("Faturas:");
-					jsonBody = new JSONObject(response.getBody());
-					System.out.println();
+					System.out.println(response.toString());
+					
+					if(response.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp())) {
+						
+						jsonBody = new JSONObject(response.getBody());
+						System.out.println("Faturas:");
+						System.out.println(jsonBody);
+						System.out.println();
+						
+					}else {
+						
+						System.out.println(response.getStatusLine());
+						
+					}
 					break;
 
 				case "5":
 
 					mapHeaders = new HashMap<>();
-					mapHeaders.put("Host",
-							clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
-					request = new RequestHttp(HttpMethods.GET, "/user/statusConsumption/" + clientID, "HTTP/1.1",
-							mapHeaders);
+					mapHeaders.put("Host",clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
+					request = new RequestHttp(HttpMethods.GET, "/user/statusConsumption/" + clientID, "HTTP/1.1",mapHeaders);
 					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
 					Thread.sleep(18);
 					response = readResponse(clientSocket.getInputStream());
-					System.out.println("Status de consumo:");
-					jsonBody = new JSONObject(response.getBody());
-					System.out.println();
+					System.out.println(response.toString());
+					
+					if(response.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp())) {
+						
+						jsonBody = new JSONObject(response.getBody());
+						System.out.println("Status de consumo:");
+						System.out.println(jsonBody);
+						System.out.println();
+						
+					}else {
+						
+						System.out.println(response.getStatusLine());
+							
+					}
 					break;
 
 				case "6":
@@ -227,7 +267,7 @@ public class Client {
 		String[] linesReq;
 
 		BufferedInputStream buffer = new BufferedInputStream(input);
-		
+
 		if (buffer.available() > 0) {
 
 			while (buffer.available() > 0) {
