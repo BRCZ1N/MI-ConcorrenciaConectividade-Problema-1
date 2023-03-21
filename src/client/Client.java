@@ -74,10 +74,10 @@ public class Client {
 			mapHeaders.put("Host", clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
 			request = new RequestHttp(HttpMethods.GET,"/user/auth/id:" + clientID.replace(" ", "") + "&password:" + clientPassword.replace(" ", ""),"HTTP/1.1", mapHeaders);
 			ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
-			Thread.sleep(36);
+			Thread.sleep(100);
 			resp = readResponse(clientSocket.getInputStream());
 
-		} while (resp.getBody().equals("NAO AUTENTICADO"));
+		} while (!resp.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp()));
 
 		clientMenu();
 
@@ -117,7 +117,7 @@ public class Client {
 					mapHeaders.put("Host",clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
 					request = new RequestHttp(HttpMethods.GET, "/consumption/historic/" + clientID, "HTTP/1.1",mapHeaders);
 					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
-					Thread.sleep(18);
+					Thread.sleep(100);
 					response = readResponse(clientSocket.getInputStream());
 
 					if (response.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp().replaceAll("\r\n", ""))) {
@@ -144,7 +144,7 @@ public class Client {
 					mapHeaders.put("Host",clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
 					request = new RequestHttp(HttpMethods.GET, "/invoice/newInvoice/" + clientID, "HTTP/1.1", mapHeaders);
 					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
-					Thread.sleep(18);
+					Thread.sleep(100);
 					response = readResponse(clientSocket.getInputStream());
 					
 					if (response.getStatusLine().equals(HttpCodes.HTTP_201.getCodeHttp())) {
@@ -170,7 +170,7 @@ public class Client {
 					mapHeaders.put("Host",clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
 					request = new RequestHttp(HttpMethods.GET, "/invoice/" + idInvoice, "HTTP/1.1", mapHeaders);
 					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
-					Thread.sleep(18);
+					Thread.sleep(100);
 					response = readResponse(clientSocket.getInputStream());
 					
 					if (response.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp())) {
@@ -194,7 +194,7 @@ public class Client {
 					mapHeaders.put("Host",clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
 					request = new RequestHttp(HttpMethods.GET, "/invoice/all/" + clientID, "HTTP/1.1", mapHeaders);
 					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
-					Thread.sleep(18);
+					Thread.sleep(100);
 					response = readResponse(clientSocket.getInputStream());
 					
 					if(response.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp())) {
