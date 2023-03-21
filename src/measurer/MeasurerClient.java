@@ -59,7 +59,7 @@ public class MeasurerClient {
 
 			try {
 
-				measurerPacket = new DatagramPacket(bytePackage, bytePackage.length, InetAddress.getByName("172.28.1.1"),8100);
+				measurerPacket = new DatagramPacket(bytePackage, bytePackage.length, InetAddress.getByName("172.16.103.3"),8100);
 				measurerSocket.send(measurerPacket);
 				measurerPacket = new DatagramPacket(bytePackage, bytePackage.length);
 				Thread.sleep(18);
@@ -120,7 +120,7 @@ public class MeasurerClient {
 
 				try {
 					measurerPacket = new DatagramPacket(bytePackage, bytePackage.length,
-							InetAddress.getByName("172.28.1.1"), 8100);
+							InetAddress.getByName("172.16.103.3"), 8100);
 				} catch (UnknownHostException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
