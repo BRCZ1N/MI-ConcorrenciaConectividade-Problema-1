@@ -7,3 +7,4 @@ services:
       container_name: measurer-app
       ports:
          - "8100:8100/udp"
+      network_mode: "host"
