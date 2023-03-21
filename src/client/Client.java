@@ -4,15 +4,12 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.Scanner;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import http.ProtocolHttp;
