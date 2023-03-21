@@ -32,7 +32,7 @@ public class RouterInvoice implements RouterInterface {
 
 		patterns.add(Pattern.compile("/invoice/" + idPattern));
 		patterns.add(Pattern.compile("/invoice/all/" + idPattern));
-		patterns.add(Pattern.compile("/invoice/newInvoice/" + idPattern ));
+		patterns.add(Pattern.compile("/invoice/newInvoice/" + idPattern));
 		httpPatterns.put(HttpMethods.GET, patterns);
 		patterns = new ArrayList<>();
 
@@ -102,7 +102,13 @@ public class RouterInvoice implements RouterInterface {
 
 					responseHttp = execMethodRouter(http, pattern);
 
-				} 
+				} else {
+
+					Map<String, String> mapHeaders = new HashMap<>();
+					mapHeaders.put("Content-Length", "0");
+					responseHttp = new ResponseHttp(HttpCodes.HTTP_405.getCodeHttp(), mapHeaders).toString();
+
+				}
 
 			} else {
 
@@ -249,19 +255,20 @@ public class RouterInvoice implements RouterInterface {
 		ResponseHttp response;
 		Map<String, String> mapHeaders = new HashMap<>();
 		Invoice generateInvoice = InvoiceServices.addInvoice(matcher.group(1));
-		
+
 		if (generateInvoice == null) {
 
 			mapHeaders.put("Content-Length", "0");
 			response = new ResponseHttp(HttpCodes.HTTP_404.getCodeHttp(), mapHeaders);
 
 		} else {
-			
+
 			mapHeaders.put("Content-Type", "application/json");
 			mapHeaders.put("Content-Length", Integer.toString(new JSONObject(generateInvoice).toString().length()));
 			mapHeaders.put("Location", "/invoice/" + generateInvoice.getId());
-			response = new ResponseHttp(HttpCodes.HTTP_201.getCodeHttp(), mapHeaders, new JSONObject(generateInvoice).toString());
-			
+			response = new ResponseHttp(HttpCodes.HTTP_201.getCodeHttp(), mapHeaders,
+					new JSONObject(generateInvoice).toString());
+
 		}
 
 		return response.toString();

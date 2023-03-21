@@ -96,12 +96,13 @@ public class RouterConsumption implements RouterInterface {
 
 					responseHttp = execMethodRouter(http, pattern);
 
+				}else {
+
+					Map<String, String> mapHeaders = new HashMap<>();
+					mapHeaders.put("Content-Length", "0");
+					responseHttp = new ResponseHttp(HttpCodes.HTTP_405.getCodeHttp(), mapHeaders).toString();
+
 				}
-//				} else {
-//
-//					// Erro
-//
-//				}
 
 			} else {
 

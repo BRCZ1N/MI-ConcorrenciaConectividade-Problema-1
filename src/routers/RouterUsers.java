@@ -96,30 +96,19 @@ public class RouterUsers implements RouterInterface {
 
 					responseHttp = execMethodRouter(http, pattern);
 
-				}
-//				} else {
-//
-//					// Erro
-//
-//				}
-
-			} else {
-
-				if (http.getPath().contains("/user/auth/")) {
-
-					Map<String, String> mapHeaders = new HashMap<>();
-					String message = "NAO AUTENTICADO";
-					mapHeaders.put("Content-Type", "text/plain");
-					mapHeaders.put("Content-Length", Integer.toString(message.getBytes().length));
-					responseHttp = new ResponseHttp(HttpCodes.HTTP_204.getCodeHttp(), mapHeaders, message).toString();
-
 				} else {
 
 					Map<String, String> mapHeaders = new HashMap<>();
 					mapHeaders.put("Content-Length", "0");
-					responseHttp = new ResponseHttp(HttpCodes.HTTP_400.getCodeHttp(), mapHeaders).toString();
+					responseHttp = new ResponseHttp(HttpCodes.HTTP_405.getCodeHttp(), mapHeaders).toString();
 
 				}
+
+			} else {
+
+				Map<String, String> mapHeaders = new HashMap<>();
+				mapHeaders.put("Content-Length", "0");
+				responseHttp = new ResponseHttp(HttpCodes.HTTP_400.getCodeHttp(), mapHeaders).toString();
 
 			}
 
@@ -227,23 +216,19 @@ public class RouterUsers implements RouterInterface {
 		Matcher matcher = pattern.matcher(http.getPath());
 		matcher.matches();
 		ResponseHttp response = null;
-		String authResp = UserServices.authClient(matcher.group(1), matcher.group(2));
+		boolean authResp = UserServices.authClient(matcher.group(1), matcher.group(2));
 		Map<String, String> mapHeaders = new HashMap<>();
-		mapHeaders.put("Content-Type", "text/plain");
-		mapHeaders.put("Content-Length", Integer.toString(authResp.getBytes().length));
-		String httpCurrentCode;
-		
-		if(authResp == "AUTENTICADO") {
-			
-			httpCurrentCode = HttpCodes.HTTP_200.getCodeHttp();
-			
-		}else {
-			
-			httpCurrentCode = HttpCodes.HTTP_404.getCodeHttp();
-			
+		mapHeaders.put("Content-Length", "0");
+
+		if (authResp) {
+
+			response = new ResponseHttp(HttpCodes.HTTP_200.getCodeHttp(), mapHeaders);
+
+		} else {
+
+			response = new ResponseHttp(HttpCodes.HTTP_404.getCodeHttp(), mapHeaders);
+
 		}
-		
-		response = new ResponseHttp(httpCurrentCode, mapHeaders, authResp);
 
 		return response.toString();
 
