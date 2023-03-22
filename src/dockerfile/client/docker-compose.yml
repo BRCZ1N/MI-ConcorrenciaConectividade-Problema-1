@@ -6,9 +6,8 @@ services:
       stdin_open: true
       container_name: client-app
       ports:
-         - 8000:8000
-      networks:
-         - mynetwork
+         - "8000:8000/tcp"
+      network_mode: "host"
       
       
       
