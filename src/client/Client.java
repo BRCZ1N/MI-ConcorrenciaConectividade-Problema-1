@@ -9,9 +9,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Scanner;
-
 import org.json.JSONObject;
-
 import http.ProtocolHttp;
 import http.RequestHttp;
 import http.ResponseHttp;
@@ -46,7 +44,7 @@ public class Client {
 	public static void main(String[] args) throws UnknownHostException, IOException, InterruptedException {
 
 		Client client = new Client();
-		client.generateSocketClient("localhost", 8000);
+		client.generateSocketClient("172.16.103.3", 8000);
 		client.clientExecution();
 
 	}
@@ -91,13 +89,13 @@ public class Client {
 			System.out.println("===================================================");
 			System.out.println("================ Menu de cliente ==================");
 			System.out.println("===================================================");
-			System.out.println("====== (1) - Visualizar histórico de consumo");
+			System.out.println("====== (1) - Visualizar historico de consumo");
 			System.out.println("====== (2) - Gerar fatura");
 			System.out.println("====== (3) - Visualizar fatura");
 			System.out.println("====== (4) - Visualizar todas as faturas geradas");
 			System.out.println("====== (5) - Status de consumo do cliente");
 			System.out.println("====== (6) - Desconectar");
-			System.out.println("=========== Digite a opçao desejada ===============");
+			System.out.println("=========== Digite a opcao desejada ===============");
 
 			String opcao = scan.next();
 
@@ -117,7 +115,7 @@ public class Client {
 					Thread.sleep(100);
 					response = readResponse(clientSocket.getInputStream());
 
-					if (response.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp().replaceAll("\r\n", ""))) {
+					if (response.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp())) {
 
 						System.out.println("Historico do cliente:");
 						jsonBody = new JSONObject(response.getBody());
@@ -136,12 +134,12 @@ public class Client {
 					break;
 
 				case "2":
-
+					
 					mapHeaders = new HashMap<>();
 					mapHeaders.put("Host",clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
 					request = new RequestHttp(HttpMethods.GET, "/invoice/newInvoice/" + clientID, "HTTP/1.1", mapHeaders);
 					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
-					Thread.sleep(100);
+					Thread.sleep(100);	
 					response = readResponse(clientSocket.getInputStream());
 					
 					if (response.getStatusLine().equals(HttpCodes.HTTP_201.getCodeHttp())) {
@@ -214,7 +212,7 @@ public class Client {
 					mapHeaders.put("Host",clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
 					request = new RequestHttp(HttpMethods.GET, "/user/statusConsumption/" + clientID, "HTTP/1.1",mapHeaders);
 					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
-					Thread.sleep(18);
+					Thread.sleep(100);
 					response = readResponse(clientSocket.getInputStream());
 					
 					if(response.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp())) {
@@ -269,7 +267,7 @@ public class Client {
 				str.append((char) buffer.read());
 
 			}
-
+		
 			linesReq = str.toString().split("\r\n");
 
 			for (String line : linesReq) {

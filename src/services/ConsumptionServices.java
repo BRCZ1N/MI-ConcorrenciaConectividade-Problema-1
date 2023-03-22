@@ -1,6 +1,5 @@
 package services;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -8,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 import org.json.JSONObject;
 import resources.Consumption;
-import resources.Invoice;
 
 public class ConsumptionServices {
 
@@ -36,23 +34,6 @@ public class ConsumptionServices {
 			refreshConsumptionMap(idClient, consumption);
 
 		}
-
-	}
-
-	public LocalDate getLastInvoiceDateOrInitialDate(String idClient) {
-
-		if (InvoiceServices.getMapInvoices().get(idClient).isEmpty()) {
-
-			return LocalDate.now();
-
-		}
-
-		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		ArrayList<Invoice> userInvoices = InvoiceServices.getMapInvoices().get(idClient);
-		Invoice invoice = userInvoices.get(userInvoices.size() - 1);
-		LocalDate invoiceDate = LocalDate.parse(invoice.getIssuanceDate(), dateFormatter);
-
-		return invoiceDate;
 
 	}
 
