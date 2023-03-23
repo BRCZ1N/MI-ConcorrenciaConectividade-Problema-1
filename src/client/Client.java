@@ -34,7 +34,7 @@ public class Client {
 	 * Este é o metodo principal dessa aplicação que inicia a mesma. Ele recebe um
 	 * array de argumentos de linha de comando como entrada.
 	 *
-	 * @param String[] args O array de argumentos de linhas de comando.
+	 * @param String[] args - O array de argumentos de linhas de comando.
 	 * 
 	 */
 
@@ -51,8 +51,8 @@ public class Client {
 	 * recebe como parametros o ip e a porta do servidor ao qual fica a aplicação
 	 * servidor.
 	 *
-	 * @param String ip O ip do servidor.
-	 * @param int    port A porta do servidor.
+	 * @param String ip - O ip do servidor.
+	 * @param int    port  - A porta do servidor.
 	 */
 	private void generateSocketClient(String ip, int port) {
 
@@ -290,7 +290,7 @@ public class Client {
 	/**
 	 * Esse é o metodo que vai ler a resposta http enviada pelo servidor.
 	 * 
-	 * @param InputStream input O InputStream do socket que contém a resposta
+	 * @param InputStream input - O InputStream do socket que contém a resposta
 	 *                    advinda do servidor.
 	 * @return A resposta http enviada pelo servidor formatada e colocada em um
 	 *         objeto que a representa.

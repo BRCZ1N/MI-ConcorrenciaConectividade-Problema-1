@@ -29,7 +29,7 @@ public class ProtocolHttp {
 	 * em um objeto que representa uma requisição http para o servidor entender e
 	 * processar.
 	 *
-	 * @param InputStream input O InputStream do socket que contém a requisição
+	 * @param InputStream input - O InputStream do socket que contém a requisição
 	 *                    advinda do cliente.
 	 * @return O objeto que representa a requisição http para o servidor processar.
 	 */
@@ -104,7 +104,7 @@ public class ProtocolHttp {
 	 * Esse método, é usado para enviar a mensagem do cliente para o servidor ou do
 	 * servidor para o cliente
 	 *
-	 * @param OutputStream output O OutputStream do socket que deve receber a
+	 * @param OutputStream output - O OutputStream do socket que deve receber a
 	 *                     mensagem
 	 * 
 	 */
