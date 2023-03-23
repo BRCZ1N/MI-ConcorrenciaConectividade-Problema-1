@@ -24,18 +24,22 @@
    3. Geração de fatura;
    4. Alerta sobre consumo excessivo;
    
-<h2> Interface para gerenciamento dos medidores.</h2>
+<h2>1. Interface para gerenciamento dos medidores.</h2>
    
  &emsp; Para esse requisito foi desenvolvido uma interface simples que possui uma entrada para o identificador do usuário e a sua senha que serão enviadas através de uma conexão UDP para a autenticação de usuário, após essa fase de autenticação, produziu-se threads para a interface medidor onde uma delas incrementa o contador do medidor e a secundária envia dados ao servidor após um intervalo especificado, e no metodo ao qual essas threads são iniciadas tem-se a entrada de teclado para alterar o ritmo de consumo do medidor.
   
-<h2>Acompanhar consumo de energia.</h2>
+<h2>2. Acompanhar consumo de energia.</h2>
 
- &emsp;Objetivando o acompanhamento do consumo de energia essa funcionalidade foi desenvolvida para buscar os consumos do usuário armazenados na estrutura de dados dos serviços de consumo que estão no servidor usando o identificador do usuário como chave e pegando os consumos gerados associado a ele, unido-se a esses consumos, pega-se o consumo total do usuário e também o identificador do usuário, finalmente transformando esses dados em um JSON que poderá ser repassado na resposta da requisição
+&emsp;Objetivando o acompanhamento do consumo de energia essa funcionalidade foi desenvolvida para buscar os consumos do usuário armazenados na estrutura de dados dos serviços de consumo que estão no servidor usando o identificador do usuário como chave e pegando os consumos gerados associado a ele, unido-se a esses consumos, pega-se o consumo total do usuário e também o identificador do usuário, finalmente transformando esses dados em um JSON que poderá ser repassado na resposta da requisição
+
 <h2>3. Gerar fatura.</h2>
 
-<h2>Alerta sobre consumo excessivo.</h2>
+&emsp;Para efetuar a geração de faturas prevalece a necessidade de pegar consumos que ainda não foram contabilizados em faturas anteriores, sendo assim no momento de geração da fatura pega-se a data de geração da ultima fatura e utiliza a mesma para contabilizar os consumos posteriores a ela, além desse aspecto ainda há a necessidade de pegar
 
-&emsp;A cada consumo gerado nos serviços de consumo é feito uma média dos consumos anteriores e incrementado a uma certo valor, se o valor do consumo que será adicionado atualmente for superior a essa média incrementada então o usuário é classificado como tendo um alto consumo, do contrário consumo normal , finalmente então atualizando o status de consumo do usuário. Utilizando-se de toda essa lógica para atualização, tem-se que essa funcionalidade é disponível por uma instancia de usuário da estrutura de dados relacionado a classe serviço de usuário, isto é, na resposta da requisição é repassado o status de consumo relacionado a instancia de um usuário e o seu identificador
+
+<h2>4. Alerta sobre consumo excessivo.</h2>
+
+&emsp;Para essa funcionalidade é necessário entender que para cada consumo gerado nos serviços de consumo é feito uma média dos consumos anteriores e incrementado a uma certo valor, se o valor do consumo que será adicionado atualmente for superior a essa média incrementada então o usuário é classificado como tendo um alto consumo, do contrário consumo normal , finalmente então atualizando o status de consumo do usuário. Utilizando-se de toda essa lógica para atualização, tem-se que essa funcionalidade é disponível por uma instancia de usuário da estrutura de dados relacionado a classe serviço de usuário, isto é, na resposta da requisição é repassado o status de consumo relacionado a instancia de um usuário e o seu identificador
  
 # Componentes do projeto
 
@@ -61,7 +65,7 @@
 </ul>
 
 <h2>- API REST</h2>
-<p2>  &emsp; A API Rest conecta o usuário(usuario) TCP ao servidor TCP, além disso é possível usar o insomnia para tais operações. Possui métodos get, para visualizar o historico de consumo, gerar e mostrar a fatura do usuário, visualizar a fatura do usuário, visualizar todas as faturas do usuário e para visualizar o status de consumo do usuário.<p2> 
+<p2>  &emsp; A API Rest conecta o usuário TCP ao servidor TCP. Possui métodos get, para visualizar o historico de consumo, gerar e mostrar a fatura do usuário, visualizar a fatura do usuário, visualizar todas as faturas do usuário e para visualizar o status de consumo do usuário.<p2> 
  
  # Considerações finais 
 <p2> &emsp; O projeto consegue realizar tudo dentro das obrigações mínimas. Na implementação surgiu desafios com relação a compreensão da API Rest, o mesmo também possibilitou aprofundamento em questões relacionadas no que diz respeito ao que é uma API Restful e a tipos de conexões(TCP e UDP). Em versões posteriores, poderiam ser adicionado um melhoramento entre as trocas de dados das conexões. Apesar disso, tem-se que o estado atual é apenas um prótotipo simples e é conivente com relação as especificações básicas do prótotipo
