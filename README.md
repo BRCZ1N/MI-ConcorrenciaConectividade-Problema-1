@@ -1,4 +1,4 @@
-<h2 align="center">Consumo de Energia Inteligente </h2>
+<h2 align="center">Consumo de energia inteligente </h2>
  
 # Índice
 
