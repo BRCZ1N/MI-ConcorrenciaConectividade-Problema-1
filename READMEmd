@@ -1,5 +1,4 @@
-<p align="center">
- align="center" alt="GitHub Readme Stats" />
+
  <h2 align="center">Consumo de Energia Inteligente </h2>
  
 # Índice
