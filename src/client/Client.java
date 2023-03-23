@@ -16,6 +16,10 @@ import http.ResponseHttp;
 import utilityclasses.HttpCodes;
 import utilityclasses.HttpMethods;
 
+/**
+ * Esta é a classe Client, que representa a aplicação do cliente HTTP TCP que se
+ * conecta ao servidor.
+ */
 public class Client {
 
 	private Socket clientSocket;
@@ -23,6 +27,30 @@ public class Client {
 	private String clientID;
 	private String clientPassword;
 
+	/**
+	 * Este é o metodo principal dessa aplicação que inicia a mesma. Ele recebe um
+	 * array de argumentos de linha de comando como entrada.
+	 *
+	 * @param String[] args O array de argumentos de linhas de comando.
+	 * 
+	 */
+
+	public static void main(String[] args) throws UnknownHostException, IOException, InterruptedException {
+
+		Client client = new Client();
+		client.generateSocketClient("172.16.103.3", 8000);
+		client.clientExecution();
+
+	}
+
+	/**
+	 * Esse é o método que instancia um socket TCP para o cliente, para isso ele
+	 * recebe como parametros o ip e a porta do servidor ao qual fica a aplicação
+	 * servidor.
+	 *
+	 * @param String ip O ip do servidor.
+	 * @param int    port A porta do servidor.
+	 */
 	private void generateSocketClient(String ip, int port) {
 
 		try {
@@ -41,14 +69,9 @@ public class Client {
 
 	}
 
-	public static void main(String[] args) throws UnknownHostException, IOException, InterruptedException {
-
-		Client client = new Client();
-		client.generateSocketClient("172.16.103.3", 8000);
-		client.clientExecution();
-
-	}
-
+	/**
+	 * Esse é o metodo de execução do menu de login dessa aplicação.
+	 */
 	private void clientExecution() throws IOException, InterruptedException {
 
 		String clientAuthentication = "";
@@ -67,7 +90,9 @@ public class Client {
 
 			Map<String, String> mapHeaders = new HashMap<>();
 			mapHeaders.put("Host", clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
-			request = new RequestHttp(HttpMethods.GET,"/user/auth/id:" + clientID.replace(" ", "") + "&password:" + clientPassword.replace(" ", ""),"HTTP/1.1", mapHeaders);
+			request = new RequestHttp(HttpMethods.GET,
+					"/user/auth/id:" + clientID.replace(" ", "") + "&password:" + clientPassword.replace(" ", ""),
+					"HTTP/1.1", mapHeaders);
 			ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
 			Thread.sleep(100);
 			resp = readResponse(clientSocket.getInputStream());
@@ -78,6 +103,9 @@ public class Client {
 
 	}
 
+	/**
+	 * Esse é o metodo de execução do menu de cliente dessa aplicação.
+	 */
 	private void clientMenu() throws IOException, InterruptedException {
 
 		boolean connection = true;
@@ -109,8 +137,10 @@ public class Client {
 				case "1":
 
 					mapHeaders = new HashMap<>();
-					mapHeaders.put("Host",clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
-					request = new RequestHttp(HttpMethods.GET, "/consumption/historic/" + clientID, "HTTP/1.1",mapHeaders);
+					mapHeaders.put("Host",
+							clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
+					request = new RequestHttp(HttpMethods.GET, "/consumption/historic/" + clientID, "HTTP/1.1",
+							mapHeaders);
 					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
 					Thread.sleep(100);
 					response = readResponse(clientSocket.getInputStream());
@@ -125,7 +155,7 @@ public class Client {
 						System.out.println();
 
 					} else {
-						
+
 						System.out.println("ERRO:");
 						System.out.println(response.getStatusLine());
 
@@ -134,14 +164,16 @@ public class Client {
 					break;
 
 				case "2":
-					
+
 					mapHeaders = new HashMap<>();
-					mapHeaders.put("Host",clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
-					request = new RequestHttp(HttpMethods.GET, "/invoice/newInvoice/" + clientID, "HTTP/1.1", mapHeaders);
+					mapHeaders.put("Host",
+							clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
+					request = new RequestHttp(HttpMethods.GET, "/invoice/newInvoice/" + clientID, "HTTP/1.1",
+							mapHeaders);
 					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
-					Thread.sleep(100);	
+					Thread.sleep(100);
 					response = readResponse(clientSocket.getInputStream());
-					
+
 					if (response.getStatusLine().equals(HttpCodes.HTTP_201.getCodeHttp())) {
 
 						jsonBody = new JSONObject(response.getBody());
@@ -162,71 +194,75 @@ public class Client {
 					System.out.println("Digite o id da fatura:");
 					String idInvoice = scan.next();
 					mapHeaders = new HashMap<>();
-					mapHeaders.put("Host",clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
+					mapHeaders.put("Host",
+							clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
 					request = new RequestHttp(HttpMethods.GET, "/invoice/" + idInvoice, "HTTP/1.1", mapHeaders);
 					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
 					Thread.sleep(100);
 					response = readResponse(clientSocket.getInputStream());
-					
+
 					if (response.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp())) {
 
 						jsonBody = new JSONObject(response.getBody());
 						System.out.println("Fatura:");
 						System.out.println(jsonBody);
 						System.out.println();
-						
-					}else {
-						
+
+					} else {
+
 						System.out.println("ERRO:");
 						System.out.println(response.getStatusLine());
-						
+
 					}
 					break;
 
 				case "4":
 
 					mapHeaders = new HashMap<>();
-					mapHeaders.put("Host",clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
+					mapHeaders.put("Host",
+							clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
 					request = new RequestHttp(HttpMethods.GET, "/invoice/all/" + clientID, "HTTP/1.1", mapHeaders);
 					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
 					Thread.sleep(100);
 					response = readResponse(clientSocket.getInputStream());
-					
-					if(response.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp())) {
-						
+
+					if (response.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp())) {
+
 						jsonBody = new JSONObject(response.getBody());
 						System.out.println("Faturas:");
 						System.out.println(jsonBody);
 						System.out.println();
-						
-					}else {
-						
+
+					} else {
+
 						System.out.println(response.getStatusLine());
-						
+
 					}
 					break;
 
 				case "5":
 
 					mapHeaders = new HashMap<>();
-					mapHeaders.put("Host",clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
-					request = new RequestHttp(HttpMethods.GET, "/user/statusConsumption/" + clientID, "HTTP/1.1",mapHeaders);
+					mapHeaders.put("Host",
+							clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort());
+					request = new RequestHttp(HttpMethods.GET, "/user/statusConsumption/" + clientID, "HTTP/1.1",
+							mapHeaders);
 					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
 					Thread.sleep(100);
 					response = readResponse(clientSocket.getInputStream());
-					
-					if(response.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp())) {
-						
+
+					if (response.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp())) {
+
 						jsonBody = new JSONObject(response.getBody());
 						System.out.println("Status de consumo:");
 						System.out.println(jsonBody);
 						System.out.println();
-						
-					}else {
-						
+
+					} else {
+
 						System.out.println("ERRO:");
 						System.out.println(response.getStatusLine());
-							
+
 					}
 					break;
 
@@ -248,6 +284,14 @@ public class Client {
 
 	}
 
+	/**
+	 * Esse é o metodo que vai ler a resposta http enviada pelo servidor.
+	 * 
+	 * @param InputStream input O InputStream do socket que contém a resposta
+	 *                    advinda do servidor.
+	 * @return A resposta http enviada pelo servidor formatada e colocada em um
+	 *         objeto que a representa.
+	 */
 	public ResponseHttp readResponse(InputStream input) throws IOException {
 
 		ResponseHttp req = new ResponseHttp();
@@ -267,7 +311,7 @@ public class Client {
 				str.append((char) buffer.read());
 
 			}
-		
+
 			linesReq = str.toString().split("\r\n");
 
 			for (String line : linesReq) {

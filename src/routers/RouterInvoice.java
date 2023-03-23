@@ -16,12 +16,22 @@ import services.InvoiceServices;
 import utilityclasses.HttpCodes;
 import utilityclasses.HttpMethods;
 
+/**
+ * Esta é a classe RouterInvoice, que serve para a organização e processamento
+ * do roteamento das requisições relacionadas aos serviços de fatura do cliente
+ * no servidor
+ */
 public class RouterInvoice implements RouterInterface {
 
 	private Map<Pattern, MethodRouter> routers = new HashMap<>();
 	private Map<HttpMethods, ArrayList<Pattern>> httpPatterns = new HashMap<>();
 	private String idPattern = "(\\d+)";
 
+	/**
+	 * Esse é o construtor da classe RouterInvoice que adiciona os padrões de rotas
+	 * para serviços de faturas no servidor unido com os metodos necessários para
+	 * cada requisição
+	 */
 	public RouterInvoice() {
 
 		routers.put(Pattern.compile("/invoice/" + idPattern), this::getInvoice);
@@ -38,6 +48,13 @@ public class RouterInvoice implements RouterInterface {
 
 	}
 
+	/**
+	 * Esse é o método, que verifica se o caminho existe a partir dos padrões
+	 * armazenados no sistema
+	 * 
+	 * @param String path Caminho que foi mandado na requisição
+	 * @return Retorna verdadeiro se achar o caminho e falso se não achar
+	 */
 	public boolean verifyPath(String path) {
 
 		for (Entry<Pattern, MethodRouter> pattern : routers.entrySet()) {
@@ -54,6 +71,14 @@ public class RouterInvoice implements RouterInterface {
 
 	}
 
+	/**
+	 * Esse é o método, que verifica se o caminho existe a partir dos padrões
+	 * armazenados no sistema para certo método http e retorna o padrão se existir
+	 * 
+	 * @param HttpMethods httpMethod Metodo que foi mandado pela requisição
+	 * @param String      path Caminho que foi mandado na requisição
+	 * @return Padrão da requisição caso exista
+	 */
 	public Pattern verifyPathInHttpMethod(HttpMethods httpMethod, String path) {
 
 		for (Pattern pattern : httpPatterns.get(httpMethod)) {
@@ -70,24 +95,13 @@ public class RouterInvoice implements RouterInterface {
 
 	}
 
-	public String execMethodRouter(RequestHttp http, Pattern patternCurrent) {
-
-		MethodRouter methodReq = null;
-
-		for (Entry<Pattern, MethodRouter> methodRouter : routers.entrySet()) {
-
-			if (patternCurrent.pattern().equals(methodRouter.getKey().pattern())) {
-
-				methodReq = methodRouter.getValue();
-
-			}
-
-		}
-
-		return methodReq.method(http);
-
-	}
-
+	/**
+	 * Esse é o método, que executa o roteamento completo dos serviços de fatura e
+	 * que retorna uma resposta http em formato de string para o cliente
+	 * 
+	 * @param ResquestHttp http Objeto que representa a requisição http do cliente
+	 * @return Resposta da requisição http através de uma string
+	 */
 	@Override
 	public String router(RequestHttp http) {
 
@@ -195,6 +209,41 @@ public class RouterInvoice implements RouterInterface {
 
 	}
 
+	/**
+	 * Esse é o método, que busca e executa o método que deve ser executado pela
+	 * requisição http, retornando por fim a resposta da requisição em formato
+	 * string para ser enviada
+	 * 
+	 * @param ResquestHttp http Objeto com que representa a requisição http
+	 * @param Pattern      patternCurrent Padrão do caminho da requisição
+	 * @return Resposta da requisição http através de uma string
+	 */
+	public String execMethodRouter(RequestHttp http, Pattern patternCurrent) {
+
+		MethodRouter methodReq = null;
+
+		for (Entry<Pattern, MethodRouter> methodRouter : routers.entrySet()) {
+
+			if (patternCurrent.pattern().equals(methodRouter.getKey().pattern())) {
+
+				methodReq = methodRouter.getValue();
+
+			}
+
+		}
+
+		return methodReq.method(http);
+
+	}
+
+	/**
+	 * Esse é o método que executa ações utilizando dos serviços de fatura do
+	 * servidor para pegar uma fatura existente de um cliente utilizando do conteudo
+	 * da requisição http
+	 * 
+	 * @param ResquestHttp http Objeto com que representa a requisição http
+	 * @return Resposta da requisição http através de uma string
+	 */
 	public String getInvoice(RequestHttp http) {
 
 		Pattern pattern = Pattern.compile("/invoice/" + idPattern);
@@ -221,6 +270,14 @@ public class RouterInvoice implements RouterInterface {
 
 	}
 
+	/**
+	 * Esse é o método que executa ações utilizando dos serviços de fatura do
+	 * servidor para pegar todas as faturas existentes de um cliente utilizando do
+	 * conteudo da requisição http
+	 * 
+	 * @param ResquestHttp http Objeto com que representa a requisição http
+	 * @return Resposta da requisição http através de uma string
+	 */
 	public String getAllInvoices(RequestHttp http) {
 
 		Pattern pattern = Pattern.compile("/invoice/all/" + idPattern);
@@ -247,6 +304,14 @@ public class RouterInvoice implements RouterInterface {
 
 	}
 
+	/**
+	 * Esse é o método que executa ações utilizando dos serviços de fatura do
+	 * servidor para gerar e mostra-la para o cliente utilizando do conteudo da
+	 * requisição http
+	 * 
+	 * @param ResquestHttp http Objeto com que representa a requisição http
+	 * @return Resposta da requisição http através de uma string
+	 */
 	public String generateInvoice(RequestHttp http) {
 
 		Pattern pattern = Pattern.compile("/invoice/newInvoice/" + idPattern);
@@ -275,6 +340,10 @@ public class RouterInvoice implements RouterInterface {
 
 	}
 
+	/**
+	 * Esta é a interface, para os metodos do que processam as requisições http da
+	 * classe e retornam a resposta
+	 */
 	public interface MethodRouter {
 
 		public String method(RequestHttp http);

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
@@ -11,6 +12,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+/**
+ * Esta é a classe MeasurerClient, que representa a aplicação do medidor UDP que
+ * se conecta ao servidor.
+ */
 public class MeasurerClient {
 
 	private DatagramSocket measurerSocket;
@@ -22,21 +27,44 @@ public class MeasurerClient {
 	private String idClient;
 	private String passwordClient;
 
+	/**
+	 * Este é o metodo principal dessa aplicação que inicia a mesma. Ele recebe um
+	 * array de argumentos de linha de comando como entrada.
+	 *
+	 * @param String[] args O array de argumentos de linhas de comando.
+	 * 
+	 */
+
 	public static void main(String[] args) throws UnknownHostException {
 
 		MeasurerClient measurer = new MeasurerClient();
+		measurer.generateSocketClient();
 		measurer.startMeasurer();
 
 	}
 
-	private void startMeasurer() throws UnknownHostException {
+	/**
+	 * Este é o metodo que instancia o socket UDP do medidor
+	 */
+	private void generateSocketClient() {
 
 		try {
+
 			measurerSocket = new DatagramSocket();
-		} catch (SocketException e) {
-			// TODO Auto-generated catch block
+
+		} catch (IOException e) {
+
 			e.printStackTrace();
+
 		}
+
+	}
+
+	/**
+	 * Esse é o metodo de execução do menu de login dessa aplicação.
+	 */
+	private void startMeasurer() throws UnknownHostException {
+
 		String userCredentials;
 		String authenticate = "denied authenticate";
 
@@ -59,14 +87,15 @@ public class MeasurerClient {
 
 			try {
 
-				measurerPacket = new DatagramPacket(bytePackage, bytePackage.length, InetAddress.getByName("172.16.103.3"),8100);
+				measurerPacket = new DatagramPacket(bytePackage, bytePackage.length,
+						InetAddress.getByName("172.16.103.3"), 8100);
 				measurerSocket.send(measurerPacket);
 				measurerPacket = new DatagramPacket(bytePackage, bytePackage.length);
 				Thread.sleep(18);
 				measurerSocket.receive(measurerPacket);
 				authenticate = (new String(bytePackage, StandardCharsets.UTF_8));
 				bytePackage = new byte[1024];
-				
+
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -81,6 +110,9 @@ public class MeasurerClient {
 
 	}
 
+	/**
+	 * Esse é o metodo de execução do simulador de medidor da aplicação.
+	 */
 	private void execMeasurer() {
 
 		System.out.println("Medidor ativo");

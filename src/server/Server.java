@@ -11,6 +11,9 @@ import services.ConsumptionServices;
 import services.InvoiceServices;
 import services.UserServices;
 
+/**
+ * Esta é a classe Server, que representa a aplicação do servidor
+ */
 public class Server {
 
 	private ServerSocket socketServer;
@@ -22,6 +25,14 @@ public class Server {
 	private ConsumptionServices consumptionService = new ConsumptionServices();
 	private InvoiceServices invoiceService = new InvoiceServices();
 
+	/**
+	 * Esse é o método que instancia sockets para o servidor para conexões TCP para
+	 * clientes http e conexões UDP para os medidores, para isso ele recebe como
+	 * parametros uma porta para o socket TCP e uma para o socket UDP
+	 *
+	 * @param int portServerSocket Porta do servidor TCP
+	 * @param int portDatagramSocket Porta do servidor UDP
+	 */
 	private void generateServer(int portServerSocket, int portDatagramSocket) throws IOException {
 
 		socketServer = new ServerSocket(portServerSocket);
@@ -29,21 +40,52 @@ public class Server {
 
 	}
 
-	private void generateAndStartThreadClient(Socket socketClient) {
+	/**
+	 * Esse é o método que gera e inicia uma Thread para clientes TCP da aplicação
+	 * servidor
+	 *
+	 * @param Socket socketClientTCP Socket do cliente TCP
+	 */
+	private void generateAndStartThreadClientTCP(Socket socketClientTCP) {
 
-		ThreadTcpClient threadTcpClient = new ThreadTcpClient(socketClient);
+		ThreadTcpClient threadTcpClient = new ThreadTcpClient(socketClientTCP);
 		new Thread(threadTcpClient).start();
 
 	}
 
+	/**
+	 * Esse é o método que gera e inicia uma Thread para os medidores UDP da
+	 * aplicação servidor
+	 *
+	 * @param DatagramSocket datagramSocket Socket UDP do medidor
+	 * @param DatagramPacket datagramPacket Pacote datagram do medidor UDP
+	 * @param byte[]         bufferPacker Buffer de dados
+	 */
+	private void generateAndStartThreadClientUDP(DatagramSocket datagramSocket, DatagramPacket datagramPacket,
+			byte[] bufferPacket) {
+
+		ThreadUdpClient threadUdpClient = new ThreadUdpClient(datagramSocket, datagramPacket, bufferPacket);
+		new Thread(threadUdpClient).start();
+
+	}
+
+	/**
+	 * Esse é o método que executa o servidor desde as proprias threads do servidor
+	 * até as proprios sockets UDP e TCP
+	 * 
+	 * @param int portServerSocket Porta TCP para o servidor
+	 * @param int portDatagramSocket Porta UDP para o servidor
+	 *
+	 */
 	private void execServer(int portServerSocket, int portDatagramSocket) throws IOException {
 
 		UserServices.generateUsersTest();
 		boolean connection = true;
 
 		generateServer(portServerSocket, portDatagramSocket);
-		System.out.println("Server executado no IP:" + InetAddress.getLocalHost().getHostAddress() + " - Porta:" + socketServer.getLocalPort());
-		
+		System.out.println("Server executado no IP:" + InetAddress.getLocalHost().getHostAddress() + " - Porta:"
+				+ socketServer.getLocalPort());
+
 		new Thread(() -> {
 
 			try {
@@ -52,13 +94,12 @@ public class Server {
 
 					datagramPacket = new DatagramPacket(bufferPacket, bufferPacket.length);
 					datagramSocket.receive(datagramPacket);
-					ThreadUdpClient threadUdpClient = new ThreadUdpClient(datagramSocket, datagramPacket, bufferPacket);
-					new Thread(threadUdpClient).start();
+					generateAndStartThreadClientUDP(datagramSocket, datagramPacket, bufferPacket);
 
 				}
 
 			} catch (IOException e) {
-			
+
 				e.printStackTrace();
 			}
 
@@ -68,7 +109,7 @@ public class Server {
 
 			clientSocket = socketServer.accept();
 			System.out.println("Cliente conectado a partir da porta:" + clientSocket.getPort());
-			generateAndStartThreadClient(clientSocket);
+			generateAndStartThreadClientTCP(clientSocket);
 
 		}
 
@@ -76,6 +117,13 @@ public class Server {
 
 	}
 
+	/**
+	 * Este é o metodo principal dessa aplicação que inicia a mesma. Ele recebe um
+	 * array de argumentos de linha de comando como entrada.
+	 *
+	 * @param String[] args O array de argumentos de linhas de comando.
+	 * 
+	 */
 	public static void main(String[] args) throws IOException {
 
 		Server serverMain = new Server();

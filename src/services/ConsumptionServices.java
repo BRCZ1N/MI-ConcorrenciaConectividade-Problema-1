@@ -8,35 +8,69 @@ import java.util.Map;
 import org.json.JSONObject;
 import resources.Consumption;
 
+/**
+ * Esta é a classe ConsumptionServices, que representa os serviços de consumo da
+ * aplicação
+ */
 public class ConsumptionServices {
 
 	private static Map<String, ArrayList<Consumption>> mapConsumptions;
 
+	/**
+	 * Esse é o construtor da classe ConsumptionServices, que atribui ao map que
+	 * deverá possuir os consumos do cliente uma instancia
+	 */
 	public ConsumptionServices() {
 
 		mapConsumptions = new HashMap<>();
 
 	}
 
+	/**
+	 * Esse é o método, que retorna o map de consumos dos clientes
+	 * 
+	 * @return Map do consumos dos clientes
+	 */
 	public static Map<String, ArrayList<Consumption>> getMapConsumptions() {
 		return mapConsumptions;
 	}
 
+	/**
+	 * Esse é o método, que seta o map de consumos dos clientes
+	 * 
+	 * @param Map<String,ArrayList<Consumption>> mapConsumptions Map de consumos do cliente
+	 */
 	public static void setMapConsumptions(Map<String, ArrayList<Consumption>> mapConsumptions) {
 		ConsumptionServices.mapConsumptions = mapConsumptions;
 	}
 
+	/**
+	 * Esse é o método, que adiciona um consumo ao cliente e que chama o metodo de
+	 * mudança de status de consumo.
+	 * 
+	 * @param String      idClient Identificador do cliente
+	 * @param Consumption consumption Consumo do cliente
+	 */
 	public static void addConsumption(String idClient, Consumption consumption) {
 
 		if (containsClient(idClient)) {
 
 			UserServices.refreshStatusConsumption(idClient, consumption.getAmount());
-			refreshConsumptionMap(idClient, consumption);
+			ArrayList<Consumption> copyListConsumption = mapConsumptions.get(idClient);
+			copyListConsumption.add(consumption);
+			mapConsumptions.replace(idClient, mapConsumptions.get(idClient));
 
 		}
 
 	}
 
+	/**
+	 * Esse é o método, que retorna o consumo total do cliente dentro de um periodo
+	 * para geração de faturas.
+	 * 
+	 * @param String idClient Identificador do cliente
+	 * @return Consumo do cliente em um periodo
+	 */
 	public static double valueConsumptionInPeriod(String idClient) {
 
 		double consumptionTotal = 0;
@@ -62,14 +96,12 @@ public class ConsumptionServices {
 
 	}
 
-	private static void refreshConsumptionMap(String idClient, Consumption consumption) {
-
-		ArrayList<Consumption> copyListConsumption = mapConsumptions.get(idClient);
-		copyListConsumption.add(consumption);
-		mapConsumptions.replace(idClient, copyListConsumption);
-
-	}
-
+	/**
+	 * Esse é o método, que retorna os consumos do cliente em formato JSON
+	 * 
+	 * @param String idClient Identificador do cliente
+	 * @return Os consumos do cliente em formato JSON
+	 */
 	public static JSONObject getConsumptionsJSON(String idClient) {
 
 		JSONObject json = new JSONObject();
@@ -87,6 +119,12 @@ public class ConsumptionServices {
 
 	}
 
+	/**
+	 * Esse é o método, que verifica se um cliente existe
+	 * 
+	 * @param String idClient Identificador do cliente
+	 * @return Retorna verdadeiro se existe e falso se não existe
+	 */
 	public static boolean containsClient(String idClient) {
 
 		for (String id : mapConsumptions.keySet()) {
@@ -103,12 +141,24 @@ public class ConsumptionServices {
 
 	}
 
+	/**
+	 * Esse é o método, que adiciona uma chave de cliente ao map de consumo dos
+	 * clientes
+	 * 
+	 * @param String idClient Identificador do cliente
+	 */
 	public static void addSlotClientConsumptions(String idClient) {
 
 		mapConsumptions.put(idClient, new ArrayList<Consumption>());
 
 	}
 
+	/**
+	 * Esse é o método, que calcula a media de todos os consumos
+	 * 
+	 * @param String idClient Identificador do cliente
+	 * @return Retorna a média de consumo do cliente
+	 */
 	public static double averageConsumptions(String idClient) {
 
 		double average = 0;
@@ -129,6 +179,21 @@ public class ConsumptionServices {
 		}
 
 		return average;
+
+	}
+	
+	/**
+	 * Esse é o método, que deleta os consumos de um cliente
+	 * 
+	 * @param String idClient Identificador do cliente
+	 */
+	public static void deleteUserConsumption(String idClient) {
+
+		if (containsClient(idClient)) {
+
+			mapConsumptions.remove(idClient);
+
+		}
 
 	}
 

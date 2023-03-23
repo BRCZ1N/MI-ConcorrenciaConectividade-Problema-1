@@ -12,14 +12,24 @@ import services.UserServices;
 import utilityclasses.HttpCodes;
 import utilityclasses.HttpMethods;
 
-public class RouterUsers implements RouterInterface {
+/**
+ * Esta é a classe RouterUsers, que serve para a organização e processamento do
+ * roteamento das requisições relacionadas aos serviços de usuario do cliente no
+ * servidor
+ */
+public class RouterUser implements RouterInterface {
 
 	private Map<Pattern, MethodRouter> routers = new HashMap<>();
 	private Map<HttpMethods, ArrayList<Pattern>> httpPatterns = new HashMap<>();
 	private String idPattern = "(\\w+)";
 	private String passwordPattern = "(\\w+)";
 
-	public RouterUsers() {
+	/**
+	 * Esse é o construtor da classe RouterUser que adiciona os padrões de rotas
+	 * para serviços de usuario no servidor unido com os metodos necessários para
+	 * cada requisição
+	 */
+	public RouterUser() {
 
 		routers.put(Pattern.compile("/user/statusConsumption/" + idPattern), this::getCurrentStateConsumption);
 		routers.put(Pattern.compile("/user/auth/id:" + idPattern + "&password:" + passwordPattern), this::authClient);
@@ -32,6 +42,13 @@ public class RouterUsers implements RouterInterface {
 
 	}
 
+	/**
+	 * Esse é o método, que verifica se o caminho existe a partir dos padrões
+	 * armazenados no sistema
+	 * 
+	 * @param String path Caminho que foi mandado na requisição
+	 * @return Retorna verdadeiro se achar o caminho e falso se não achar
+	 */
 	public boolean verifyPath(String path) {
 
 		for (Entry<Pattern, MethodRouter> pattern : routers.entrySet()) {
@@ -48,6 +65,14 @@ public class RouterUsers implements RouterInterface {
 
 	}
 
+	/**
+	 * Esse é o método, que verifica se o caminho existe a partir dos padrões
+	 * armazenados no sistema para certo método http e retorna o padrão se existir
+	 * 
+	 * @param HttpMethods httpMethod Metodo que foi mandado pela requisição
+	 * @param String      path Caminho que foi mandado na requisição
+	 * @return Padrão da requisição caso exista
+	 */
 	public Pattern verifyPathInHttpMethod(HttpMethods httpMethod, String path) {
 
 		for (Pattern pattern : httpPatterns.get(httpMethod)) {
@@ -64,24 +89,13 @@ public class RouterUsers implements RouterInterface {
 
 	}
 
-	public String execMethodRouter(RequestHttp http, Pattern patternCurrent) {
-
-		MethodRouter methodReq = null;
-
-		for (Entry<Pattern, MethodRouter> methodRouter : routers.entrySet()) {
-
-			if (patternCurrent.pattern().equals(methodRouter.getKey().pattern())) {
-
-				methodReq = methodRouter.getValue();
-
-			}
-
-		}
-
-		return methodReq.method(http);
-
-	}
-
+	/**
+	 * Esse é o método, que executa o roteamento completo dos serviços de usuário e
+	 * que retorna uma resposta http em formato de string para o cliente
+	 * 
+	 * @param ResquestHttp http Objeto que representa a requisição http do cliente
+	 * @return Resposta da requisição http através de uma string
+	 */
 	@Override
 	public String router(RequestHttp http) {
 
@@ -184,6 +198,41 @@ public class RouterUsers implements RouterInterface {
 
 	}
 
+	/**
+	 * Esse é o método, que busca e executa o método que deve ser executado pela
+	 * requisição http, retornando por fim a resposta da requisição em formato
+	 * string para ser enviada
+	 * 
+	 * @param ResquestHttp http Objeto que representa a requisição http do cliente
+	 * @param Pattern      patternCurrent Padrão do caminho da requisição
+	 * @return Resposta da requisição http através de uma string
+	 */
+	public String execMethodRouter(RequestHttp http, Pattern patternCurrent) {
+
+		MethodRouter methodReq = null;
+
+		for (Entry<Pattern, MethodRouter> methodRouter : routers.entrySet()) {
+
+			if (patternCurrent.pattern().equals(methodRouter.getKey().pattern())) {
+
+				methodReq = methodRouter.getValue();
+
+			}
+
+		}
+
+		return methodReq.method(http);
+
+	}
+
+	/**
+	 * Esse é o método que executa ações utilizando dos serviços de usuario do
+	 * servidor para pegar o estado de consumo atual de um cliente utilizando do
+	 * conteudo da requisição http
+	 * 
+	 * @param ResquestHttp http Objeto que representa a requisição http do cliente
+	 * @return Resposta da requisição http através de uma string
+	 */
 	public String getCurrentStateConsumption(RequestHttp http) {
 
 		Pattern pattern = Pattern.compile("/user/statusConsumption/" + idPattern);
@@ -210,6 +259,14 @@ public class RouterUsers implements RouterInterface {
 
 	}
 
+	/**
+	 * Esse é o método que executa ações utilizando dos serviços de usuario do
+	 * servidor para a autenticação de um cliente utilizando do conteudo da
+	 * requisição http
+	 * 
+	 * @param ResquestHttp http Objeto que representa a requisição http do cliente
+	 * @return Resposta da requisição http através de uma string
+	 */
 	public String authClient(RequestHttp http) {
 
 		Pattern pattern = Pattern.compile("/user/auth/id:" + idPattern + "&password:" + passwordPattern);
@@ -234,6 +291,10 @@ public class RouterUsers implements RouterInterface {
 
 	}
 
+	/**
+	 * Esta é a interface, para os metodos do que processam as requisições http da
+	 * classe e retornam a resposta
+	 */
 	public interface MethodRouter {
 
 		public String method(RequestHttp http);

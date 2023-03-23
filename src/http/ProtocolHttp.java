@@ -14,8 +14,22 @@ import org.json.JSONObject;
 
 import utilityclasses.HttpMethods;
 
+/**
+ * Esta é a classe ProtocolHttp, que possui os métodos de leitura de requisições
+ * http advindas de um cliente e de envio de respostas http para o cliente
+ * conectado ao servidor.
+ */
 public class ProtocolHttp {
 
+	/**
+	 * Esse método, faz a leitura da requisição http advinda de um cliente e molda
+	 * em um objeto que representa uma requisição http para o servidor entender e
+	 * processar.
+	 *
+	 * @param InputStream input O InputStream do socket que contém a requisição
+	 *                    advinda do cliente.
+	 * @return O objeto que representa a requisição http para o servidor processar.
+	 */
 	public static RequestHttp readRequest(InputStream input) throws IOException, InterruptedException {
 
 		RequestHttp req = new RequestHttp();
@@ -83,13 +97,19 @@ public class ProtocolHttp {
 
 	}
 
-	public static void sendMessage(OutputStream out, String response) throws IOException {
+	/**
+	 * Esse método, é usado para enviar a mensagem do cliente para o servidor ou do
+	 * servidor para o cliente
+	 *
+	 * @param OutputStream output O OutputStream do socket que deve receber a mensagem
+	 *                  
+	 */
+	public static void sendMessage(OutputStream output, String response) throws IOException {
 
-		BufferedOutputStream buffer = new BufferedOutputStream(out);
-		
+		BufferedOutputStream buffer = new BufferedOutputStream(output);
+
 		buffer.write(response.getBytes("UTF-8"));
 		buffer.flush();
-	
 
 	}
 

@@ -1,41 +1,36 @@
 package utilityclasses;
 
+/**
+ * Esta é a enumeração HttpCodes, que possui os status de resposta da requisição
+ */
 public enum HttpCodes {
 
-	HTTP_200("HTTP/1.1 200 OK"), 
-	HTTP_201("HTTP/1.1 201 Created"), 
-	HTTP_204("HTTP/1.1 204 No Content"),
-	HTTP_400("HTTP/1.1 400 Bad Request"),
-	HTTP_401("HTTP/1.1 401 Unauthorized"),
-	HTTP_403("HTTP/1.1 403 Forbidden"), 
-	HTTP_404("HTTP/1.1 404 Not Found"),
-	HTTP_405("HTTP/1.1 405 Method Not Allowed"),
-	HTTP_500("HTTP/1.1 500 Internal Server Error"),
-	HTTP_501("HTTP/1.1 501 Not Implemented");
-
-//	200 OK: a solicitaï¿½ï¿½o foi bem-sucedida e o servidor retornou a resposta solicitada.
-//	201 Created: a solicitaï¿½ï¿½o foi bem-sucedida e o servidor criou um novo recurso como resultado.
-//	204 No Content: a solicitaï¿½ï¿½o foi bem-sucedida, mas nï¿½o hï¿½ conteï¿½do a ser retornado.
-//	400 Bad Request: a solicitaï¿½ï¿½o nï¿½o pode ser processada devido a uma sintaxe invï¿½lida ou outras informaï¿½ï¿½es incorretas na solicitaï¿½ï¿½o.
-//	401 Unauthorized: a solicitaï¿½ï¿½o nï¿½o foi autorizada devido a credenciais invï¿½lidas ou ausentes.
-//	403 Forbidden: a solicitaï¿½ï¿½o foi entendida, mas o servidor se recusa a fornecer o recurso.
-//	404 Not Found: o recurso solicitado nï¿½o foi encontrado no servidor.
-//	500 Internal Server Error: ocorreu um erro interno no servidor que impediu a conclusï¿½o da solicitaï¿½ï¿½o.
+	HTTP_200("HTTP/1.1 200 OK"), HTTP_201("HTTP/1.1 201 Created"), HTTP_204("HTTP/1.1 204 No Content"),
+	HTTP_400("HTTP/1.1 400 Bad Request"), HTTP_401("HTTP/1.1 401 Unauthorized"), HTTP_403("HTTP/1.1 403 Forbidden"),
+	HTTP_404("HTTP/1.1 404 Not Found"), HTTP_405("HTTP/1.1 405 Method Not Allowed"),
+	HTTP_500("HTTP/1.1 500 Internal Server Error"), HTTP_501("HTTP/1.1 501 Not Implemented");
 
 	private String codeHttp;
 
+	/**
+	 * Esse é o construtor da enumeração HttpCodes, que constroe o objeto que
+	 * representa os possiveis codigos de status http
+	 * 
+	 * @param String codeHttp
+	 */
 	private HttpCodes(String codeHttp) {
 
 		this.codeHttp = codeHttp;
 
 	}
 
+	/**
+	 * Esse é o método, que retorna código do status http
+	 * 
+	 * @return Status http
+	 */
 	public String getCodeHttp() {
 		return codeHttp;
-	}
-
-	public void setCodeHttp(String codeHttp) {
-		this.codeHttp = codeHttp;
 	}
 
 }
