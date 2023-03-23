@@ -30,7 +30,7 @@
   
 <h2>2. Acompanhar consumo de energia.</h2>
 
- &emsp; Objetivando o acompanhamento do consumo de energia essa funcionalidade foi desenvolvida para buscar os consumos do cliente armazenados na estrutura de dados dos serviços de consumo que estão no servidor usando o identificador do cliente como chave e pegando os consumos gerados associado a ele. Além disso, pega-se o consumo total do cliente e também o identificador do cliente, e finalmente retorna-se a resposta http contendo a lista de consumos, o identificador do cliente e o consumo total do cliente
+ &emsp; Objetivando o acompanhamento do consumo de energia essa funcionalidade foi desenvolvida para buscar os consumos do cliente armazenados na estrutura de dados dos serviços de consumo que estão no servidor usando o identificador do cliente como chave e pegando os consumos gerados associado a ele. Além disso, pega-se o consumo total do cliente e também o identificador do cliente, e finalmente retorna-se a resposta http da requisição
 <h2>3. Gerar fatura.</h2>
 
 <h2>3.Alerta sobre consumo excessivo.</h2>
