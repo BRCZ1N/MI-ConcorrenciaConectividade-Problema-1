@@ -52,22 +52,38 @@ public class Client {
 	 * servidor.
 	 *
 	 * @param String ip - O ip do servidor.
-	 * @param int    port  - A porta do servidor.
+	 * @param int    port - A porta do servidor.
 	 */
 	private void generateSocketClient(String ip, int port) {
 
-		try {
+		boolean connected = false;
+		while (!connected) {
 
-			clientSocket = new Socket(ip, port);
+			try {
 
-		} catch (UnknownHostException e) {
+				clientSocket = new Socket(ip, port);
+				connected = true;
 
-			e.printStackTrace();
+			} catch (UnknownHostException e) {
 
-		} catch (IOException e) {
+				e.printStackTrace();
 
-			e.printStackTrace();
+			} catch (ConnectException e) {
 
+				System.out.println("Server ainda não foi iniciado, espere um tempo");
+
+				try {
+
+					Thread.sleep(1000);
+
+				} catch (InterruptedException ex) {
+
+					ex.printStackTrace();
+
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 	}
@@ -176,7 +192,7 @@ public class Client {
 					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
 					Thread.sleep(100);
 					response = readResponse(clientSocket.getInputStream());
-					
+
 					if (response.getStatusLine().equals(HttpCodes.HTTP_201.getCodeHttp())) {
 
 						jsonBody = new JSONObject(response.getBody());

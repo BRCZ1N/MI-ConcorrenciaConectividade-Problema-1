@@ -141,7 +141,7 @@ public class MeasurerClient {
 			while (true) {
 
 				try {
-					Thread.sleep(60000);
+					Thread.sleep(30000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

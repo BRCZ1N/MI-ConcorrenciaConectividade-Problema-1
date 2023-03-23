@@ -191,7 +191,7 @@ public class UserServices {
 
 		User user = getUser(idClient);
 
-		if (currentConsumption > ConsumptionServices.averageConsumptions(idClient) + 200) {
+		if (currentConsumption > ConsumptionServices.averageConsumptions(idClient) + 100) {
 
 			user.setStatusConsumption(StatusConsumeEnum.HIGH);
 			editUser(user);

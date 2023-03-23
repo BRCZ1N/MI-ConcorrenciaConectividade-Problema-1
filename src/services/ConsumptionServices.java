@@ -101,6 +101,26 @@ public class ConsumptionServices {
 	}
 
 	/**
+	 * Esse é o método, que retorna o consumo total acumulado
+	 * 
+	 * @param String idClient - Identificador do cliente
+	 * @return Consumo total do cliente
+	 */
+	public static double valueConsumptionTotal(String idClient) {
+
+		double accumulatedConsumption = 0;
+
+		for (Consumption consumption : mapConsumptions.get(idClient)) {
+
+			accumulatedConsumption += consumption.getAmount();
+
+		}
+
+		return accumulatedConsumption;
+
+	}
+
+	/**
 	 * Esse é o método, que retorna os consumos do cliente em formato JSON
 	 * 
 	 * @param String idClient - Identificador do cliente
@@ -113,6 +133,7 @@ public class ConsumptionServices {
 		if (containsClient(idClient)) {
 
 			json.put("idClient", idClient);
+			json.put("accumulatedConsumption", ConsumptionServices.valueConsumptionTotal(idClient));
 			json.put("historic", mapConsumptions.get(idClient));
 
 			return json;

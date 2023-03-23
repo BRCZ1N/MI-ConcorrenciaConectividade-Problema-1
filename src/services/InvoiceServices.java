@@ -1,5 +1,6 @@
 package services;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -62,12 +63,6 @@ public class InvoiceServices {
 		if (containsClient(idClient)) {
 
 			LocalDateTime currentDate = LocalDateTime.now();
-
-			if (containsInvoiceDate(idClient)) {
-
-				currentDate = currentDate.plusDays(1);
-
-			}
 
 			Invoice invoice = new Invoice(Long.toString(idInvoice), idClient, UserServices.getUser(idClient).getName(),
 					currentDate, Fares.FARE_1.getFare(), ConsumptionServices.valueConsumptionInPeriod(idClient),
@@ -171,27 +166,6 @@ public class InvoiceServices {
 		for (String id : mapInvoices.keySet()) {
 
 			if (id.equals(idClient)) {
-
-				return true;
-			}
-
-		}
-
-		return false;
-
-	}
-
-	/**
-	 * Esse é o método, que verifica se a data de uma fatura já existe
-	 * 
-	 * @param String idClient - Identificador do cliente
-	 * @return Retorna verdadeiro se existe e falso se não existe
-	 */
-	public static boolean containsInvoiceDate(String idClient) {
-
-		for (Invoice invoice : mapInvoices.get(idClient)) {
-
-			if (invoice.getIssuanceDate().equals(idClient)) {
 
 				return true;
 			}
