@@ -26,16 +26,16 @@
    
    <h2>   1. Interface para gerenciamento dos medidores.</h2>
    
- &emsp; Para esse requisito foi desenvolvido uma interface simples que possui uma entrada para o identificador do cliente e a sua senha que serão enviadas através de uma conexão UDP para a autenticação de usuário, após essa fase de autenticação, produziu-se 2 threads para os medidores onde uma delas incrementa o contador do medidor e a secundária envia dados ao servidor após um intervalo especificado, e no metodo ao qual essas threads são iniciadas tem-se a entrada de teclado para alterar o ritmo de consumo do medidor.
+ &emsp; Para esse requisito foi desenvolvido uma interface simples que possui uma entrada para o identificador do cliente e a sua senha que serão enviadas através de uma conexão UDP para a autenticação de usuário, após essa fase de autenticação, produziu-se threads para a interface medidor onde uma delas incrementa o contador do medidor e a secundária envia dados ao servidor após um intervalo especificado, e no metodo ao qual essas threads são iniciadas tem-se a entrada de teclado para alterar o ritmo de consumo do medidor.
   
 <h2>2. Acompanhar consumo de energia.</h2>
 
- &emsp; Objetivando o acompanhamento do consumo de energia essa funcionalidade foi desenvolvida para buscar os consumos do cliente armazenados na estrutura de dados dos serviços de consumo que estão no servidor usando o identificador do cliente como chave e pegando os consumos gerados associado a ele. Além disso, pega-se o consumo total do cliente e também o identificador do cliente, e finalmente retorna-se a resposta http da requisição
+ &emsp; Objetivando o acompanhamento do consumo de energia essa funcionalidade foi desenvolvida para buscar os consumos do cliente armazenados na estrutura de dados dos serviços de consumo que estão no servidor usando o identificador do cliente como chave e pegando os consumos gerados associado a ele. Além disso, pega-se o consumo total do cliente e também o identificador do cliente.
 <h2>3. Gerar fatura.</h2>
 
 <h2>3.Alerta sobre consumo excessivo.</h2>
 
-&emsp;A cada consumo gerado nos serviços de consumo é feito uma média dos consumos anteriores e incrementado a uma certo valor, se o valor do consumo que será adicionado atualmente for superior a essa média incrementada então o cliente é classificado como tendo um alto consumo, do contrário consumo normal , finalmente então atualizando o status de consumo do cliente, se o usuário requisitar o status atual de consumo então esse dado armazenado na representação do objeto é retornando com resposta http
+&emsp;A cada consumo gerado nos serviços de consumo é feito uma média dos consumos anteriores e incrementado a uma certo valor, se o valor do consumo que será adicionado atualmente for superior a essa média incrementada então o cliente é classificado como tendo um alto consumo, do contrário consumo normal , finalmente então atualizando o status de consumo do cliente.
  
 # Componentes do projeto
 
