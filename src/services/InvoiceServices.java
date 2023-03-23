@@ -93,13 +93,13 @@ public class InvoiceServices {
 			JSONObject json = new JSONObject();
 			json.put("idInvoice", invoice.getId());
 			json.put("idClient", invoice.getIdClient());
-			json.put("name", invoice.getNameClient());
+			json.put("nameClient", invoice.getNameClient());
 			json.put("issuanceDate", invoice.getIssuanceDate());
 			json.put("expirationDate", invoice.getExpirationDate());
 			json.put("fare", invoice.getFare());
 			json.put("consumption", invoice.getConsumption());
 			json.put("invoiceValue", invoice.getInvoiceValue());
-			json.put("currentStatusClient", invoice.getCurrentStatusConsumption());
+			json.put("currentStatusConsumption", invoice.getCurrentStatusConsumption());
 
 			return json;
 

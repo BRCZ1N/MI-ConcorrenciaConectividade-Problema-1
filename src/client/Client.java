@@ -9,6 +9,8 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Scanner;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 import http.ProtocolHttp;
 import http.RequestHttp;
@@ -41,7 +43,7 @@ public class Client {
 	public static void main(String[] args) throws UnknownHostException, IOException, InterruptedException {
 
 		Client client = new Client();
-		client.generateSocketClient("localhost", 8000);
+		client.generateSocketClient("172.16.103.3", 8000);
 		client.clientExecution();
 
 	}
@@ -166,13 +168,33 @@ public class Client {
 
 					if (response.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp())) {
 
-						System.out.println("Historico do cliente:");
+						System.out.println("================HISTORICO DE CONSUMO===============");
 						jsonBody = new JSONObject(response.getBody());
+						System.out.println("Historico do cliente:");
 						System.out.println("Idenficador do cliente: " + jsonBody.get("idClient"));
-						System.out.println("Historico de consumo do cliente:");
-						System.out.println(jsonBody.getJSONArray("historic"));
-						System.out.println();
+						System.out.println("Consumo acumulado do cliente: " + jsonBody.get("accumulatedConsumption"));
+						JSONArray jsonArray = jsonBody.getJSONArray("historic");
+						System.out.println("======================CONSUMOS=====================");
+																							 
+						if (!jsonArray.isEmpty()) {
 
+							for (int i = 0; i < jsonArray.length(); i++) {
+
+								JSONObject jsonObject = jsonArray.getJSONObject(i);
+								System.out.println("Data e hora do consumo:" + jsonObject.get("dateTime"));
+								System.out.println("Quantidade de consumo:" + jsonObject.get("amount"));
+								System.out.println("Unidade de medida do consumo:" + jsonObject.get("unitMeasurement"));
+								System.out.println("===================================================");
+												
+							}
+
+						} else {
+
+							System.out.println("Lista de consumos do cliente está vazia");
+
+						}
+						System.out.println("===================================================");
+											
 					} else {
 
 						System.out.println("ERRO:");
@@ -180,6 +202,7 @@ public class Client {
 
 					}
 
+					System.out.println();
 					break;
 
 				case "2":
@@ -196,9 +219,19 @@ public class Client {
 					if (response.getStatusLine().equals(HttpCodes.HTTP_201.getCodeHttp())) {
 
 						jsonBody = new JSONObject(response.getBody());
-						System.out.println("Fatura gerada:");
-						System.out.println(jsonBody);
-						System.out.println();
+						System.out.println(
+								"=============================FATURA GERADA====================================");
+						System.out.println("Identificador do cliente:" + jsonBody.get("idClient"));
+						System.out.println(
+								"Status de consumo atual do cliente:" + jsonBody.get("currentStatusConsumption"));
+						System.out.println("Nome do cliente:" + jsonBody.get("nameClient"));
+						System.out.println("Consumo total da fatura:" + jsonBody.get("consumption"));
+						System.out.println("Valor da fatura:" + jsonBody.get("invoiceValue"));
+						System.out.println("Tarifa da fatura:" + jsonBody.get("fare"));
+						System.out.println("Data de geração da fatura:" + jsonBody.get("issuanceDate"));
+						System.out.println("Data em que a fatura expira:" + jsonBody.get("expirationDate"));
+						System.out.println(
+								"==============================================================================");
 
 					} else {
 
@@ -206,6 +239,7 @@ public class Client {
 						System.out.println(response.getStatusLine());
 
 					}
+					System.out.println();
 					break;
 
 				case "3":
@@ -223,9 +257,19 @@ public class Client {
 					if (response.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp())) {
 
 						jsonBody = new JSONObject(response.getBody());
-						System.out.println("Fatura:");
-						System.out.println(jsonBody);
-						System.out.println();
+						System.out.println(
+								"====================================FATURA===================================");
+						System.out.println("Identificador do cliente:" + jsonBody.get("idClient"));
+						System.out.println(
+								"Status de consumo atual do cliente:" + jsonBody.get("currentStatusConsumption"));
+						System.out.println("Nome do cliente:" + jsonBody.get("nameClient"));
+						System.out.println("Consumo total da fatura:" + jsonBody.get("consumption"));
+						System.out.println("Valor da fatura:" + jsonBody.get("invoiceValue"));
+						System.out.println("Tarifa da fatura:" + jsonBody.get("fare"));
+						System.out.println("Data de geração da fatura:" + jsonBody.get("issuanceDate"));
+						System.out.println("Data em que a fatura expira:" + jsonBody.get("expirationDate"));
+						System.out.println(
+								"==============================================================================");
 
 					} else {
 
@@ -233,6 +277,7 @@ public class Client {
 						System.out.println(response.getStatusLine());
 
 					}
+					System.out.println();
 					break;
 
 				case "4":
@@ -248,15 +293,39 @@ public class Client {
 					if (response.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp())) {
 
 						jsonBody = new JSONObject(response.getBody());
-						System.out.println("Faturas:");
-						System.out.println(jsonBody);
-						System.out.println();
+						JSONArray jsonArray = jsonBody.getJSONArray("invoices");
+						System.out.println("=================LISTA DE FATURAS==================");
+											 									   
+						if (!jsonArray.isEmpty()) {											   
 
+							for (int i = 0; i < jsonArray.length(); i++) {
+
+								JSONObject jsonObject = jsonArray.getJSONObject(i);
+								System.out.println("Identificador do cliente:" + jsonObject.get("idClient"));
+								System.out.println("Status de consumo atual do cliente:"+ jsonObject.get("currentStatusConsumption"));
+								System.out.println("Nome do cliente:" + jsonObject.get("nameClient"));
+								System.out.println("Consumo total da fatura:" + jsonObject.get("consumption"));
+								System.out.println("Valor da fatura:" + jsonObject.get("invoiceValue"));
+								System.out.println("Tarifa da fatura:" + jsonObject.get("fare"));
+								System.out.println("Data de geração da fatura:" + jsonObject.get("issuanceDate"));
+								System.out.println("Data em que a fatura expira:" + jsonObject.get("expirationDate"));
+								System.out.println("===================================================");
+
+							}
+
+						} else {
+
+							System.out.println("Lista de faturas do cliente está vazia");
+
+						}
+						System.out.println("===================================================");
+											
 					} else {
 
 						System.out.println(response.getStatusLine());
 
 					}
+					System.out.println();
 					break;
 
 				case "5":
@@ -273,9 +342,10 @@ public class Client {
 					if (response.getStatusLine().equals(HttpCodes.HTTP_200.getCodeHttp())) {
 
 						jsonBody = new JSONObject(response.getBody());
-						System.out.println("Status de consumo:");
-						System.out.println(jsonBody);
-						System.out.println();
+						System.out.println("=====================STATUS DE CONSUMO==================");
+						System.out.println("Identificador do cliente:" + jsonBody.get("idClient"));
+						System.out.println("Status de consumo:" + jsonBody.get("statusConsumption"));
+						System.out.println("========================================================");
 
 					} else {
 
@@ -283,6 +353,7 @@ public class Client {
 						System.out.println(response.getStatusLine());
 
 					}
+					System.out.println();
 					break;
 
 				case "6":
