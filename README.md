@@ -8,7 +8,7 @@
    - [Medidor](#Medidor)
    - [Servidor](#Servidor)
    - [Client](#Client)
-   - [APIRest](#APIRest)
+   - [API Rest](#API Rest)
 - [Considerações finais](#consideracoes)
 
 
