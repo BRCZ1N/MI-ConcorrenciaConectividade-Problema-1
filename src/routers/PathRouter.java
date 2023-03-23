@@ -31,7 +31,7 @@ public class PathRouter {
 	 * recebe o retorno da resposta gerada pelos roteamentos especificos de usuario,
 	 * faturas e consumo.
 	 * 
-	 * @param HttpMethods method O método da requisição http
+	 * @param HttpMethods method - O método da requisição http
 	 * @return Resposta da requisição http através de uma string
 	 */
 	public String execRoute(RequestHttp http) {
@@ -56,7 +56,7 @@ public class PathRouter {
 	/**
 	 * Esse é o método, que retorna o endpoint principal do caminho da requisição
 	 * 
-	 * @param String path Caminho da requisição
+	 * @param String path - Caminho da requisição
 	 * @return O caminho geral da requisição
 	 */
 	public String searchEndpoint(String path) {

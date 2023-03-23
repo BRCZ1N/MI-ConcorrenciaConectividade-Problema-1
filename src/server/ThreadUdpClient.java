@@ -37,7 +37,7 @@ public class ThreadUdpClient implements Runnable {
 	 * Esse é o método, que seta o ip e a porta em conjunto e em formato string para
 	 * exibição no console do servidor
 	 * 
-	 * @param String connection Representação em conjunto em string do ip e da porta
+	 * @param String connection - Representação em conjunto em string do ip e da porta
 	 *               do servidor
 	 */
 
@@ -49,9 +49,9 @@ public class ThreadUdpClient implements Runnable {
 	 * Esse é o construtor da classe ThreadUdpClient, que constroe os objetos que
 	 * representam as threads do cliente UDP
 	 * 
-	 * @param DatagramSocket socket Socket UDP do cliente
-	 * @param DatagramPacket packet Pacote UDP do cliente
-	 * @param byte[]         dataPacket Buffer de dados do cliente
+	 * @param DatagramSocket socket - Socket UDP do cliente
+	 * @param DatagramPacket packet - Pacote UDP do cliente
+	 * @param byte[]         dataPacket - Buffer de dados do cliente
 	 */
 	public ThreadUdpClient(DatagramSocket socket, DatagramPacket packet, byte[] dataPacket) {
 

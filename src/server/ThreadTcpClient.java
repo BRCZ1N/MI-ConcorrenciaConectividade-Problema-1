@@ -33,7 +33,7 @@ public class ThreadTcpClient implements Runnable {
 	 * Esse é o método, que seta o ip e a porta em conjunto e em formato string para
 	 * exibição no console do servidor
 	 * 
-	 * @param String connection Representação em conjunto em string do ip e da porta
+	 * @param String connection - Representação em conjunto em string do ip e da porta
 	 *               do servidor
 	 */
 	public void setConnection(String connection) {
@@ -44,7 +44,7 @@ public class ThreadTcpClient implements Runnable {
 	 * Esse é o construtor da classe ThreadTcpClient, que constroe os objetos que
 	 * representam as threads do cliente TCP
 	 * 
-	 * @param Socket socket Socket TCP do cliente
+	 * @param Socket socket - Socket TCP do cliente
 	 */
 
 	public ThreadTcpClient(Socket socket) {

@@ -38,7 +38,7 @@ public class ConsumptionServices {
 	/**
 	 * Esse é o método, que seta o map de consumos dos clientes
 	 * 
-	 * @param Map<String,ArrayList<Consumption>> mapConsumptions Map de consumos do cliente
+	 * @param Map<String,ArrayList<Consumption>> mapConsumptions - Map de consumos do cliente
 	 */
 	public static void setMapConsumptions(Map<String, ArrayList<Consumption>> mapConsumptions) {
 		ConsumptionServices.mapConsumptions = mapConsumptions;
@@ -48,8 +48,8 @@ public class ConsumptionServices {
 	 * Esse é o método, que adiciona um consumo ao cliente e que chama o metodo de
 	 * mudança de status de consumo.
 	 * 
-	 * @param String      idClient Identificador do cliente
-	 * @param Consumption consumption Consumo do cliente
+	 * @param String      idClient - Identificador do cliente
+	 * @param Consumption consumption - Consumo do cliente
 	 */
 	public static void addConsumption(String idClient, Consumption consumption) {
 
@@ -68,7 +68,7 @@ public class ConsumptionServices {
 	 * Esse é o método, que retorna o consumo total do cliente dentro de um periodo
 	 * para geração de faturas.
 	 * 
-	 * @param String idClient Identificador do cliente
+	 * @param String idClient - Identificador do cliente
 	 * @return Consumo do cliente em um periodo
 	 */
 	public static double valueConsumptionInPeriod(String idClient) {
@@ -99,7 +99,7 @@ public class ConsumptionServices {
 	/**
 	 * Esse é o método, que retorna os consumos do cliente em formato JSON
 	 * 
-	 * @param String idClient Identificador do cliente
+	 * @param String idClient - Identificador do cliente
 	 * @return Os consumos do cliente em formato JSON
 	 */
 	public static JSONObject getConsumptionsJSON(String idClient) {
@@ -122,7 +122,7 @@ public class ConsumptionServices {
 	/**
 	 * Esse é o método, que verifica se um cliente existe
 	 * 
-	 * @param String idClient Identificador do cliente
+	 * @param String idClient - Identificador do cliente
 	 * @return Retorna verdadeiro se existe e falso se não existe
 	 */
 	public static boolean containsClient(String idClient) {
@@ -145,7 +145,7 @@ public class ConsumptionServices {
 	 * Esse é o método, que adiciona uma chave de cliente ao map de consumo dos
 	 * clientes
 	 * 
-	 * @param String idClient Identificador do cliente
+	 * @param String idClient - Identificador do cliente
 	 */
 	public static void addSlotClientConsumptions(String idClient) {
 
@@ -156,7 +156,7 @@ public class ConsumptionServices {
 	/**
 	 * Esse é o método, que calcula a media de todos os consumos
 	 * 
-	 * @param String idClient Identificador do cliente
+	 * @param String idClient - Identificador do cliente
 	 * @return Retorna a média de consumo do cliente
 	 */
 	public static double averageConsumptions(String idClient) {
@@ -185,7 +185,7 @@ public class ConsumptionServices {
 	/**
 	 * Esse é o método, que deleta os consumos de um cliente
 	 * 
-	 * @param String idClient Identificador do cliente
+	 * @param String idClient - Identificador do cliente
 	 */
 	public static void deleteUserConsumption(String idClient) {
 

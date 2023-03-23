@@ -13,7 +13,7 @@ public enum Fares {
 	 * Esse é o construtor da enumeração Fares, que constroe o objeto que representa
 	 * as possiveis faturas
 	 * 
-	 * @param double fare
+	 * @param double fare 
 	 */
 	private Fares(double fare) {
 

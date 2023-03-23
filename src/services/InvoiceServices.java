@@ -42,7 +42,7 @@ public class InvoiceServices {
 	/**
 	 * Esse é o método, que seta o map de faturas dos clientes
 	 * 
-	 * @param Map<String,ArrayList<Invoice>> mapInvoices Map de faturas dos clientes
+	 * @param Map<String,ArrayList<Invoice>> mapInvoices - Map de faturas dos clientes
 	 */
 	public static void setMapInvoices(Map<String, ArrayList<Invoice>> mapInvoices) {
 		InvoiceServices.mapInvoices = mapInvoices;
@@ -51,7 +51,7 @@ public class InvoiceServices {
 	/**
 	 * Esse é o método, que cria e adiciona uma fatura ao cliente.
 	 * 
-	 * @param String idClient Identificador do cliente
+	 * @param String idClient - Identificador do cliente
 	 */
 	public static Invoice addInvoice(String idClient) {
 
@@ -84,7 +84,7 @@ public class InvoiceServices {
 	/**
 	 * Esse é o método, que retorna a fatura de um cliente em formato JSON
 	 * 
-	 * @param String idClient Identificador do cliente
+	 * @param String idClient - Identificador do cliente
 	 */
 	public static JSONObject getInvoiceJSON(String idInvoice) {
 
@@ -113,7 +113,7 @@ public class InvoiceServices {
 	/**
 	 * Esse é o método, que retorna as faturas de um cliente em formato JSON
 	 * 
-	 * @param String idClient Identificador do cliente
+	 * @param String idClient - Identificador do cliente
 	 */
 	public static JSONObject getInvoicesJSON(String idClient) {
 
@@ -134,7 +134,7 @@ public class InvoiceServices {
 	/**
 	 * Esse é o método, que retorna a fatura de um cliente
 	 * 
-	 * @param String idClient Identificador do cliente
+	 * @param String idClient - Identificador do cliente
 	 */
 	public static Invoice getInvoice(String idInvoice) {
 
@@ -159,7 +159,7 @@ public class InvoiceServices {
 	/**
 	 * Esse é o método, que verifica se um cliente existe
 	 * 
-	 * @param String idClient Identificador do cliente
+	 * @param String idClient - Identificador do cliente
 	 * @return Retorna verdadeiro se existe e falso se não existe
 	 */
 	public static boolean containsClient(String idClient) {
@@ -180,7 +180,7 @@ public class InvoiceServices {
 	/**
 	 * Esse é o método, que verifica se a data de uma fatura já existe
 	 * 
-	 * @param String idClient Identificador do cliente
+	 * @param String idClient - Identificador do cliente
 	 * @return Retorna verdadeiro se existe e falso se não existe
 	 */
 	public static boolean containsInvoiceDate(String idClient) {
@@ -202,7 +202,7 @@ public class InvoiceServices {
 	 * Esse é o método, que adiciona uma chave de cliente ao map de faturas dos
 	 * clientes
 	 * 
-	 * @param String idClient Identificador do cliente
+	 * @param String idClient - Identificador do cliente
 	 */
 	public static void addSlotClientInvoices(String idClient) {
 
@@ -214,7 +214,7 @@ public class InvoiceServices {
 	 * Esse é o método, que adiciona uma chave de cliente ao map de consumo dos
 	 * clientes
 	 * 
-	 * @param String idClient Identificador do cliente
+	 * @param String idClient - Identificador do cliente
 	 * @return Retorna a data da ultima fatura ou a data inicial caso não existam faturas
 	 */
 	public static LocalDateTime getInitialDateInvoiceOrInitialDate(String idClient) {
@@ -238,7 +238,7 @@ public class InvoiceServices {
 	/**
 	 * Esse é o método, que deleta as faturas de um cliente
 	 * 
-	 * @param String idClient Identificador do cliente
+	 * @param String idClient - Identificador do cliente
 	 */
 	public static void deleteUserInvoices(String idClient) {
 

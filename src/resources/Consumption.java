@@ -13,8 +13,8 @@ public class Consumption {
 	 * Esse é o construtor da classe Consumption, que constroe o objeto que
 	 * representa um consumo de cliente
 	 * 
-	 * @param double amount Quantidade de consumo
-	 * @param String dateTime Data e hora que o consumo foi gerado
+	 * @param double amount - Quantidade de consumo
+	 * @param String dateTime - Data e hora que o consumo foi gerado
 	 */
 	public Consumption(double amount, String dateTime) {
 
@@ -34,7 +34,7 @@ public class Consumption {
 	/**
 	 * Esse é o método, que seta a data e a hora do consumo
 	 * 
-	 * @param String dateTime Data e hora do consumo
+	 * @param String dateTime - Data e hora do consumo
 	 */
 	public void setDateTime(String dateTime) {
 		this.dateTime = dateTime;
@@ -52,7 +52,7 @@ public class Consumption {
 	/**
 	 * Esse é o método, que seta a quantidade do consumo
 	 * 
-	 * @param double amount Quantidade do consumo
+	 * @param double amount - Quantidade do consumo
 	 */
 	public void setAmount(double amount) {
 		this.amount = amount;
