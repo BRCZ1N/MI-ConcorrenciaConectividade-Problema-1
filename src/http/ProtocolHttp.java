@@ -18,6 +18,9 @@ import utilityclasses.HttpMethods;
  * Esta é a classe ProtocolHttp, que possui os métodos de leitura de requisições
  * http advindas de um cliente e de envio de respostas http para o cliente
  * conectado ao servidor.
+ * 
+ * @author Bruno Campos de Oliveira Rocha
+ * @version 1.0
  */
 public class ProtocolHttp {
 
@@ -101,8 +104,9 @@ public class ProtocolHttp {
 	 * Esse método, é usado para enviar a mensagem do cliente para o servidor ou do
 	 * servidor para o cliente
 	 *
-	 * @param OutputStream output O OutputStream do socket que deve receber a mensagem
-	 *                  
+	 * @param OutputStream output O OutputStream do socket que deve receber a
+	 *                     mensagem
+	 * 
 	 */
 	public static void sendMessage(OutputStream output, String response) throws IOException {
 

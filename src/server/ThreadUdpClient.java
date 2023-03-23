@@ -15,6 +15,9 @@ import services.UserServices;
  * Esta é a classe ThreadUdpClient, que é utilizada para representar e utilizar
  * de uma thread de um cliente UDP que se conecta ao servidor para auxiliar no
  * processamennto de dados
+ * 
+ * @author Bruno Campos de Oliveira Rocha
+ * @version 1.0
  */
 public class ThreadUdpClient implements Runnable {
 
@@ -37,8 +40,8 @@ public class ThreadUdpClient implements Runnable {
 	 * Esse é o método, que seta o ip e a porta em conjunto e em formato string para
 	 * exibição no console do servidor
 	 * 
-	 * @param String connection - Representação em conjunto em string do ip e da porta
-	 *               do servidor
+	 * @param String connection - Representação em conjunto usando string do ip e da
+	 *               porta do servidor
 	 */
 
 	public void setConnection(String connection) {

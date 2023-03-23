@@ -19,6 +19,9 @@ import utilityclasses.HttpMethods;
  * Esta é a classe RouterConsumption, que serve para a organização e
  * processamento do roteamento das requisições relacionadas aos serviços de
  * consumo do cliente no servidor
+ * 
+ * @author Bruno Campos de Oliveira Rocha
+ * @version 1.0
  */
 public class RouterConsumption implements RouterInterface {
 

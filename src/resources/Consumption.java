@@ -2,6 +2,9 @@ package resources;
 
 /**
  * Esta é a classe Consumption, que é a representação do consumo do cliente
+ * 
+ * @author Bruno Campos de Oliveira Rocha
+ * @version 1.0
  */
 public class Consumption {
 

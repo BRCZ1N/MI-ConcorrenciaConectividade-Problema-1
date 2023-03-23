@@ -10,6 +10,9 @@ import utilityclasses.HttpMethods;
 /**
  * Esta é a classe RequestHttp, que representa a requisição http do cliente
  * conectado ao servidor.
+ * 
+ * @author Bruno Campos de Oliveira Rocha
+ * @version 1.0
  */
 public class RequestHttp {
 
@@ -23,12 +26,13 @@ public class RequestHttp {
 	 * Esse é o construtor da classe RequestHttp, que constroe o objeto http que
 	 * representa a requisição do cliente em formato completo
 	 * 
-	 * @param HttpMethods method - Representa o método da requisição http.
-	 * @param String path - Armazena o caminho da requisição http.
-	 * @param String versionHttp -  Representa a versão atual da requisição
+	 * @param HttpMethods        method - Representa o método da requisição http.
+	 * @param String             path - Armazena o caminho da requisição http.
+	 * @param String             versionHttp - Representa a versão atual da
+	 *                           requisição http.
+	 * @param Map<String,String> headers - Representa os cabeçalhos da requisição
 	 *                           http.
-	 * @param Map<String,String> headers - Representa os cabeçalhos da requisição http.
-	 * @param JSONObject body - Representa o corpo da requisição http.
+	 * @param JSONObject         body - Representa o corpo da requisição http.
 	 */
 	public RequestHttp(HttpMethods method, String path, String versionHttp, Map<String, String> headers,
 			JSONObject body) {
@@ -44,11 +48,12 @@ public class RequestHttp {
 	 * Esse é o construtor da classe RequestHttp, que constroe o objeto http que
 	 * representa a requisição do cliente sem o corpo
 	 * 
-	 * @param HttpMethods method - Representa o método da requisição http.
-	 * @param String path - Armazena o caminho da requisição http.
-	 * @param String versionHttp - Representa a versão atual da requisição
+	 * @param HttpMethods        method - Representa o método da requisição http.
+	 * @param String             path - Armazena o caminho da requisição http.
+	 * @param String             versionHttp - Representa a versão atual da
+	 *                           requisição http.
+	 * @param Map<String,String> headers - Representa os cabeçalhos da requisição
 	 *                           http.
-	 * @param Map<String,String> headers - Representa os cabeçalhos da requisição http.
 	 */
 	public RequestHttp(HttpMethods method, String path, String versionHttp, Map<String, String> headers) {
 
@@ -65,7 +70,8 @@ public class RequestHttp {
 	 * 
 	 * @param HttpMethods method - Representa o método da requisição http.
 	 * @param String      path - Armazena o caminho da requisição http.
-	 * @param String      versionHttp - Representa a versão atual da requisição http.
+	 * @param String      versionHttp - Representa a versão atual da requisição
+	 *                    http.
 	 */
 	public RequestHttp(HttpMethods method, String path, String versionHttp) {
 
@@ -76,8 +82,8 @@ public class RequestHttp {
 	}
 
 	/**
-	 * Esse é o construtor vazio da classe RequestHttp, que constroe o objeto da classe
-	 * RequestHttp vazio
+	 * Esse é o construtor vazio da classe RequestHttp, que constroe o objeto da
+	 * classe RequestHttp vazio
 	 */
 	public RequestHttp() {
 
@@ -138,7 +144,7 @@ public class RequestHttp {
 	}
 
 	/**
-	 * Esse é o método, que retorna os cabeçalhos da requisição http 
+	 * Esse é o método, que retorna os cabeçalhos da requisição http
 	 * 
 	 * @return Os cabeçalhos da requisição http
 	 */
@@ -147,7 +153,7 @@ public class RequestHttp {
 	}
 
 	/**
-	 * Esse é o método, que seta os cabeçalhos da requisição http 
+	 * Esse é o método, que seta os cabeçalhos da requisição http
 	 * 
 	 * @param Map<String,String> headers - Os cabeçalhos da requisição http
 	 */
@@ -156,7 +162,7 @@ public class RequestHttp {
 	}
 
 	/**
-	 * Esse é o método, que retorna o corpo da requisição http 
+	 * Esse é o método, que retorna o corpo da requisição http
 	 * 
 	 * @return O corpo da requisição http
 	 */
@@ -165,7 +171,7 @@ public class RequestHttp {
 	}
 
 	/**
-	 * Esse é o método, que seta o corpo da requisição http 
+	 * Esse é o método, que seta o corpo da requisição http
 	 * 
 	 * @param JSONObject body - O corpo da requisição http
 	 */
@@ -174,7 +180,8 @@ public class RequestHttp {
 	}
 
 	/**
-	 * Esse é o método, que formata os cabeçalhos da requisição no modelo padrão de cabeçalhos http
+	 * Esse é o método, que formata os cabeçalhos da requisição no modelo padrão de
+	 * cabeçalhos http
 	 * 
 	 * @return Os cabeçalhos da requisição http em string
 	 */
@@ -192,7 +199,8 @@ public class RequestHttp {
 	}
 
 	/**
-	 * Esse é o método, que formata todo o objeto da requisição no modelo padrão de uma requisição http
+	 * Esse é o método, que formata todo o objeto da requisição no modelo padrão de
+	 * uma requisição http
 	 * 
 	 * @return O objeto formatado em uma requisição http padrão em formato String
 	 */

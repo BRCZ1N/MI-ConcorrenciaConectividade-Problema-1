@@ -2,6 +2,9 @@ package utilityclasses;
 
 /**
  * Esta é a enumeração Fares, que possui as constantes de fatura da aplicação
+ * 
+ * @author Bruno Campos de Oliveira Rocha
+ * @version 1.0
  */
 public enum Fares {
 
@@ -13,13 +16,14 @@ public enum Fares {
 	 * Esse é o construtor da enumeração Fares, que constroe o objeto que representa
 	 * as possiveis faturas
 	 * 
-	 * @param double fare 
+	 * @param double fare
 	 */
 	private Fares(double fare) {
 
 		this.fare = fare;
 
 	}
+
 	/**
 	 * Esse é o método, que retorna a tarifa do consumo
 	 * 

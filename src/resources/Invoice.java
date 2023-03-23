@@ -6,6 +6,9 @@ import utilityclasses.StatusConsumeEnum;
 
 /**
  * Esta é a classe Invoice, que é a representação da fatura do cliente
+ * 
+ * @author Bruno Campos de Oliveira Rocha
+ * @version 1.0
  */
 public class Invoice {
 
@@ -20,15 +23,15 @@ public class Invoice {
 	private StatusConsumeEnum currentStatus;
 
 	/**
-	 * Esse é o construtor da classe Invoice, que constroe o objeto que
-	 * representa uma fatura de um cliente
+	 * Esse é o construtor da classe Invoice, que constroe o objeto que representa
+	 * uma fatura de um cliente
 	 * 
-	 * @param String id - Identificador da fatura
-	 * @param String idClient - Identificador do cliente
-	 * @param String nameClient - Nome do cliente
-	 * @param LocalDateTime issuanceDate - Data de inicio da fatura
-	 * @param double fare - Tarifa da fatura
-	 * @param double consumption - Consumo até a data da fatura
+	 * @param String            id - Identificador da fatura
+	 * @param String            idClient - Identificador do cliente
+	 * @param String            nameClient - Nome do cliente
+	 * @param LocalDateTime     issuanceDate - Data de inicio da fatura
+	 * @param double            fare - Tarifa da fatura
+	 * @param double            consumption - Consumo até a data da fatura
 	 * @param StatusConsumeEnum currentStatus - Status de consumo do cliente
 	 */
 	public Invoice(String id, String idClient, String nameClient, LocalDateTime issuanceDate, double fare,
@@ -73,7 +76,7 @@ public class Invoice {
 	 */
 	public String getIdClient() {
 		return idClient;
-		
+
 	}
 
 	/**
@@ -178,7 +181,7 @@ public class Invoice {
 	/**
 	 * Esse é o método, que retorna o valor da fatura do cliente
 	 * 
-	 * @return Valor da fatura 
+	 * @return Valor da fatura
 	 */
 	public double getInvoiceValue() {
 		return invoiceValue;

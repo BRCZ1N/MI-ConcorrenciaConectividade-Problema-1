@@ -2,6 +2,9 @@ package utilityclasses;
 
 /**
  * Esta é a enumeração HttpCodes, que possui os status de resposta da requisição
+ * 
+ * @author Bruno Campos de Oliveira Rocha
+ * @version 1.0
  */
 public enum HttpCodes {
 

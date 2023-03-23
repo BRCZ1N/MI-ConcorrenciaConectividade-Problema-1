@@ -8,6 +8,9 @@ import http.RequestHttp;
 /**
  * Esta é a classe PathRouter, que armazena os roteamentos principais do projeto
  * para usuários, faturas e consumos.
+ * 
+ * @author Bruno Campos de Oliveira Rocha
+ * @version 1.0
  */
 public class PathRouter {
 

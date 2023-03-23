@@ -14,6 +14,9 @@ import utilityclasses.Fares;
 /**
  * Esta é a classe ConsumptionServices, que representa os serviços de fatura da
  * aplicação
+ * 
+ * @author Bruno Campos de Oliveira Rocha
+ * @version 1.0
  */
 public class InvoiceServices {
 
@@ -42,7 +45,8 @@ public class InvoiceServices {
 	/**
 	 * Esse é o método, que seta o map de faturas dos clientes
 	 * 
-	 * @param Map<String,ArrayList<Invoice>> mapInvoices - Map de faturas dos clientes
+	 * @param Map<String,ArrayList<Invoice>> mapInvoices - Map de faturas dos
+	 *                                       clientes
 	 */
 	public static void setMapInvoices(Map<String, ArrayList<Invoice>> mapInvoices) {
 		InvoiceServices.mapInvoices = mapInvoices;
@@ -215,7 +219,8 @@ public class InvoiceServices {
 	 * clientes
 	 * 
 	 * @param String idClient - Identificador do cliente
-	 * @return Retorna a data da ultima fatura ou a data inicial caso não existam faturas
+	 * @return Retorna a data da ultima fatura ou a data inicial caso não existam
+	 *         faturas
 	 */
 	public static LocalDateTime getInitialDateInvoiceOrInitialDate(String idClient) {
 
@@ -234,7 +239,7 @@ public class InvoiceServices {
 		return newInvoiceDate;
 
 	}
-	
+
 	/**
 	 * Esse é o método, que deleta as faturas de um cliente
 	 * 

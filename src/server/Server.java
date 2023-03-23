@@ -13,6 +13,9 @@ import services.UserServices;
 
 /**
  * Esta é a classe Server, que representa a aplicação do servidor
+ * 
+ * @author Bruno Campos de Oliveira Rocha
+ * @version 1.0
  */
 public class Server {
 

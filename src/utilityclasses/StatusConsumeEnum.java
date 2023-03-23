@@ -1,7 +1,11 @@
 package utilityclasses;
 
 /**
- * Esta é a enumeração StatusConsumeEnum, que possui os estados possiveis de consumo
+ * Esta é a enumeração StatusConsumeEnum, que possui os estados possiveis de
+ * consumo
+ * 
+ * @author Bruno Campos de Oliveira Rocha
+ * @version 1.0
  */
 public enum StatusConsumeEnum {
 
@@ -10,8 +14,8 @@ public enum StatusConsumeEnum {
 	private String typeConsume;
 
 	/**
-	 * Esse é o construtor da enumeração StatusConsumeEnum, que constroe o objeto que
-	 * representa os possiveis status de consumo
+	 * Esse é o construtor da enumeração StatusConsumeEnum, que constroe o objeto
+	 * que representa os possiveis status de consumo
 	 * 
 	 * @param String typeConsume
 	 */

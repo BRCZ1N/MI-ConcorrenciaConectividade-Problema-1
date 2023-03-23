@@ -11,6 +11,9 @@ import resources.Consumption;
 /**
  * Esta é a classe ConsumptionServices, que representa os serviços de consumo da
  * aplicação
+ * 
+ * @author Bruno Campos de Oliveira Rocha
+ * @version 1.0
  */
 public class ConsumptionServices {
 
@@ -38,7 +41,8 @@ public class ConsumptionServices {
 	/**
 	 * Esse é o método, que seta o map de consumos dos clientes
 	 * 
-	 * @param Map<String,ArrayList<Consumption>> mapConsumptions - Map de consumos do cliente
+	 * @param Map<String,ArrayList<Consumption>> mapConsumptions - Map de consumos
+	 *                                           do cliente
 	 */
 	public static void setMapConsumptions(Map<String, ArrayList<Consumption>> mapConsumptions) {
 		ConsumptionServices.mapConsumptions = mapConsumptions;
@@ -181,7 +185,7 @@ public class ConsumptionServices {
 		return average;
 
 	}
-	
+
 	/**
 	 * Esse é o método, que deleta os consumos de um cliente
 	 * 

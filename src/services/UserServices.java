@@ -12,6 +12,9 @@ import utilityclasses.StatusConsumeEnum;
 /**
  * Esta é a classe ConsumptionServices, que representa os serviços de usuarios
  * da aplicação.
+ * 
+ * @author Bruno Campos de Oliveira Rocha
+ * @version 1.0
  */
 public class UserServices {
 

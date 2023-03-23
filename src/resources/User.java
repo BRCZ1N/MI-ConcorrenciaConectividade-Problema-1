@@ -5,6 +5,9 @@ import utilityclasses.StatusConsumeEnum;
 /**
  * Esta é a classe User, que é a representação dos dados mais gerais de cliente
  * no servidor
+ * 
+ * @author Bruno Campos de Oliveira Rocha
+ * @version 1.0
  */
 public class User {
 
@@ -17,8 +20,8 @@ public class User {
 	 * Esse é o construtor da classe User, que constroe o objeto que representa
 	 * dados básicos do cliente
 	 * 
-	 * @param double name - Nome do cliente
-	 * @param String password - Senha do cliente
+	 * @param double            name - Nome do cliente
+	 * @param String            password - Senha do cliente
 	 * @param StatusConsumeEnum statusConsumption - Status de consumo do cliente
 	 */
 	public User(String name, String password, StatusConsumeEnum statusConsumption) {

@@ -20,6 +20,9 @@ import utilityclasses.HttpMethods;
  * Esta é a classe RouterInvoice, que serve para a organização e processamento
  * do roteamento das requisições relacionadas aos serviços de fatura do cliente
  * no servidor
+ * 
+ * @author Bruno Campos de Oliveira Rocha
+ * @version 1.0
  */
 public class RouterInvoice implements RouterInterface {
 
@@ -99,7 +102,7 @@ public class RouterInvoice implements RouterInterface {
 	 * Esse é o método, que executa o roteamento completo dos serviços de fatura e
 	 * que retorna uma resposta http em formato de string para o cliente
 	 * 
-	 * @param ResquestHttp http - Objeto que representa a requisição http 
+	 * @param ResquestHttp http - Objeto que representa a requisição http
 	 * @return Resposta da requisição http através de uma string
 	 */
 	@Override

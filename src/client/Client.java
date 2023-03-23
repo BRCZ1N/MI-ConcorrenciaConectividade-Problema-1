@@ -19,6 +19,9 @@ import utilityclasses.HttpMethods;
 /**
  * Esta é a classe Client, que representa a aplicação do cliente HTTP TCP que se
  * conecta ao servidor.
+ * 
+ * @author Bruno Campos de Oliveira Rocha
+ * @version 1.0
  */
 public class Client {
 

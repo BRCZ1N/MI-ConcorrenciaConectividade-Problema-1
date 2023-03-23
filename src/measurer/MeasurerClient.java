@@ -15,6 +15,9 @@ import java.util.Scanner;
 /**
  * Esta é a classe MeasurerClient, que representa a aplicação do medidor UDP que
  * se conecta ao servidor.
+ * 
+ * @author Bruno Campos de Oliveira Rocha
+ * @version 1.0
  */
 public class MeasurerClient {
 
