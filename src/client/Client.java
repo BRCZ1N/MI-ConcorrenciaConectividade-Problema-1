@@ -41,7 +41,7 @@ public class Client {
 	public static void main(String[] args) throws UnknownHostException, IOException, InterruptedException {
 
 		Client client = new Client();
-		client.generateSocketClient("172.16.103.3", 8000);
+		client.generateSocketClient("localhost", 8000);
 		client.clientExecution();
 
 	}
@@ -176,7 +176,7 @@ public class Client {
 					ProtocolHttp.sendMessage(clientSocket.getOutputStream(), request.toString());
 					Thread.sleep(100);
 					response = readResponse(clientSocket.getInputStream());
-
+					
 					if (response.getStatusLine().equals(HttpCodes.HTTP_201.getCodeHttp())) {
 
 						jsonBody = new JSONObject(response.getBody());

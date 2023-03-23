@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import http.RequestHttp;
+import http.ResponseHttp;
+import utilityclasses.HttpCodes;
 
 /**
  * Esta é a classe PathRouter, que armazena os roteamentos principais do projeto
@@ -34,7 +36,7 @@ public class PathRouter {
 	 * recebe o retorno da resposta gerada pelos roteamentos especificos de usuario,
 	 * faturas e consumo.
 	 * 
-	 * @param HttpMethods method - O método da requisição http
+	 * @param RequestHttp http - A requisição http do cliente
 	 * @return Resposta da requisição http através de uma string
 	 */
 	public String execRoute(RequestHttp http) {
@@ -48,7 +50,9 @@ public class PathRouter {
 
 		} else {
 
-			// Falta implementar o erro
+			Map<String, String> mapHeaders = new HashMap<>();
+			mapHeaders.put("Content-Length", "0");
+			responseHttp = new ResponseHttp(HttpCodes.HTTP_404.getCodeHttp(), mapHeaders).toString();
 
 		}
 

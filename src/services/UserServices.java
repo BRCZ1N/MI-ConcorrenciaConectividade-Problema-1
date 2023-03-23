@@ -90,7 +90,7 @@ public class UserServices {
 
 		for (Entry<String, User> user : mapUsers.entrySet()) {
 
-			if (user.getKey().equals(id)) {
+			if (user.getKey().equals(idClient)) {
 
 				return user.getValue();
 
