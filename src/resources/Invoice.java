@@ -20,22 +20,22 @@ public class Invoice {
 	private double fare;
 	private double consumption;
 	private double invoiceValue;
-	private StatusConsumeEnum currentStatus;
+	private String currentStatusConsumption;
 
 	/**
 	 * Esse é o construtor da classe Invoice, que constroe o objeto que representa
 	 * uma fatura de um cliente
 	 * 
-	 * @param String            id - Identificador da fatura
-	 * @param String            idClient - Identificador do cliente
-	 * @param String            nameClient - Nome do cliente
-	 * @param LocalDateTime     issuanceDate - Data de inicio da fatura
-	 * @param double            fare - Tarifa da fatura
-	 * @param double            consumption - Consumo até a data da fatura
-	 * @param StatusConsumeEnum currentStatus - Status de consumo do cliente
+	 * @param String        id - Identificador da fatura
+	 * @param String        idClient - Identificador do cliente
+	 * @param String        nameClient - Nome do cliente
+	 * @param LocalDateTime issuanceDate - Data de inicio da fatura
+	 * @param double        fare - Tarifa da faturas
+	 * @param double        consumption - Consumo até a data da fatura
+	 * @param String        currentStatus - Status de consumo do cliente
 	 */
 	public Invoice(String id, String idClient, String nameClient, LocalDateTime issuanceDate, double fare,
-			double consumption, StatusConsumeEnum currentStatus) {
+			double consumption, String currentStatusConsumption) {
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
@@ -47,7 +47,7 @@ public class Invoice {
 		this.fare = fare;
 		this.consumption = consumption;
 		this.invoiceValue = consumption * fare;
-		this.currentStatus = currentStatus;
+		this.currentStatusConsumption = currentStatusConsumption;
 
 	}
 
@@ -201,17 +201,17 @@ public class Invoice {
 	 * 
 	 * @return Staus de consumo atual
 	 */
-	public StatusConsumeEnum getCurrentStatus() {
-		return currentStatus;
+	public String getCurrentStatusConsumption() {
+		return currentStatusConsumption;
 	}
 
 	/**
 	 * Esse é o método, que seta o status de consumo atual do cliente
 	 * 
-	 * @param StatusConsumeEnum currentStatus - Status de consumo atual
+	 * @param String currentStatus - Status de consumo atual
 	 */
-	public void setCurrentStatus(StatusConsumeEnum currentStatus) {
-		this.currentStatus = currentStatus;
+	public void setCurrentStatus(String currentStatusConsumption) {
+		this.currentStatusConsumption = currentStatusConsumption;
 	}
 
 }

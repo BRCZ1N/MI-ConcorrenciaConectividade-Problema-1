@@ -1,6 +1,5 @@
 package services;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -66,7 +65,7 @@ public class InvoiceServices {
 
 			Invoice invoice = new Invoice(Long.toString(idInvoice), idClient, UserServices.getUser(idClient).getName(),
 					currentDate, Fares.FARE_1.getFare(), ConsumptionServices.valueConsumptionInPeriod(idClient),
-					UserServices.getUser(idClient).getStatusConsumption());
+					UserServices.getUser(idClient).getStatusConsumption().getTypeConsume());
 			ArrayList<Invoice> copyListInvoice = mapInvoices.get(idClient);
 			copyListInvoice.add(invoice);
 			mapInvoices.replace(idClient, copyListInvoice);
@@ -100,7 +99,7 @@ public class InvoiceServices {
 			json.put("fare", invoice.getFare());
 			json.put("consumption", invoice.getConsumption());
 			json.put("invoiceValue", invoice.getInvoiceValue());
-			json.put("currentStatusClient", invoice.getCurrentStatus());
+			json.put("currentStatusClient", invoice.getCurrentStatusConsumption());
 
 			return json;
 
