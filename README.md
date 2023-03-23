@@ -8,6 +8,7 @@
    - [Medidor](#Medidor)
    - [Servidor](#Servidor)
    - [Client](#Client)
+   - [API Rest](#API Rest)
 - [Considerações finais](#consideracoes)
 
 
@@ -16,7 +17,7 @@
 
 # Solução
 
-<h2>Necessidades do projeto</h2>
+<h2>Requisitos do projeto</h2>
 
    1. Interface para gerenciamento dos medidores;
    2. Acompanhamento do consumo de energia;
@@ -25,19 +26,16 @@
    
    <h2>   1. Interface para gerenciamento dos medidores.</h2>
    
- &emsp; 
+ &emsp; Para esse requisito foi desenvolvido uma interface simples que possui uma entrada para o identificador do cliente e a sua senha que serão enviadas através de um socket UDP para a autenticação de usuário, após essa fase de autenticação, produziu-se 2 threads para os medidores onde uma delas incrementa o contador do medidor e a secundária envia dados ao servidor após um cooldown especificado, e no metodo ao qual essas threads são iniciadas tem-se a entrada de teclado para alterar o ritmo de consumo do medidor.
   
 <h2>2. Acompanhar consumo de energia.</h2>
 
- &emsp;
-
+ &emsp; Objetivando o acompanhamento do consumo de energia essa funcionalidade foi desenvolvida buscando os consumos do cliente armazenados na estrutura de dados dos serviços de consumo que estão no servidor usando o identificador do usuario como chave e pegando os consumos gerados pelos medidor associado a ele, além disso pega-se o calculo do consumo total do cliente e também o identificaor, e por fim adiciona-os em um JSONObject
 <h2>3. Gerar fatura.</h2>
-
-&emsp; 
 
 <h2>3.Alerta sobre consumo excessivo.</h2>
 
-&emsp; 
+&emsp;A cada consumo gerado é feito uma média dos consumos anteriores e incrementado a uma certo valor se o valor do consumo gerado atualmente for superior a essa média incrementada então o cliente é classificado com o alto consumo, do contrário o consumo é classificado como normal, e por fim após o usuário requisitar essa solicitação a API Rest é enviado o identificador do cliente e a classificação de consumo
 
  
 # Componentes do projeto
