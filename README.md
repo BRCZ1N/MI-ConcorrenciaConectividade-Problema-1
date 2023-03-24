@@ -91,9 +91,6 @@ Para auxiliar as necessidades do projeto foram criadas algumas componentes de se
   <li>1. Envia as medições e os dados necessários para armazenar a medição no servidor são eles: o identificador do usuário, a data e hora da medição e o consumo do usuário</li>
   <li>2. Altera o ritmo de consumo das medições</li>
 </ul>
-
-<h2>- API REST</h2>
-<p2>  &emsp; A API Rest conecta o usuário TCP ao servidor TCP. Possui métodos get, para visualizar o histórico de consumo, gerar e mostrar a fatura do usuário, visualizar a fatura do usuário, visualizar todas as faturas do usuário e para visualizar o estado de consumo do usuário.<p2> 
  
  # Considerações finais 
 <p2> &emsp; O projeto consegue realizar tudo dentro das obrigações mínimas. Na implementação surgiu desafios com relação à compreensão da API Rest, o mesmo também possibilitou aprofundamento em questões relacionadas no que diz respeito ao que é uma API Restful e a tipos de conexões(TCP e UDP). Em versões posteriores, poderiam ser adicionado um melhoramento entre as trocas de dados das conexões. Apesar disso, tem-se que o estado atual é apenas de um protótipo simples e que não deve refletir em um possível produto
