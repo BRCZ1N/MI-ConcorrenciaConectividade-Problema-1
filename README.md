@@ -16,7 +16,7 @@
 
 # Introdução
 
-Levando-se em conta que as concessionárias atuam na coordenação do fornecimento de energia elétrica e que as mesmas dependem de ação humana para realizar as medições de consumo e também para impressões das faturas dos consumidores, fora proposto aos alunos do curso de Engenharia de Computação da Universidade Estadual de Feira de Santana(UEFS) que desenvolvessem um sistema inteligente com infraestrutura de IoT(Internet das Coisas) para oferecer um serviço inteligente de energia.
+Levando-se em conta que as concessionárias atuam na coordenação do fornecimento de energia elétrica e que as mesmas dependem da ação humana para realizar as medições de consumo e também para impressões das faturas dos consumidores, fora proposto aos alunos do curso de Engenharia de Computação da Universidade Estadual de Feira de Santana(UEFS) que desenvolvessem um sistema inteligente com infraestrutura de IoT(Internet das Coisas) para oferecer um serviço inteligente de energia.
 
 O relatório presente pretende descrever de forma simples um projeto que se baseia em um sistema de comunicação que utiliza arquitetura em rede desenvolvido na linguagem de programação Java.
 
