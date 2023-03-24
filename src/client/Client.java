@@ -36,8 +36,10 @@ public class Client {
 	 * Este é o metodo principal dessa aplicação que inicia a mesma. Ele recebe um
 	 * array de argumentos de linha de comando como entrada.
 	 *
-	 * @param String[] args - O array de argumentos de linhas de comando.
-	 * 
+	 * @param args - O array de argumentos de linhas de comando.
+	 * @throws UnknownHostException Exception de conexão de rede
+	 * @throws IOException          Exception de entrada e saida
+	 * @throws InterruptedException Exception de thread interrompido
 	 */
 
 	public static void main(String[] args) throws UnknownHostException, IOException, InterruptedException {
@@ -53,8 +55,8 @@ public class Client {
 	 * recebe como parametros o ip e a porta do servidor ao qual fica a aplicação
 	 * servidor.
 	 *
-	 * @param String ip - O ip do servidor.
-	 * @param int    port - A porta do servidor.
+	 * @param ip   - O ip do servidor.
+	 * @param port - A porta do servidor.
 	 */
 	private void generateSocketClient(String ip, int port) {
 
@@ -92,6 +94,9 @@ public class Client {
 
 	/**
 	 * Esse é o metodo de execução do menu de login dessa aplicação.
+	 * 
+	 * @throws IOException
+	 * @throws InterruptedException
 	 */
 	private void clientExecution() throws IOException, InterruptedException {
 
@@ -126,6 +131,9 @@ public class Client {
 
 	/**
 	 * Esse é o metodo de execução do menu de cliente dessa aplicação.
+	 * 
+	 * @throws IOException
+	 * @throws InterruptedException
 	 */
 	private void clientMenu() throws IOException, InterruptedException {
 
@@ -175,7 +183,7 @@ public class Client {
 						System.out.println("Consumo acumulado do cliente: " + jsonBody.get("accumulatedConsumption"));
 						JSONArray jsonArray = jsonBody.getJSONArray("historic");
 						System.out.println("======================CONSUMOS=====================");
-																							 
+
 						if (!jsonArray.isEmpty()) {
 
 							for (int i = 0; i < jsonArray.length(); i++) {
@@ -185,7 +193,7 @@ public class Client {
 								System.out.println("Quantidade de consumo:" + jsonObject.get("amount"));
 								System.out.println("Unidade de medida do consumo:" + jsonObject.get("unitMeasurement"));
 								System.out.println("===================================================");
-												
+
 							}
 
 						} else {
@@ -194,7 +202,7 @@ public class Client {
 
 						}
 						System.out.println("===================================================");
-											
+
 					} else {
 
 						System.out.println("ERRO:");
@@ -295,14 +303,15 @@ public class Client {
 						jsonBody = new JSONObject(response.getBody());
 						JSONArray jsonArray = jsonBody.getJSONArray("invoices");
 						System.out.println("=================LISTA DE FATURAS==================");
-											 									   
-						if (!jsonArray.isEmpty()) {											   
+
+						if (!jsonArray.isEmpty()) {
 
 							for (int i = 0; i < jsonArray.length(); i++) {
 
 								JSONObject jsonObject = jsonArray.getJSONObject(i);
 								System.out.println("Identificador do cliente:" + jsonObject.get("idClient"));
-								System.out.println("Status de consumo atual do cliente:"+ jsonObject.get("currentStatusConsumption"));
+								System.out.println("Status de consumo atual do cliente:"
+										+ jsonObject.get("currentStatusConsumption"));
 								System.out.println("Nome do cliente:" + jsonObject.get("nameClient"));
 								System.out.println("Consumo total da fatura:" + jsonObject.get("consumption"));
 								System.out.println("Valor da fatura:" + jsonObject.get("invoiceValue"));
@@ -319,7 +328,7 @@ public class Client {
 
 						}
 						System.out.println("===================================================");
-											
+
 					} else {
 
 						System.out.println(response.getStatusLine());
@@ -377,10 +386,11 @@ public class Client {
 	/**
 	 * Esse é o metodo que vai ler a resposta http enviada pelo servidor.
 	 * 
-	 * @param InputStream input - O InputStream do socket que contém a resposta
-	 *                    advinda do servidor.
+	 * @param input - O InputStream do socket que contém a resposta advinda do
+	 *              servidor.
 	 * @return A resposta http enviada pelo servidor formatada e colocada em um
-	 *         objeto que a representa.
+	 *         objeto que a representa. * @throws UnknownHostException
+	 * @throws IOException Erro de entrada e saida
 	 */
 	public ResponseHttp readResponse(InputStream input) throws IOException {
 

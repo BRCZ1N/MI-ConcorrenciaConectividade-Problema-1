@@ -20,9 +20,9 @@ public class User {
 	 * Esse é o construtor da classe User, que constroe o objeto que representa
 	 * dados básicos do cliente
 	 * 
-	 * @param double            name - Nome do cliente
-	 * @param String            password - Senha do cliente
-	 * @param StatusConsumeEnum statusConsumption - Status de consumo do cliente
+	 * @param name              - Nome do cliente
+	 * @param password          - Senha do cliente
+	 * @param statusConsumption - Status de consumo do cliente
 	 */
 	public User(String name, String password, StatusConsumeEnum statusConsumption) {
 
@@ -43,7 +43,7 @@ public class User {
 	/**
 	 * Esse é o método, que seta o id do cliente
 	 * 
-	 * @param String id - Identificador do cliente
+	 * @param id - Identificador do cliente
 	 */
 	public void setId(String id) {
 		this.id = id;
@@ -61,7 +61,7 @@ public class User {
 	/**
 	 * Esse é o método, que seta o nome do cliente
 	 * 
-	 * @param String name - Nome do cliente
+	 * @param name - Nome do cliente
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -79,7 +79,7 @@ public class User {
 	/**
 	 * Esse é o método, que seta a senha do cliente
 	 * 
-	 * @param String password - Senha do cliente
+	 * @param password - Senha do cliente
 	 */
 	public void setPassword(String password) {
 		this.password = password;
@@ -97,7 +97,7 @@ public class User {
 	/**
 	 * Esse é o método, que seta o status de consumo do cliente
 	 * 
-	 * @param StatusConsumeEnum statusConsumption - Status de consumo do cliente
+	 * @param statusConsumption - Status de consumo do cliente
 	 */
 	public void setStatusConsumption(StatusConsumeEnum statusConsumption) {
 		this.statusConsumption = statusConsumption;

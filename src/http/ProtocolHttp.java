@@ -5,6 +5,7 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -29,9 +30,11 @@ public class ProtocolHttp {
 	 * em um objeto que representa uma requisição http para o servidor entender e
 	 * processar.
 	 *
-	 * @param InputStream input - O InputStream do socket que contém a requisição
-	 *                    advinda do cliente.
+	 * @param input - O InputStream do socket que contém a requisição advinda do
+	 *              cliente.
 	 * @return O objeto que representa a requisição http para o servidor processar.
+	 * @throws IOException Exception de entrada e saida
+	 * @throws InterruptedException Exception de thread interrompido
 	 */
 	public static RequestHttp readRequest(InputStream input) throws IOException, InterruptedException {
 
@@ -104,8 +107,9 @@ public class ProtocolHttp {
 	 * Esse método, é usado para enviar a mensagem do cliente para o servidor ou do
 	 * servidor para o cliente
 	 *
-	 * @param OutputStream output - O OutputStream do socket que deve receber a
-	 *                     mensagem
+	 * @param output   - O OutputStream do socket que deve receber a mensagem
+	 * @param response - A mensagem em formato string
+	 * @throws IOException Erro de entrada e saida
 	 * 
 	 */
 	public static void sendMessage(OutputStream output, String response) throws IOException {

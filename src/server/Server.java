@@ -33,8 +33,9 @@ public class Server {
 	 * clientes http e conexões UDP para os medidores, para isso ele recebe como
 	 * parametros uma porta para o socket TCP e uma para o socket UDP
 	 *
-	 * @param int portServerSocket - Porta do servidor TCP
-	 * @param int portDatagramSocket - Porta do servidor UDP
+	 * @param portServerSocket   - Porta do servidor TCP
+	 * @param portDatagramSocket - Porta do servidor UDP
+	 * @throws IOException
 	 */
 	private void generateServer(int portServerSocket, int portDatagramSocket) throws IOException {
 
@@ -47,7 +48,7 @@ public class Server {
 	 * Esse é o método que gera e inicia uma Thread para clientes TCP da aplicação
 	 * servidor
 	 *
-	 * @param Socket socketClientTCP - Socket do cliente TCP
+	 * @param socketClientTCP - Socket do cliente TCP
 	 */
 	private void generateAndStartThreadClientTCP(Socket socketClientTCP) {
 
@@ -60,9 +61,9 @@ public class Server {
 	 * Esse é o método que gera e inicia uma Thread para os medidores UDP da
 	 * aplicação servidor
 	 *
-	 * @param DatagramSocket datagramSocket - Socket UDP do medidor
-	 * @param DatagramPacket datagramPacket - Pacote datagram do medidor UDP
-	 * @param byte[]         bufferPacker - Buffer de dados
+	 * @param datagramSocket - Socket UDP do medidor
+	 * @param datagramPacket - Pacote datagram do medidor UDP
+	 * @param bufferPacker   - Buffer de dados
 	 */
 	private void generateAndStartThreadClientUDP(DatagramSocket datagramSocket, DatagramPacket datagramPacket,
 			byte[] bufferPacket) {
@@ -76,9 +77,9 @@ public class Server {
 	 * Esse é o método que executa o servidor desde as proprias threads do servidor
 	 * até as proprios sockets UDP e TCP
 	 * 
-	 * @param int portServerSocket - Porta TCP para o servidor
-	 * @param int portDatagramSocket - Porta UDP para o servidor
-	 *
+	 * @param portServerSocket   - Porta TCP para o servidor
+	 * @param portDatagramSocket - Porta UDP para o servidor
+	 * @throws IOException
 	 */
 	private void execServer(int portServerSocket, int portDatagramSocket) throws IOException {
 
@@ -124,8 +125,8 @@ public class Server {
 	 * Este é o metodo principal dessa aplicação que inicia a mesma. Ele recebe um
 	 * array de argumentos de linha de comando como entrada.
 	 *
-	 * @param String[] args - O array de argumentos de linhas de comando.
-	 * 
+	 * @param args - O array de argumentos de linhas de comando.
+	 * @throws IOException Erro de entrada e saida
 	 */
 	public static void main(String[] args) throws IOException {
 

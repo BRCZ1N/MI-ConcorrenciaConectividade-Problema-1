@@ -49,7 +49,7 @@ public class RouterUser implements RouterInterface {
 	 * Esse é o método, que verifica se o caminho existe a partir dos padrões
 	 * armazenados no sistema
 	 * 
-	 * @param String path - Caminho que foi mandado na requisição
+	 * @param path - Caminho que foi mandado na requisição
 	 * @return Retorna verdadeiro se achar o caminho e falso se não achar
 	 */
 	public boolean verifyPath(String path) {
@@ -72,8 +72,8 @@ public class RouterUser implements RouterInterface {
 	 * Esse é o método, que verifica se o caminho existe a partir dos padrões
 	 * armazenados no sistema para certo método http e retorna o padrão se existir
 	 * 
-	 * @param HttpMethods httpMethod - Metodo que foi mandado pela requisição
-	 * @param String      path - Caminho que foi mandado na requisição
+	 * @param httpMethod - Metodo que foi mandado pela requisição
+	 * @param path       - Caminho que foi mandado na requisição
 	 * @return Padrão da requisição caso exista
 	 */
 	public Pattern verifyPathInHttpMethod(HttpMethods httpMethod, String path) {
@@ -96,7 +96,7 @@ public class RouterUser implements RouterInterface {
 	 * Esse é o método, que executa o roteamento completo dos serviços de usuário e
 	 * que retorna uma resposta http em formato de string para o cliente
 	 * 
-	 * @param ResquestHttp http - Objeto que representa a requisição http do cliente
+	 * @param http - Objeto que representa a requisição http do cliente
 	 * @return Resposta da requisição http através de uma string
 	 */
 	@Override
@@ -206,8 +206,8 @@ public class RouterUser implements RouterInterface {
 	 * requisição http, retornando por fim a resposta da requisição em formato
 	 * string para ser enviada
 	 * 
-	 * @param ResquestHttp http - Objeto que representa a requisição http do cliente
-	 * @param Pattern      patternCurrent - Padrão do caminho da requisição
+	 * @param http           - Objeto que representa a requisição http do cliente
+	 * @param patternCurrent - Padrão do caminho da requisição
 	 * @return Resposta da requisição http através de uma string
 	 */
 	public String execMethodRouter(RequestHttp http, Pattern patternCurrent) {
@@ -233,7 +233,7 @@ public class RouterUser implements RouterInterface {
 	 * servidor para pegar o estado de consumo atual de um cliente utilizando do
 	 * conteudo da requisição http
 	 * 
-	 * @param ResquestHttp http - Objeto que representa a requisição http do cliente
+	 * @param http - Objeto que representa a requisição http do cliente
 	 * @return Resposta da requisição http através de uma string
 	 */
 	public String getCurrentStateConsumption(RequestHttp http) {
@@ -267,7 +267,7 @@ public class RouterUser implements RouterInterface {
 	 * servidor para a autenticação de um cliente utilizando do conteudo da
 	 * requisição http
 	 * 
-	 * @param ResquestHttp http - Objeto que representa a requisição http do cliente
+	 * @param http - Objeto que representa a requisição http do cliente
 	 * @return Resposta da requisição http através de uma string
 	 */
 	public String authClient(RequestHttp http) {

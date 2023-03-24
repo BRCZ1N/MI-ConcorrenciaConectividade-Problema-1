@@ -21,11 +21,9 @@ public class ResponseHttp {
 	 * representa a resposta http que será enviada para o cliente em formato
 	 * completo.
 	 * 
-	 * @param String             statusLine - Representa o status da resposta da
-	 *                           requisição.
-	 * @param Map<String,String> headers - Representa os cabeçalhos da resposta
-	 *                           http.
-	 * @param JSONObject         body - Representa o corpo da resposta http.
+	 * @param statusLine - Representa o status da resposta da requisição.
+	 * @param headers    - Representa os cabeçalhos da resposta http.
+	 * @param body       - Representa o corpo da resposta http.
 	 */
 	public ResponseHttp(String statusLine, Map<String, String> headers, String body) {
 
@@ -39,10 +37,8 @@ public class ResponseHttp {
 	 * representa a resposta http que será enviada para o cliente em formato sem
 	 * corpo.
 	 * 
-	 * @param String             statusLine - Representa o status da resposta da
-	 *                           requisição.
-	 * @param Map<String,String> headers - Representa os cabeçalhos da resposta
-	 *                           http.
+	 * @param statusLine - Representa o status da resposta da requisição.
+	 * @param headers    - Representa os cabeçalhos da resposta http.
 	 */
 
 	public ResponseHttp(String statusLine, Map<String, String> headers) {
@@ -72,7 +68,7 @@ public class ResponseHttp {
 	/**
 	 * Esse é o método, que seta o status da resposta http
 	 * 
-	 * @param String statusLine - O status da resposta http
+	 * @param statusLine - O status da resposta http
 	 */
 	public void setStatusLine(String statusLine) {
 		this.statusLine = statusLine;
@@ -90,7 +86,7 @@ public class ResponseHttp {
 	/**
 	 * Esse é o método, que seta os cabeçalhos da resposta http
 	 * 
-	 * @param Map<String,String> headers - Os cabeçalhos da resposta http
+	 * @param headers - Os cabeçalhos da resposta http
 	 */
 	public void setHeaders(Map<String, String> headers) {
 		this.headers = headers;
@@ -108,7 +104,7 @@ public class ResponseHttp {
 	/**
 	 * Esse é o método, que seta o corpo da resposta http
 	 * 
-	 * @param String body - O corpo da resposta http
+	 * @param body - O corpo da resposta http
 	 */
 	public void setBody(String body) {
 		this.body = body;

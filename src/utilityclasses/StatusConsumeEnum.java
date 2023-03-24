@@ -17,7 +17,7 @@ public enum StatusConsumeEnum {
 	 * Esse é o construtor da enumeração StatusConsumeEnum, que constroe o objeto
 	 * que representa os possiveis status de consumo
 	 * 
-	 * @param String typeConsume
+	 * @param typeConsume
 	 */
 	private StatusConsumeEnum(String typeConsume) {
 

@@ -34,8 +34,8 @@ public class MeasurerClient {
 	 * Este é o metodo principal dessa aplicação que inicia a mesma. Ele recebe um
 	 * array de argumentos de linha de comando como entrada.
 	 *
-	 * @param String[] args - O array de argumentos de linhas de comando.
-	 * 
+	 * @param args - O array de argumentos de linhas de comando.
+	 * @throws UnknownHostException
 	 */
 
 	public static void main(String[] args) throws UnknownHostException {

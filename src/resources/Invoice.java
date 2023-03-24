@@ -26,13 +26,13 @@ public class Invoice {
 	 * Esse é o construtor da classe Invoice, que constroe o objeto que representa
 	 * uma fatura de um cliente
 	 * 
-	 * @param String        id - Identificador da fatura
-	 * @param String        idClient - Identificador do cliente
-	 * @param String        nameClient - Nome do cliente
-	 * @param LocalDateTime issuanceDate - Data de inicio da fatura
-	 * @param double        fare - Tarifa da faturas
-	 * @param double        consumption - Consumo até a data da fatura
-	 * @param String        currentStatus - Status de consumo do cliente
+	 * @param id            - Identificador da fatura
+	 * @param idClient      - Identificador do cliente
+	 * @param nameClient    - Nome do cliente
+	 * @param issuanceDate  - Data de inicio da fatura
+	 * @param fare          - Tarifa da faturas
+	 * @param consumption   - Consumo até a data da fatura
+	 * @param currentStatusConsumption - Status de consumo do cliente
 	 */
 	public Invoice(String id, String idClient, String nameClient, LocalDateTime issuanceDate, double fare,
 			double consumption, String currentStatusConsumption) {
@@ -63,7 +63,7 @@ public class Invoice {
 	/**
 	 * Esse é o método, que seta o id da fatura
 	 * 
-	 * @param String id - Identificador da fatura
+	 * @param id - Identificador da fatura
 	 */
 	public void setId(String id) {
 		this.id = id;
@@ -82,7 +82,7 @@ public class Invoice {
 	/**
 	 * Esse é o método, que seta o identificador do cliente da fatura
 	 * 
-	 * @param String idClient - Identificador do cliente
+	 * @param idClient - Identificador do cliente
 	 */
 	public void setIdClient(String idClient) {
 		this.idClient = idClient;
@@ -100,7 +100,7 @@ public class Invoice {
 	/**
 	 * Esse é o método, que seta o nome do cliente ao qual pertence a fatura
 	 * 
-	 * @param String nameClient - Nome do cliente
+	 * @param nameClient - Nome do cliente
 	 */
 	public void setNameClient(String nameClient) {
 		this.nameClient = nameClient;
@@ -118,7 +118,7 @@ public class Invoice {
 	/**
 	 * Esse é o método, que seta a data em que a fatura foi gerada
 	 * 
-	 * @param String issuanceDate - Data de geração da fatura
+	 * @param issuanceDate - Data de geração da fatura
 	 */
 	public void setIssuanceDate(String issuanceDate) {
 		this.issuanceDate = issuanceDate;
@@ -136,7 +136,7 @@ public class Invoice {
 	/**
 	 * Esse é o método, que seta a data que expira a fatura do cliente
 	 * 
-	 * @param String issuanceDate - Data de geração da fatura
+	 * @param expirationDate - Data que expira a fatura
 	 */
 	public void setExpirationDate(String expirationDate) {
 		this.expirationDate = expirationDate;
@@ -154,7 +154,7 @@ public class Invoice {
 	/**
 	 * Esse é o método, que seta a tarifa da fatura
 	 * 
-	 * @param double fare - Tarifa da fatura
+	 * @param fare - Tarifa da fatura
 	 */
 	public void setFare(double fare) {
 		this.fare = fare;
@@ -172,7 +172,7 @@ public class Invoice {
 	/**
 	 * Esse é o método, que seta o consumo da fatura
 	 * 
-	 * @param double consumption - Consumo da fatura
+	 * @param consumption - Consumo da fatura
 	 */
 	public void setConsumption(double consumption) {
 		this.consumption = consumption;
@@ -190,7 +190,7 @@ public class Invoice {
 	/**
 	 * Esse é o método, que seta o valor da fatura
 	 * 
-	 * @param double invoiceValue - Valor da fatura
+	 * @param invoiceValue - Valor da fatura
 	 */
 	public void setInvoiceValue(double invoiceValue) {
 		this.invoiceValue = invoiceValue;
@@ -208,9 +208,9 @@ public class Invoice {
 	/**
 	 * Esse é o método, que seta o status de consumo atual do cliente
 	 * 
-	 * @param String currentStatus - Status de consumo atual
+	 * @param currentStatusConsumption - Status de consumo atual
 	 */
-	public void setCurrentStatus(String currentStatusConsumption) {
+	public void setCurrentStatusConsumption(String currentStatusConsumption) {
 		this.currentStatusConsumption = currentStatusConsumption;
 	}
 

@@ -50,7 +50,7 @@ public class UserServices {
 	 * Esse é o método, que adiciona um cliente ao map de clientes e que chama os
 	 * metodos para adicionar chaves de clientes no map dos outros serviços.
 	 * 
-	 * @param User user - Usuario a ser cadastrado
+	 * @param user - Usuario a ser cadastrado
 	 */
 	public static void addUser(User user) {
 
@@ -66,7 +66,7 @@ public class UserServices {
 	 * Esse é o método, que deleta um cliente do map de clientes e que chama os
 	 * metodos para deletar dos outros serviços.
 	 * 
-	 * @param String idClient - Identificador do cliente
+	 * @param idClient - Identificador do cliente
 	 */
 	public static void deleteUser(String idClient) {
 
@@ -83,7 +83,7 @@ public class UserServices {
 	/**
 	 * Esse é o método, retorna um usuário caso ele exista.
 	 * 
-	 * @param String idClient - Identificador do cliente
+	 * @param idClient - Identificador do cliente
 	 * @return Retorna o objeto usuário
 	 */
 	public static User getUser(String idClient) {
@@ -121,8 +121,8 @@ public class UserServices {
 	/**
 	 * Esse é o método, que faz a autenticação de um usuario através do id e senha.
 	 * 
-	 * @param String idClient - Identificador do cliente
-	 * @param String password - Senha do cliente
+	 * @param idClient - Identificador do cliente
+	 * @param password - Senha do cliente
 	 * @return Retorna um array de bytes contendo a mensagem de autenticação
 	 */
 	public static byte[] authenticateClient(String idClient, String password) {
@@ -146,7 +146,7 @@ public class UserServices {
 	 * Esse é o método, que faz a autenticação de um usuario através do id e de sua
 	 * senha.
 	 * 
-	 * @param User user - Usuario editado
+	 * @param user - Usuario editado
 	 */
 	public static void editUser(User user) {
 
@@ -161,7 +161,7 @@ public class UserServices {
 	/**
 	 * Esse é o método, que retorna o status de consumo do cliente
 	 * 
-	 * @param String idClient - Identificador do cliente
+	 * @param idClient - Identificador do cliente
 	 * @return Retorna o status de consumo do cliente em formato JSON
 	 */
 	public static JSONObject getStatusConsumptionJSON(String idClient) {
@@ -184,8 +184,8 @@ public class UserServices {
 	/**
 	 * Esse é o método, que atualiza o status de consumo cliente
 	 * 
-	 * @param String idClient - Identificador do cliente
-	 * @param double currentConsumption - Consumo atual do cliente
+	 * @param idClient           - Identificador do cliente
+	 * @param currentConsumption - Consumo atual do cliente
 	 */
 	public static void refreshStatusConsumption(String idClient, double currentConsumption) {
 
@@ -208,7 +208,7 @@ public class UserServices {
 	/**
 	 * Esse é o método, que verifica se um cliente existe
 	 * 
-	 * @param String idClient - Identificador do cliente
+	 * @param idClient - Identificador do cliente
 	 * @return Retorna verdadeiro se existe e falso se não existe
 	 */
 	public static boolean containsClient(String idClient) {
@@ -229,8 +229,8 @@ public class UserServices {
 	/**
 	 * Esse é o método, que faz a autenticação de um usuario através do id e senha.
 	 * 
-	 * @param String idClient - Identificador do cliente
-	 * @param String password - Senha do cliente
+	 * @param idClient - Identificador do cliente
+	 * @param passwordClient - Senha do cliente
 	 * @return Retorna verdadeiro se existir o client e falso se não
 	 */
 	public static boolean authClient(String idClient, String passwordClient) {
