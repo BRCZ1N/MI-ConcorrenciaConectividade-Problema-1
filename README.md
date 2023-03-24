@@ -43,9 +43,9 @@ Com a criação da aplicação servidor e medidor, surge a necessidade da aplica
  
 Para auxiliar as necessidades do projeto foram criadas algumas componentes de serviços, isto é, entidades que armazenam dados temporários e/ou processam dados que serão transmitidos na rede.
  
-# Solução para os requisitos principais
+# Solução para os requisitos principais 
 
-<h2>Requisitos do projeto</h2>
+<h2>Requisitos principais do projeto</h2>
 
    1. Interface para gerenciamento dos medidores;
    2. Acompanhamento do consumo de energia;
@@ -68,6 +68,7 @@ Para auxiliar as necessidades do projeto foram criadas algumas componentes de se
 <h2>4. Alerta sobre consumo excessivo.</h2>
 
 &emsp;Para essa funcionalidade é necessário entender que para cada consumo gerado nos serviços de consumo é feito uma média dos consumos anteriores e incrementado a uma certo valor, se o valor do consumo que será adicionado atualmente for superior a essa média incrementada então o usuário é classificado como tendo um alto consumo, do contrário consumo normal, finalmente então atualizando o estado de consumo do usuário. Utilizando-se de toda essa lógica para atualização, tem-se que essa funcionalidade é disponível por uma instância de usuário da estrutura de dados relacionado a classe serviço de usuário, isto é, na resposta da requisição é repassado o estado de consumo relacionado a instância de um usuário e o seu identificador.
+ 
  
 # Componentes do projeto
 
