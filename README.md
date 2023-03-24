@@ -30,7 +30,7 @@
   
 <h2>2. Acompanhar consumo de energia.</h2>
 
-&emsp;Objetivando o acompanhamento do consumo de energia essa funcionalidade foi desenvolvida para buscar os consumos do usuário armazenados na estrutura de dados dos serviços de consumo que estão no servidor usando o identificador do usuário como chave e pegando os consumos associados a ele, unido-se a esses consumos, pega-se o consumo total do usuário e também o identificador do usuário, finalmente a partir desses atributos é possível gerar um JSON que represente os consumos do cliente que poderá ser repassado na resposta da requisição para gerar a representação dos consumos do cliente.
+&emsp;Objetivando o acompanhamento do consumo de energia essa funcionalidade foi desenvolvida para buscar os consumos do usuário armazenados na estrutura de dados dos serviços de consumo que estão no servidor usando o identificador do usuário como chave e pegando os consumos associados a ele, unido-se a esses consumos, pega-se o consumo total do usuário e também o identificador do usuário, finalmente a partir desses atributos é possível gerar um JSON que represente os consumos do cliente que poderá ser repassado na resposta da requisição.
 
 <h2>3. Gerar fatura.</h2>
 
