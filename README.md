@@ -60,7 +60,7 @@
 <h2>- Inteface do medidor </h2>
 <p2> O medidor realiza o envio dos dados ao servidor de forma continua</p2>
  <ul>
-  <li>1. As medições e os dados necessários para armazenar a medição no servidor são eles: o identificador do usuário, a data e hora da medição e o consumo do usuário</li>
+  <li>1. Envia as medições e os dados necessários para armazenar a medição no servidor são eles: o identificador do usuário, a data e hora da medição e o consumo do usuário</li>
   <li>2. Altera o ritmo de consumo das medições</li>
 </ul>
 
