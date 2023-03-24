@@ -26,7 +26,7 @@
    
 <h2>1. Interface para gerenciamento dos medidores.</h2>
    
- &emsp; Para esse requisito foi desenvolvido uma interface simples que possui uma entrada para o identificador do usuário e a sua senha que serão enviadas através de uma conexão UDP para a autenticação de usuário, produziu-se threads para a interface medidor onde uma delas incrementa o contador do medidor e a secundária envia dados ao servidor após um intervalo especificado, e no metodo ao qual essas threads são iniciadas tem-se a entrada de teclado para alterar o ritmo de consumo do medidor.
+ &emsp; Para esse requisito foi desenvolvido uma interface simples que possui uma entrada para o identificador do usuário e a sua senha que serão enviadas através de uma conexão UDP para a autenticação de usuário, produziu-se threads para a interface medidor onde uma delas incrementa o contador do medidor e a secundária envia dados ao servidor após um intervalo especificado, e no metodo ao qual essas threads são iniciadas tem-se a entrada de dados para alterar o ritmo de consumo do medidor.
   
 <h2>2. Acompanhar consumo de energia.</h2>
 
