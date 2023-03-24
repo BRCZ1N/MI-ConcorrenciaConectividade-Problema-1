@@ -15,7 +15,7 @@
 # Desenvolvedor
 <br /><a href="https://github.com/BRCZ1N">Bruno Campos</a>
 
-# Solução
+# Solução para os problemas principais
 
 <h2>Requisitos do projeto</h2>
 
