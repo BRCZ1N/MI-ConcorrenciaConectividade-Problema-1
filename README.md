@@ -30,11 +30,11 @@
   
 <h2>2. Acompanhar consumo de energia.</h2>
 
-&emsp;Objetivando o acompanhamento do consumo de energia essa funcionalidade foi desenvolvida para buscar os consumos do usuário armazenados na estrutura de dados dos serviços de consumo que estão no servidor usando o identificador do usuário como chave e pegando os consumos gerados associado a ele, unido-se a esses consumos, pega-se o consumo total do usuário e também o identificador do usuário, finalmente transformando esses dados em um JSON que poderá ser repassado na resposta da requisição
+&emsp;Objetivando o acompanhamento do consumo de energia essa funcionalidade foi desenvolvida para buscar os consumos do usuário armazenados na estrutura de dados dos serviços de consumo que estão no servidor usando o identificador do usuário como chave e pegando os consumos gerados associado a ele, unido-se a esses consumos, pega-se o consumo total do usuário e também o identificador do usuário, finalmente a partir desses atributos é possível gerar um JSON que represente os consumos do cliente que poderá ser repassado na resposta da requisição para gerar os consumos do cliente.
 
 <h2>3. Gerar fatura.</h2>
 
-&emsp;Para efetuar a geração de faturas prevalece a necessidade de pegar consumos que ainda não foram contabilizados em faturas anteriores, sendo assim no momento de geração da fatura pega-se a data de geração da ultima fatura e utiliza a mesma para contabilizar os consumos posteriores a ela, além desse aspecto ainda há a necessidade de pegar
+&emsp;Para efetuar a geração de faturas prevalece a necessidade de pegar consumos que ainda não foram contabilizados em faturas anteriores, sendo assim no momento de geração da fatura pega-se a data de geração da ultima fatura e utiliza a mesma para contabilizar os consumos posteriores a ela, além desse aspecto ainda há a necessidade do nome de usuário, identificador do usuário, tarifa e o consumo atual do cliente, por fim a partir desses dados é possível gerar um JSON que poderá ser repassado na resposta da requisição da fatura para representar a entidade de fatura.
 
 
 <h2>4. Alerta sobre consumo excessivo.</h2>
@@ -44,10 +44,10 @@
 # Componentes do projeto
 
 <h2>- Servidor</h2>
-<p2> O servidor processa as requisições http advindas da interface do usuário ou do insomnia, realiza o tratamento das mesmas, e por fim retorna a resposta da requisição em formato http além de exibi-las no terminal,  ainda leva-se em conta a sua função de gerar threads para cada tipo de componente no servidor, isto é, seja medidor(UDP) ou usuário(TCP).</p2>
+<p2> O servidor processa as requisições, realiza o tratamento das mesmas, e por fim retorna a resposta da requisição, além de exibi-las no terminal,  ainda leva-se em conta a sua função de gerar threads para cada tipo de componente no servidor, isto é, seja medidor(UDP) ou usuário(TCP).</p2>
 
 <h2>- Interface do usuário</h2>
-<p2> O usuário se conecta ao servidor através da API Rest. O mesmo, por conseguinte, apresenta as seguintes funcionalidades:</p2>
+<p2> O usuário se conecta ao servidor e aos serviços através da API Rest. O mesmo, por conseguinte, apresenta as seguintes funcionalidades:</p2>
  <ul>
   <li>1. Visualizar historico de consumo </li>
   <li>2. Gerar fatura </li>
@@ -58,9 +58,9 @@
 </ul>
 
 <h2>- Inteface do medidor </h2>
-<p2> O medidor realiza o envio dos dados ao servidor de forma continua, os dados enviados são:</p2>
+<p2> O medidor realiza o envio dos dados ao servidor de forma continua</p2>
  <ul>
-  <li>1. Envia as medições e os dados necessários para armazenar a medição no servidor são eles: o identificador do usuário, a data e hora da medição e o consumo do usuário</li>
+  <li>1. As medições e os dados necessários para armazenar a medição no servidor são eles: o identificador do usuário, a data e hora da medição e o consumo do usuário</li>
   <li>2. Altera o ritmo de consumo das medições</li>
 </ul>
 
