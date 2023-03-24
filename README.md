@@ -57,7 +57,7 @@
   <li>6. Desconectar</li>
 </ul>
 
-<h2>- Inteface do medidor </h2>
+<h2>- Interface do medidor </h2>
 <p2> O medidor realiza o envio dos dados ao servidor de forma continua</p2>
  <ul>
   <li>1. Envia as medições e os dados necessários para armazenar a medição no servidor são eles: o identificador do usuário, a data e hora da medição e o consumo do usuário</li>
