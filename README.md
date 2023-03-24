@@ -11,9 +11,16 @@
    - [API Rest](#APIRest)
 - [Considerações finais](#consideracoes)
 
-
 # Desenvolvedor
 <br /><a href="https://github.com/BRCZ1N">Bruno Campos</a>
+
+# Introdução
+
+Levando-se em conta que as concessionárias que atuam na coordenação do fornecimento de energia elétrica e que as mesmas dependem de ação humana para realizar as medições de consumo e também para impressões das faturas dos consumidores, fora proposto aos alunos do curso de Engenharia de Computação da Universidade Estadual de Feira de Santana(UEFS) que desenvolvessem um sistema inteligente com infraestrutura de IoT para oferecer um serviço inteligente de energia que abordasse as temáticas relacionada a Internet das Coisas(IOT).
+
+O relatório presente pretende descrever de forma simples um projeto que baseia-se em um sistema de comunicação que utiliza arquitetura em rede desenvolvido na linguagem de programação Java.
+
+O presente projeto foi desenvolvido a partir de sockets para dois tipos de aplicações de cliente-servidor, o primeiro foi desenvolvido utilizando "DatagramSockets", isto é, sockets que utilizam do protocolo UDP para aplicação cliente-servidor que relaciona os medidores com o servidor, já o segundo utilizou de "Socket" e "ServerSocket" que provém o protocolo TCP para criação de aplicações com a comunicação através da padrozinação em APIs Rest para a trocar de dados entre o servidor e o usuário final. Os medidores foram criados para enviar os valores de medição para o servidor, além de prover uma interface simples para alteração dos ritmos de consumo. Com relação ao servidor o mesmo é responsável por armazenar os valores de medição, além do processamento de dados, e finalmente para ser disponível em rede para o usuário consumidor realizar serviços que outrora deveriam ser feitas por funcionários das concessionárias, os serviços dessa aplicação consistem em: acompanhar o seu consumo de energia, disponibilizar um alerta para o cliente caso o consumo esteja elevado, geração de faturas, retornar uma fatura gerada do cliente e também para retornar todas as suas faturas que já foram geradas do mesmo. Com relação a parte de teste de execução desse protótipo, utilizou-se de containers docker para virtualizar e executar a aplicação em um ambiente de rede.
 
 # Solução para os problemas principais
 
