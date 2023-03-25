@@ -99,8 +99,8 @@ Segue a descrição para a alteração manual:
 <li>Passo 1 - Deverá ir nessa classe MI-ConcorrenciaConectividade-Problema-1/src/client/Client.java no método "main" e apenas alterar o IP de 172.16.103.3   para a sua preferência e depois gerar o .jar e a imagem, ou se preferir executar localmente basta alterar o ip para localhost e executar na IDE.
 <li>Passo 2 - Deverá ir nessa classe MI-ConcorrenciaConectividade-Problema-1/src/measurer/MeasurerClient.java no método "execMeasurer" e  no metodo "startMeasurer" e alterar o IP de 172.16.103.3 para a sua preferência e depois gerar o .jar e a imagem, ou se preferir executar localmente basta alterar o ip  para localhost e executar na IDE.
 <li>Obs: Mas se já quiser testar direto na maquina 3 do larsid basta pegar as imagens que estão no dockerhub através desse link https://hub.docker.com/u/brcz1n ou então executar os docker-compose que estão no projeto na aba stack do portainer
-<h2> Exemplos de requisição </h2>
-<p2> Se o usuário que for utilizado for o de id:0 e senha: Test1 então</p2>
+<h2> Exemplo 1 de requisição para um usuário :</h2>
+   <li>Para o usuário de id:0 e senha:Test1</p2>
    <li>
    <li>
    <li>
