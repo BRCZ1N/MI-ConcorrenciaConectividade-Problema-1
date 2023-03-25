@@ -100,13 +100,12 @@ Segue a descrição para a alteração manual:
 <li>Passo 2 - Deverá ir nessa classe MI-ConcorrenciaConectividade-Problema-1/src/measurer/MeasurerClient.java no método "execMeasurer" e  no metodo "startMeasurer" e alterar o IP de 172.16.103.3 para a sua preferência e depois gerar o .jar e a imagem, ou se preferir executar localmente basta alterar o ip  para localhost e executar na IDE.
 <li>Obs: Mas se já quiser testar direto na maquina 3 do larsid basta pegar as imagens que estão no dockerhub através desse link https://hub.docker.com/u/brcz1n ou então executar os docker-compose que estão no projeto na aba stack do portainer
 <h2> Exemplo 1 de requisição para um usuário :</h2>
-   <li>Para o usuário de id:0 e senha:Test1</p2>
-   <li>
-   <li>
-   <li>
-   <li>
-   <li>
-   <li>
+   <li>Para o usuário de id:0 e senha:Test1 para a maquina 3 do larsid no insomnia:</p2>
+   <li> 172.16.103.3:8000/user/statusConsumption/0 - Pega o alerta de consumo para o usuário de id = 0;
+   <li> 172.16.103.3:8000/consumption/historic/0 - Pega o histórico de consumo para o usuário de id = 0;
+   <li> 172.16.103.3:8000/invoice/newInvoice/0 - Gera uma nova fatura para o usuário de id = 0;
+   <li> 172.16.103.3:8000/invoice/0 - Pega a fatura que possui possui id = 0;
+   <li> 172.16.103.3:8000/invoice/all/0 - Pega todas as faturas para o usuario de id:0.
  
  # Considerações finais 
 <p2> &emsp; O projeto consegue realizar tudo dentro das obrigações mínimas. Na implementação surgiu desafios com relação à compreensão da API Rest, o mesmo também possibilitou aprofundamento em questões relacionadas no que diz respeito ao que é uma API Restful e a tipos de conexões(TCP e UDP). Em versões posteriores, poderiam ser adicionado um melhoramento entre as trocas de dados das conexões. Apesar disso, tem-se que o estado atual é apenas de um protótipo simples e que não deve refletir em um possível produto
