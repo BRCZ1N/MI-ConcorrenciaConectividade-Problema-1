@@ -45,7 +45,7 @@ public class Client {
 	public static void main(String[] args) throws UnknownHostException, IOException, InterruptedException {
 
 		Client client = new Client();
-		client.generateSocketClient("localhost", 8000);
+		client.generateSocketClient("172.16.103.3", 8000);
 		client.clientExecution();
 
 	}
