@@ -19,7 +19,7 @@ import utilityclasses.HttpCodes;
 import utilityclasses.HttpMethods;
 
 /**
- * Esta é a classe Client, que representa a aplicação do cliente HTTP TCP que se
+ * Esta ï¿½ a classe Client, que representa a aplicaï¿½ï¿½o do cliente HTTP TCP que se
  * conecta ao servidor.
  * 
  * @author Bruno Campos de Oliveira Rocha
@@ -33,11 +33,11 @@ public class Client {
 	private String clientPassword;
 
 	/**
-	 * Este é o metodo principal dessa aplicação que inicia a mesma. Ele recebe um
+	 * Este ï¿½ o metodo principal dessa aplicaï¿½ï¿½o que inicia a mesma. Ele recebe um
 	 * array de argumentos de linha de comando como entrada.
 	 *
 	 * @param args - O array de argumentos de linhas de comando.
-	 * @throws UnknownHostException Exception de conexão de rede
+	 * @throws UnknownHostException Exception de conexï¿½o de rede
 	 * @throws IOException          Exception de entrada e saida
 	 * @throws InterruptedException Exception de thread interrompido
 	 */
@@ -45,14 +45,14 @@ public class Client {
 	public static void main(String[] args) throws UnknownHostException, IOException, InterruptedException {
 
 		Client client = new Client();
-		client.generateSocketClient("172.16.103.3", 8000);
+		client.generateSocketClient("localhost", 8000);
 		client.clientExecution();
 
 	}
 
 	/**
-	 * Esse é o método que instancia um socket TCP para o cliente, para isso ele
-	 * recebe como parametros o ip e a porta do servidor ao qual fica a aplicação
+	 * Esse ï¿½ o mï¿½todo que instancia um socket TCP para o cliente, para isso ele
+	 * recebe como parametros o ip e a porta do servidor ao qual fica a aplicaï¿½ï¿½o
 	 * servidor.
 	 *
 	 * @param ip   - O ip do servidor.
@@ -74,7 +74,7 @@ public class Client {
 
 			} catch (ConnectException e) {
 
-				System.out.println("Server ainda não foi iniciado, espere um tempo");
+				System.out.println("Server ainda nï¿½o foi iniciado, espere um tempo");
 
 				try {
 
@@ -93,7 +93,7 @@ public class Client {
 	}
 
 	/**
-	 * Esse é o metodo de execução do menu de login dessa aplicação.
+	 * Esse ï¿½ o metodo de execuï¿½ï¿½o do menu de login dessa aplicaï¿½ï¿½o.
 	 * 
 	 * @throws IOException
 	 * @throws InterruptedException
@@ -130,7 +130,7 @@ public class Client {
 	}
 
 	/**
-	 * Esse é o metodo de execução do menu de cliente dessa aplicação.
+	 * Esse ï¿½ o metodo de execuï¿½ï¿½o do menu de cliente dessa aplicaï¿½ï¿½o.
 	 * 
 	 * @throws IOException
 	 * @throws InterruptedException
@@ -198,7 +198,7 @@ public class Client {
 
 						} else {
 
-							System.out.println("Lista de consumos do cliente está vazia");
+							System.out.println("Lista de consumos do cliente estï¿½ vazia");
 
 						}
 						System.out.println("===================================================");
@@ -236,7 +236,7 @@ public class Client {
 						System.out.println("Consumo total da fatura:" + jsonBody.get("consumption"));
 						System.out.println("Valor da fatura:" + jsonBody.get("invoiceValue"));
 						System.out.println("Tarifa da fatura:" + jsonBody.get("fare"));
-						System.out.println("Data de geração da fatura:" + jsonBody.get("issuanceDate"));
+						System.out.println("Data de geraï¿½ï¿½o da fatura:" + jsonBody.get("issuanceDate"));
 						System.out.println("Data em que a fatura expira:" + jsonBody.get("expirationDate"));
 						System.out.println(
 								"==============================================================================");
@@ -274,7 +274,7 @@ public class Client {
 						System.out.println("Consumo total da fatura:" + jsonBody.get("consumption"));
 						System.out.println("Valor da fatura:" + jsonBody.get("invoiceValue"));
 						System.out.println("Tarifa da fatura:" + jsonBody.get("fare"));
-						System.out.println("Data de geração da fatura:" + jsonBody.get("issuanceDate"));
+						System.out.println("Data de geraï¿½ï¿½o da fatura:" + jsonBody.get("issuanceDate"));
 						System.out.println("Data em que a fatura expira:" + jsonBody.get("expirationDate"));
 						System.out.println(
 								"==============================================================================");
@@ -316,7 +316,7 @@ public class Client {
 								System.out.println("Consumo total da fatura:" + jsonObject.get("consumption"));
 								System.out.println("Valor da fatura:" + jsonObject.get("invoiceValue"));
 								System.out.println("Tarifa da fatura:" + jsonObject.get("fare"));
-								System.out.println("Data de geração da fatura:" + jsonObject.get("issuanceDate"));
+								System.out.println("Data de geraï¿½ï¿½o da fatura:" + jsonObject.get("issuanceDate"));
 								System.out.println("Data em que a fatura expira:" + jsonObject.get("expirationDate"));
 								System.out.println("===================================================");
 
@@ -324,7 +324,7 @@ public class Client {
 
 						} else {
 
-							System.out.println("Lista de faturas do cliente está vazia");
+							System.out.println("Lista de faturas do cliente estï¿½ vazia");
 
 						}
 						System.out.println("===================================================");
@@ -384,9 +384,9 @@ public class Client {
 	}
 
 	/**
-	 * Esse é o metodo que vai ler a resposta http enviada pelo servidor.
+	 * Esse ï¿½ o metodo que vai ler a resposta http enviada pelo servidor.
 	 * 
-	 * @param input - O InputStream do socket que contém a resposta advinda do
+	 * @param input - O InputStream do socket que contï¿½m a resposta advinda do
 	 *              servidor.
 	 * @return A resposta http enviada pelo servidor formatada e colocada em um
 	 *         objeto que a representa. * @throws UnknownHostException

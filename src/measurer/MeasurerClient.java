@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 /**
- * Esta é a classe MeasurerClient, que representa a aplicação do medidor UDP que
+ * Esta ï¿½ a classe MeasurerClient, que representa a aplicaï¿½ï¿½o do medidor UDP que
  * se conecta ao servidor.
  * 
  * @author Bruno Campos de Oliveira Rocha
@@ -31,7 +31,7 @@ public class MeasurerClient {
 	private String passwordClient;
 
 	/**
-	 * Este é o metodo principal dessa aplicação que inicia a mesma. Ele recebe um
+	 * Este ï¿½ o metodo principal dessa aplicaï¿½ï¿½o que inicia a mesma. Ele recebe um
 	 * array de argumentos de linha de comando como entrada.
 	 *
 	 * @param args - O array de argumentos de linhas de comando.
@@ -47,7 +47,7 @@ public class MeasurerClient {
 	}
 
 	/**
-	 * Este é o metodo que instancia o socket UDP do medidor
+	 * Este ï¿½ o metodo que instancia o socket UDP do medidor
 	 */
 	private void generateSocketClient() {
 
@@ -64,7 +64,7 @@ public class MeasurerClient {
 	}
 
 	/**
-	 * Esse é o metodo de execução do menu de login dessa aplicação.
+	 * Esse ï¿½ o metodo de execuï¿½ï¿½o do menu de login dessa aplicaï¿½ï¿½o.
 	 */
 	private void startMeasurer() throws UnknownHostException {
 
@@ -91,7 +91,7 @@ public class MeasurerClient {
 			try {
 
 				measurerPacket = new DatagramPacket(bytePackage, bytePackage.length,
-						InetAddress.getByName("172.16.103.3"), 8100);
+						InetAddress.getByName("localhost"), 8100);
 				measurerSocket.send(measurerPacket);
 				measurerPacket = new DatagramPacket(bytePackage, bytePackage.length);
 				Thread.sleep(18);
@@ -114,7 +114,7 @@ public class MeasurerClient {
 	}
 
 	/**
-	 * Esse é o metodo de execução do simulador de medidor da aplicação.
+	 * Esse ï¿½ o metodo de execuï¿½ï¿½o do simulador de medidor da aplicaï¿½ï¿½o.
 	 */
 	private void execMeasurer() {
 
@@ -155,7 +155,7 @@ public class MeasurerClient {
 
 				try {
 					measurerPacket = new DatagramPacket(bytePackage, bytePackage.length,
-							InetAddress.getByName("172.16.103.3"), 8100);
+							InetAddress.getByName("localhost"), 8100);
 				} catch (UnknownHostException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
